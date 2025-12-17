@@ -1,0 +1,30 @@
+{
+  "name": "supermarket-alostaz",
+  "version": "2026.3.0",
+  "description": "تطبيق سوبر ماركت الأستاذ - تسوق أونلاين",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve .",
+    "build": "echo 'بناء التطبيق...'",
+    "deploy": "firebase deploy",
+    "test": "echo 'اختبار التطبيق...'"
+  },
+  "keywords": [
+    "supermarket",
+    "ecommerce",
+    "pwa",
+    "firebase",
+    "shopping"
+  ],
+  "author": "سوبر ماركت الأستاذ",
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^9.6.10"
+  },
+  "devDependencies": {
+    "serve": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
