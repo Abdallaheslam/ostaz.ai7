@@ -1,21 +1,13 @@
 {
   "name": "سوبر ماركت الأستاذ",
   "short_name": "الأستاذ ماركت",
-  "description": "تسوق بسهولة مع توصيل سريع لجميع أنحاء المدينة | عروض 2026 الحصرية",
-  
+  "description": "تطبيق سوبر ماركت متكامل مع خدمة التوصيل السريع",
   "start_url": "/",
-  "scope": "/",
-  
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
-  
-  "orientation": "portrait-primary",
-  
-  "background_color": "#FFFFFF",
+  "orientation": "portrait",
+  "scope": "/",
+  "background_color": "#ffffff",
   "theme_color": "#6B5BFF",
-  
-  "categories": ["shopping", "food", "lifestyle"],
-  
   "icons": [
     {
       "src": "./icons/icon-72x72.png",
@@ -26,44 +18,32 @@
     {
       "src": "./icons/icon-96x96.png",
       "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "./icons/icon-128x128.png",
       "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "./icons/icon-144x144.png",
       "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "./icons/icon-152x152.png",
       "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "./icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "./icons/icon-256x256.png",
-      "sizes": "256x256",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "./icons/icon-384x384.png",
       "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "./icons/icon-512x512.png",
@@ -72,26 +52,63 @@
       "purpose": "any maskable"
     }
   ],
-  
+  "screenshots": [
+    {
+      "src": "./screenshots/screenshot1.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "./screenshots/screenshot2.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
   "shortcuts": [
     {
       "name": "تصفح العروض",
       "short_name": "العروض",
-      "description": "تصفح جميع العروض الخاصة",
-      "url": "/?action=offers",
-      "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+      "description": "تصفح جميع العروض المتاحة",
+      "url": "/?tab=offers",
+      "icons": [
+        {
+          "src": "./icons/offers-icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "عربة التسوق",
       "short_name": "العربة",
-      "description": "عرض وتعديل عربة التسوق",
-      "url": "/?action=cart",
-      "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+      "description": "عرض عربة التسوق وإتمام الطلب",
+      "url": "/?tab=cart",
+      "icons": [
+        {
+          "src": "./icons/cart-icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "اتصل بنا",
+      "short_name": "الاتصال",
+      "description": "اتصل أو راسلنا عبر واتساب",
+      "url": "/?tab=contact",
+      "icons": [
+        {
+          "src": "./icons/contact-icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     }
   ],
-  
+  "categories": ["shopping", "food", "lifestyle"],
   "lang": "ar",
   "dir": "rtl",
-  
   "prefer_related_applications": false
 }
