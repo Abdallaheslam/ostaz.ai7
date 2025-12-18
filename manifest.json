@@ -1,54 +1,97 @@
 {
   "name": "سوبر ماركت الأستاذ",
-  "short_name": "سوبر ماركت",
-  "description": "تسوق بسهولة مع توصيل سريع لجميع أنحاء المدينة",
+  "short_name": "الأستاذ ماركت",
+  "description": "تسوق بسهولة مع توصيل سريع لجميع أنحاء المدينة | عروض 2026 الحصرية",
+  
   "start_url": "/",
+  "scope": "/",
+  
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  
+  "orientation": "portrait-primary",
+  
   "background_color": "#FFFFFF",
   "theme_color": "#6B5BFF",
-  "orientation": "portrait",
+  
+  "categories": ["shopping", "food", "lifestyle"],
+  
   "icons": [
     {
       "src": "./icons/icon-72x72.png",
       "sizes": "72x72",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "./icons/icon-96x96.png",
       "sizes": "96x96",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "./icons/icon-128x128.png",
       "sizes": "128x128",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "./icons/icon-144x144.png",
       "sizes": "144x144",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "./icons/icon-152x152.png",
       "sizes": "152x152",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "./icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "./icons/icon-384x384.png",
       "sizes": "384x384",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "./icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
+  
+  "shortcuts": [
+    {
+      "name": "تصفح العروض",
+      "short_name": "العروض",
+      "description": "تصفح جميع العروض الخاصة",
+      "url": "/?action=offers",
+      "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "عربة التسوق",
+      "short_name": "العربة",
+      "description": "عرض وتعديل عربة التسوق",
+      "url": "/?action=cart",
+      "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
+    }
+  ],
+  
   "lang": "ar",
-  "dir": "rtl"
+  "dir": "rtl",
+  
+  "prefer_related_applications": false
 }
