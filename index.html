@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <meta name="theme-color" content="#6B5BFF" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -61,7 +60,7 @@
   }
   </script>
 
-  <!-- ====== CSS مضمّن مع تصميم احترافي ====== -->
+  <!-- ====== CSS مضمّن ====== -->
   <style>
     /* ====== CSS RESET & BASE STYLES ====== */
     * {
@@ -185,6 +184,21 @@
       animation: ripple 1s ease-out;
     }
     
+    @keyframes ripple {
+      0% {
+        transform: scale(0, 0);
+        opacity: 1;
+      }
+      20% {
+        transform: scale(25, 25);
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: scale(40, 40);
+      }
+    }
+    
     /* الزر البرتقالي */
     .btn-orange {
       background: linear-gradient(135deg, #FF9500, #FFA500);
@@ -221,11 +235,11 @@
       box-shadow: var(--shadow-md);
       background: linear-gradient(135deg, #FF6B00, var(--browse-orange));
     }
-   .btn-coupon {
-  background: linear-gradient(135deg, var(--coupon-purple), var(--primary-light));
-  /* أضف هذا القوس ) */
-  color: white;
-}
+    
+    .btn-coupon {
+      background: linear-gradient(135deg, var(--coupon-purple), var(--primary-light));
+      color: white;
+    }
     
     .btn-search {
       background: var(--search-orange);
@@ -294,6 +308,11 @@
       animation: spin 1s linear infinite;
     }
     
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
     /* زر البحث للهواتف */
     .mobile-search-btn {
       display: none;
@@ -323,7 +342,7 @@
       display: none;
     }
     
-    /* ====== NAVBAR REDESIGN - MOBILE FIRST ====== */
+    /* ====== NAVBAR REDESIGN ====== */
     .navbar {
       position: fixed;
       top: 0;
@@ -377,6 +396,18 @@
       font-size: 1.1rem;
       animation: bounce 2s infinite;
       flex-shrink: 0;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-10px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
     }
     
     .logo-text {
@@ -608,17 +639,17 @@
     }
     
     /* الألوان الخاصة بالأيقونات الجانبية */
-    .nav-item:nth-child(5) .nav-icon { /* عربة التسوق */
+    .nav-item:nth-child(5) .nav-icon {
       color: var(--cart-red);
       background: rgba(255, 45, 85, 0.1);
     }
     
-    .nav-item:nth-child(6) .nav-icon { /* المفضلة */
+    .nav-item:nth-child(6) .nav-icon {
       color: var(--cart-red);
       background: rgba(255, 45, 85, 0.1);
     }
     
-    .nav-item:nth-child(7) .nav-icon { /* الإشعارات */
+    .nav-item:nth-child(7) .nav-icon {
       color: var(--primary-color);
       background: rgba(107, 91, 255, 0.1);
     }
@@ -646,6 +677,21 @@
       animation: pulse 2s infinite;
     }
     
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(107, 91, 255, 0.7);
+      }
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(107, 91, 255, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(107, 91, 255, 0);
+      }
+    }
+    
     /* ====== MAIN CONTENT ====== */
     .main-content {
       padding: calc(var(--navbar-height) + 20px) 20px 100px;
@@ -668,6 +714,17 @@
       animation: slideInDown 0.8s ease;
     }
     
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
     .hero-section::before {
       content: '';
       position: absolute;
@@ -675,7 +732,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
       opacity: 0.1;
     }
     
@@ -690,6 +747,17 @@
       margin-bottom: 15px;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       animation: fadeInUp 0.8s ease 0.2s both;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
     .hero-subtitle {
@@ -715,6 +783,11 @@
       margin-bottom: 25px;
       box-shadow: var(--shadow-sm);
       animation: fadeIn 0.6s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     
     .section-header {
@@ -755,13 +828,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 20px;
-    }
-    
-    @media (max-width: 768px) {
-      .categories-grid {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 15px;
-      }
     }
     
     .category-card {
@@ -842,13 +908,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 20px;
-    }
-    
-    @media (max-width: 768px) {
-      .products-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 15px;
-      }
     }
     
     .product-card {
@@ -1072,14 +1131,27 @@
       overflow: hidden;
       box-shadow: var(--shadow-lg);
       animation: slideInUp 0.6s ease;
+      margin: 10px;
+    }
+    
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
     .admin-header {
       background: var(--primary-gradient);
       color: white;
-      padding: 25px;
+      padding: 25px 20px;
       position: relative;
       overflow: hidden;
+      text-align: center;
     }
     
     .admin-header::before {
@@ -1103,20 +1175,21 @@
       opacity: 0.9;
       position: relative;
       z-index: 1;
+      font-size: 0.9rem;
     }
     
     .admin-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 25px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      padding: 20px;
       background: rgba(107, 91, 255, 0.05);
     }
     
     .stat-card {
       background: white;
       border-radius: var(--border-radius-md);
-      padding: 20px;
+      padding: 15px;
       text-align: center;
       transition: all var(--transition-normal);
       border: 1px solid var(--border-color);
@@ -1141,20 +1214,20 @@
     }
     
     .stat-icon {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 15px;
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 10px;
       background: rgba(107, 91, 255, 0.1);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       color: var(--primary-color);
     }
     
     .stat-value {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 800;
       color: var(--text-primary);
       margin-bottom: 5px;
@@ -1162,19 +1235,26 @@
     
     .stat-label {
       color: var(--text-light);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
     
     .admin-tabs {
       display: flex;
       background: rgba(107, 91, 255, 0.05);
-      padding: 0 25px;
+      padding: 0 10px;
       border-bottom: 1px solid var(--border-color);
       overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      white-space: nowrap;
+    }
+    
+    .admin-tabs::-webkit-scrollbar {
+      display: none;
     }
     
     .admin-tab {
-      padding: 15px 25px;
+      padding: 15px;
       background: none;
       border: none;
       color: var(--text-secondary);
@@ -1183,7 +1263,15 @@
       cursor: pointer;
       transition: all var(--transition-fast);
       position: relative;
-      white-space: nowrap;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+      min-width: 100px;
+      text-align: center;
+    }
+    
+    .admin-tab i {
+      margin-left: 5px;
+      font-size: 1rem;
     }
     
     .admin-tab.active {
@@ -1207,8 +1295,10 @@
     }
     
     .admin-content {
-      padding: 25px;
+      padding: 20px;
       min-height: 400px;
+      max-height: 70vh;
+      overflow-y: auto;
     }
     
     .admin-table {
@@ -1218,20 +1308,23 @@
       border-radius: var(--border-radius-md);
       overflow: hidden;
       box-shadow: var(--shadow-sm);
+      font-size: 0.85rem;
     }
     
     .admin-table th {
       background: var(--primary-gradient);
       color: white;
-      padding: 15px;
+      padding: 12px 10px;
       text-align: right;
       font-weight: 600;
+      font-size: 0.9rem;
     }
     
     .admin-table td {
-      padding: 12px 15px;
+      padding: 10px;
       border-bottom: 1px solid var(--border-color);
       color: var(--text-secondary);
+      font-size: 0.85rem;
     }
     
     .admin-table tr:hover {
@@ -1242,16 +1335,23 @@
       border-bottom: none;
     }
     
+    .admin-table img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    
     .admin-form {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      max-width: 800px;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      max-width: 100%;
       margin: 0 auto;
     }
     
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     
     .form-label {
@@ -1259,6 +1359,7 @@
       margin-bottom: 8px;
       color: var(--text-primary);
       font-weight: 600;
+      font-size: 0.9rem;
     }
     
     .form-control {
@@ -1267,7 +1368,7 @@
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius-md);
       font-family: 'Cairo', sans-serif;
-      font-size: 1rem;
+      font-size: 0.95rem;
       transition: all var(--transition-fast);
       background: white;
     }
@@ -1359,8 +1460,8 @@
     /* ====== CART ====== */
     .cart-item {
       display: flex;
-      gap: 20px;
-      padding: 20px;
+      gap: 15px;
+      padding: 15px;
       border-bottom: 1px solid var(--border-color);
       animation: fadeIn 0.4s ease;
     }
@@ -1370,48 +1471,57 @@
     }
     
     .cart-item-image {
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
       object-fit: contain;
       border-radius: var(--border-radius-sm);
       background: rgba(107, 91, 255, 0.05);
-      padding: 10px;
+      padding: 8px;
+      flex-shrink: 0;
     }
     
     .cart-item-content {
       flex: 1;
+      min-width: 0;
     }
     
     .cart-item-name {
       font-weight: 600;
       margin-bottom: 8px;
       color: var(--text-primary);
+      font-size: 0.95rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
     
     .cart-item-price {
       color: var(--primary-color);
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
     
     .cart-item-actions {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 10px;
+      flex-shrink: 0;
     }
     
     .quantity-control {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: rgba(107, 91, 255, 0.05);
       border-radius: var(--border-radius-md);
-      padding: 5px;
+      padding: 4px;
     }
     
     .quantity-btn {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       border: none;
       background: white;
@@ -1431,23 +1541,25 @@
     }
     
     .quantity-value {
-      min-width: 30px;
+      min-width: 25px;
       text-align: center;
       font-weight: 600;
+      font-size: 0.9rem;
     }
     
     .cart-summary {
       background: rgba(107, 91, 255, 0.05);
       border-radius: var(--border-radius-md);
-      padding: 25px;
-      margin-top: 25px;
+      padding: 20px;
+      margin-top: 20px;
     }
     
     .summary-row {
       display: flex;
       justify-content: space-between;
-      padding: 10px 0;
+      padding: 8px 0;
       color: var(--text-secondary);
+      font-size: 0.95rem;
     }
     
     .summary-row.total {
@@ -1456,95 +1568,10 @@
       padding-top: 15px;
       color: var(--text-primary);
       font-weight: 800;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
     
     /* ====== ANIMATIONS ====== */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes slideInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    
-    @keyframes ripple {
-      0% {
-        transform: scale(0, 0);
-        opacity: 1;
-      }
-      20% {
-        transform: scale(25, 25);
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-        transform: scale(40, 40);
-      }
-    }
-    
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(107, 91, 255, 0.7);
-      }
-      70% {
-        transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(107, 91, 255, 0);
-      }
-      100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(107, 91, 255, 0);
-      }
-    }
-    
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-      }
-      40% {
-        transform: translateY(-10px);
-      }
-      60% {
-        transform: translateY(-5px);
-      }
-    }
-    
     @keyframes float {
       0%, 100% {
         transform: translateY(0);
@@ -1707,35 +1734,70 @@
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       }
       
+      .admin-panel {
+        margin: 5px;
+      }
+      
       .admin-stats {
         grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 15px;
+      }
+      
+      .stat-card {
+        padding: 12px;
+      }
+      
+      .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+      }
+      
+      .stat-value {
+        font-size: 1.3rem;
+      }
+      
+      .admin-tabs {
+        padding: 0 5px;
+      }
+      
+      .admin-tab {
+        padding: 12px 10px;
+        font-size: 0.85rem;
+        min-width: 90px;
+      }
+      
+      .admin-tab i {
+        font-size: 0.9rem;
+      }
+      
+      .admin-content {
+        padding: 15px;
+        max-height: 60vh;
+      }
+      
+      .admin-table {
+        font-size: 0.8rem;
+      }
+      
+      .admin-table th {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+      }
+      
+      .admin-table td {
+        padding: 8px;
+        font-size: 0.8rem;
+      }
+      
+      .admin-table img {
+        width: 35px;
+        height: 35px;
       }
       
       .modal {
         margin: 10px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .categories-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .admin-stats {
-        grid-template-columns: 1fr;
-      }
-      
-      .admin-tabs {
-        padding: 0 15px;
-      }
-      
-      .admin-tab {
-        padding: 12px 15px;
-        font-size: 0.9rem;
       }
       
       .hero-actions {
@@ -1771,6 +1833,135 @@
         height: 30px;
         font-size: 0.9rem;
       }
+      
+      .categories-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 12px;
+      }
+      
+      .category-card {
+        padding: 15px;
+      }
+      
+      .category-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+      
+      .category-name {
+        font-size: 0.9rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .admin-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .admin-tab {
+        padding: 10px 8px;
+        font-size: 0.8rem;
+        min-width: 85px;
+      }
+      
+      .admin-tab i {
+        font-size: 0.85rem;
+      }
+      
+      .stat-card {
+        padding: 10px;
+      }
+      
+      .stat-value {
+        font-size: 1.2rem;
+      }
+      
+      .stat-label {
+        font-size: 0.8rem;
+      }
+      
+      .admin-header {
+        padding: 20px 15px;
+      }
+      
+      .admin-title {
+        font-size: 1.5rem;
+      }
+      
+      .admin-subtitle {
+        font-size: 0.85rem;
+      }
+      
+      .logo-text {
+        font-size: 0.9rem;
+        max-width: 100px;
+      }
+      
+      .auth-buttons .btn span {
+        display: none;
+      }
+      
+      .auth-buttons .btn {
+        width: 36px;
+        padding: 8px;
+        justify-content: center;
+      }
+      
+      .auth-buttons .btn i {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+      
+      .logo-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+      }
+      
+      .product-card {
+        border: 1px solid var(--border-color);
+      }
+      
+      .product-info {
+        padding: 15px;
+      }
+      
+      .product-name {
+        font-size: 0.9rem;
+        height: 38px;
+      }
+      
+      .price-current {
+        font-size: 1.1rem;
+      }
+      
+      .add-to-cart-btn {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+      
+      .cart-item {
+        flex-wrap: wrap;
+      }
+      
+      .cart-item-content {
+        min-width: 100%;
+        margin-top: 10px;
+      }
+      
+      .cart-item-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
     }
     
     @media (max-width: 360px) {
@@ -1788,22 +1979,52 @@
         height: 34px;
         padding: 6px;
       }
+      
+      .hero-title {
+        font-size: 1.5rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 0.9rem;
+      }
+      
+      .admin-tab {
+        min-width: 80px;
+        padding: 10px 6px;
+        font-size: 0.75rem;
+      }
+      
+      .admin-tab i {
+        font-size: 0.8rem;
+      }
+      
+      .admin-stats {
+        grid-template-columns: 1fr;
+      }
+      
+      .stat-card {
+        padding: 15px;
+      }
+      
+      .admin-title {
+        font-size: 1.3rem;
+      }
     }
     
     /* ====== SCROLLBAR STYLING ====== */
     ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
     }
     
     ::-webkit-scrollbar-track {
       background: rgba(107, 91, 255, 0.1);
-      border-radius: 4px;
+      border-radius: 3px;
     }
     
     ::-webkit-scrollbar-thumb {
       background: var(--primary-gradient);
-      border-radius: 4px;
+      border-radius: 3px;
     }
     
     ::-webkit-scrollbar-thumb:hover {
@@ -1824,6 +2045,11 @@
       
       .main-content {
         padding-top: calc(var(--navbar-height) + env(safe-area-inset-top) + 20px);
+      }
+      
+      .admin-panel {
+        margin-top: calc(env(safe-area-inset-top) + 10px);
+        max-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px);
       }
     }
     
@@ -1852,9 +2078,42 @@
         width: 36px;
         height: 36px;
       }
+      
+      .nav-item {
+        min-height: 70px;
+      }
+      
+      .admin-tab {
+        min-height: 50px;
+        min-width: 90px;
+      }
+      
+      .stat-card {
+        padding: 20px 15px;
+      }
+      
+      .form-control {
+        font-size: 16px;
+        padding: 15px;
+      }
+    }
+    
+    /* تحسين لوحة التحكم للشاشات الكبيرة */
+    @media (min-width: 992px) {
+      .admin-panel {
+        margin: 20px auto;
+        max-width: 1200px;
+      }
+      
+      .admin-stats {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      
+      .admin-form {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
     }
   </style>
-  
 </head>
 <body>
 
@@ -2100,56 +2359,17 @@
   <div id="modalsContainer"></div>
 
   <!-- Admin Floating Button (Only for Admins) -->
-  <button id="adminFloatBtn" class="btn btn-primary" style="
-    position: fixed;
-    bottom: 90px;
-    left: 20px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    z-index: 998;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-lg);
-    animation: pulse 2s infinite;
-  " onclick="openAdminPanel()" title="لوحة التحكم">
+  <button id="adminFloatBtn" class="btn btn-primary" style="position: fixed; bottom: 90px; left: 20px; width: 56px; height: 56px; border-radius: 50%; z-index: 998; display: none; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); animation: pulse 2s infinite;" onclick="openAdminPanel()" title="لوحة التحكم">
     <i class="fas fa-tools"></i>
   </button>
 
   <!-- WhatsApp Floating Button -->
-  <button id="whatsappFloatBtn" class="btn btn-success" style="
-    position: fixed;
-    bottom: 160px;
-    left: 20px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    z-index: 998;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-lg);
-    animation: bounce 2s infinite;
-  " onclick="openWhatsapp()" title="واتساب">
+  <button id="whatsappFloatBtn" class="btn btn-success" style="position: fixed; bottom: 160px; left: 20px; width: 56px; height: 56px; border-radius: 50%; z-index: 998; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); animation: bounce 2s infinite;" onclick="openWhatsapp()" title="واتساب">
     <i class="fab fa-whatsapp"></i>
   </button>
 
   <!-- Phone Floating Button -->
-  <button id="phoneFloatBtn" class="btn btn-warning" style="
-    position: fixed;
-    bottom: 230px;
-    left: 20px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    z-index: 998;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-lg);
-    animation: bounce 2s infinite 0.2s;
-  " onclick="openPhone()" title="اتصل بنا">
+  <button id="phoneFloatBtn" class="btn btn-warning" style="position: fixed; bottom: 230px; left: 20px; width: 56px; height: 56px; border-radius: 50%; z-index: 998; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); animation: bounce 2s infinite 0.2s;" onclick="openPhone()" title="اتصل بنا">
     <i class="fas fa-phone"></i>
   </button>
 
@@ -2163,8 +2383,8 @@
   <!-- JavaScript Application Code -->
   <script>
   /**************************************************************************
-   * تطبيق سوبر ماركت الأستاذ - النسخة المحسنة
-   * إصدار 2026.3 - مع إصلاح جميع المشاكل
+   * تطبيق سوبر ماركت الأستاذ - النسخة المحسنة للهواتف
+   * إصدار 2026.3 - مع تحسينات لوحة التحكم للجوال
    **************************************************************************/
 
   // ---------- إعدادات التطبيق ----------
@@ -2335,8 +2555,20 @@
       try {
         const registration = await navigator.serviceWorker.register('./sw.js');
         console.log('✅ Service Worker registered:', registration.scope);
+        
+        // تحديث الصفحة عند وجود تحديث جديد
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              showNotification('يوجد تحديث جديد متاح!', 'info');
+            }
+          });
+        });
       } catch (error) {
         console.error('❌ Service Worker registration failed:', error);
+        // إذا فشل التسجيل، حاول مرة أخرى بعد ثانية
+        setTimeout(registerServiceWorker, 1000);
       }
     }
   }
@@ -2717,10 +2949,11 @@
     if (!product) return;
     
     const isFavorite = favorites.some(fav => fav.id === productId);
+    const isMobile = window.innerWidth < 768;
     
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px;">
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: ${isMobile ? '95%' : '800px'};">
           <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
@@ -2728,11 +2961,11 @@
             <h2 class="modal-title">${product.name}</h2>
           </div>
           <div class="modal-body">
-            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: start;">
+            <div style="display: ${isMobile ? 'block' : 'grid'}; grid-template-columns: 1fr 2fr; gap: 30px; align-items: start;">
               <div>
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x300/6B5BFF/ffffff?text=صورة+المنتج'}" 
                      alt="${product.name}"
-                     style="width: 100%; border-radius: var(--border-radius-md);"
+                     style="width: 100%; border-radius: var(--border-radius-md); margin-bottom: ${isMobile ? '20px' : '0'};"
                      onerror="this.src='https://via.placeholder.com/300x300/6B5BFF/ffffff?text=صورة+المنتج'">
                 
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
@@ -2748,7 +2981,7 @@
               <div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                   <div>
-                    <h3 style="color: var(--primary-color); font-size: 1.8rem;">
+                    <h3 style="color: var(--primary-color); font-size: ${isMobile ? '1.5rem' : '1.8rem'};">
                       ${(product.price * (1 - (product.discount || 0) / 100)).toFixed(2)} جنيه
                     </h3>
                     ${product.discount > 0 ? `
@@ -2892,7 +3125,7 @@
             <i class="fas fa-list"></i>
             جميع المنتجات
           </h2>
-          <div style="display: flex; gap: 10px;">
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
             <select class="form-control" style="width: auto;" onchange="filterProducts(this.value)" id="filterSelect">
               <option value="">جميع التصنيفات</option>
               <option value="discount">العروض</option>
@@ -4088,7 +4321,7 @@
                         </h2>
                     </div>
                     <div class="modal-body">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                        <div style="display: ${window.innerWidth < 768 ? 'block' : 'grid'}; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
                             <div>
                                 <h4 style="margin-bottom: 15px; color: var(--text-primary);">معلومات العميل:</h4>
                                 <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
@@ -4650,7 +4883,7 @@ async function loadUserAddresses() {
     
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
-        <div class="admin-panel" onclick="event.stopPropagation()" style="max-width: 1200px; margin: 20px; width: calc(100% - 40px);">
+        <div class="admin-panel" onclick="event.stopPropagation()">
           <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 20px; left: 20px;">
             <i class="fas fa-times"></i>
           </button>
@@ -4788,7 +5021,7 @@ async function loadUserAddresses() {
     try {
       const snapshot = await db.collection('products')
         .orderBy('createdAt', 'desc')
-        .limit(20)
+        .limit(15)
         .get();
       
       if (snapshot.empty) {
@@ -4802,7 +5035,7 @@ async function loadUserAddresses() {
       }
       
       let tableHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
           <h3>إدارة المنتجات</h3>
           <button class="btn btn-primary" onclick="openAddProductModal()">
             <i class="fas fa-plus"></i> إضافة منتج
@@ -4817,7 +5050,6 @@ async function loadUserAddresses() {
                 <th>السعر</th>
                 <th>الخصم</th>
                 <th>المخزون</th>
-                <th>التصنيف</th>
                 <th>الإجراءات</th>
               </tr>
             </thead>
@@ -4837,7 +5069,6 @@ async function loadUserAddresses() {
             <td>${product.price?.toFixed(2) || '0'} جنيه</td>
             <td>${product.discount || 0}%</td>
             <td>${product.stock || 0}</td>
-            <td>${product.category || 'عام'}</td>
             <td>
               <button class="btn btn-sm btn-primary" onclick="editProduct('${doc.id}')">
                 <i class="fas fa-edit"></i>
@@ -4872,7 +5103,7 @@ async function loadUserAddresses() {
   function openAddProductModal() {
     const modalHTML = `
         <div class="modal-overlay" onclick="closeModal()">
-            <div class="modal" onclick="event.stopPropagation()" style="max-width: 700px;">
+            <div class="modal" onclick="event.stopPropagation()">
                 <button class="modal-close" onclick="closeModal()">
                     <i class="fas fa-times"></i>
                 </button>
@@ -4891,7 +5122,7 @@ async function loadUserAddresses() {
                         
                         <div class="form-group">
                             <label class="form-label">وصف المنتج</label>
-                            <textarea class="form-control" id="productDescription" rows="3"></textarea>
+                            <textarea class="form-control" id="productDescription" rows="2"></textarea>
                         </div>
                         
                         <div class="form-group">
@@ -4929,7 +5160,7 @@ async function loadUserAddresses() {
                             <input type="url" class="form-control" id="productImage" required>
                         </div>
                         
-                        <div class="form-group" style="grid-column: 1/-1;">
+                        <div class="form-group">
                             <label>
                                 <input type="checkbox" id="productFeatured">
                                 <span style="margin-right: 8px;">منتج مميز</span>
@@ -5005,7 +5236,7 @@ async function editProduct(productId) {
         
         const modalHTML = `
             <div class="modal-overlay" onclick="closeModal()">
-                <div class="modal" onclick="event.stopPropagation()" style="max-width: 700px;">
+                <div class="modal" onclick="event.stopPropagation()">
                     <button class="modal-close" onclick="closeModal()">
                         <i class="fas fa-times"></i>
                     </button>
@@ -5024,7 +5255,7 @@ async function editProduct(productId) {
                             
                             <div class="form-group">
                                 <label class="form-label">وصف المنتج</label>
-                                <textarea class="form-control" id="editProductDescription" rows="3">${product.description || ''}</textarea>
+                                <textarea class="form-control" id="editProductDescription" rows="2">${product.description || ''}</textarea>
                             </div>
                             
                             <div class="form-group">
@@ -5062,7 +5293,7 @@ async function editProduct(productId) {
                                 <input type="url" class="form-control" id="editProductImage" value="${product.image || ''}" required>
                             </div>
                             
-                            <div class="form-group" style="grid-column: 1/-1;">
+                            <div class="form-group">
                                 <label>
                                     <input type="checkbox" id="editProductFeatured" ${product.featured ? 'checked' : ''}>
                                     <span style="margin-right: 8px;">منتج مميز</span>
@@ -5145,7 +5376,7 @@ async function deleteProduct(productId) {
     try {
       const snapshot = await db.collection('orders')
         .orderBy('createdAt', 'desc')
-        .limit(20)
+        .limit(15)
         .get();
       
       if (snapshot.empty) {
@@ -5168,7 +5399,6 @@ async function deleteProduct(productId) {
                 <th>العميل</th>
                 <th>القيمة</th>
                 <th>الحالة</th>
-                <th>التاريخ</th>
                 <th>الإجراءات</th>
               </tr>
             </thead>
@@ -5187,11 +5417,10 @@ async function deleteProduct(productId) {
         
         tableHTML += `
           <tr>
-            <td>#${doc.id.substring(0, 8)}</td>
+            <td>#${doc.id.substring(0, 6)}</td>
             <td>${order.userName || 'غير معروف'}</td>
             <td>${order.total?.toFixed(2) || '0'} جنيه</td>
             <td>${statusText}</td>
-            <td>${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</td>
             <td>
               <button class="btn btn-sm btn-primary" onclick="viewOrderAdmin('${doc.id}')">
                 <i class="fas fa-eye"></i>
@@ -5230,10 +5459,11 @@ async function deleteProduct(productId) {
         }
         
         const order = orderDoc.data();
+        const isMobile = window.innerWidth < 768;
         
         const modalHTML = `
             <div class="modal-overlay" onclick="closeModal()">
-                <div class="modal" onclick="event.stopPropagation()" style="max-width: 900px;">
+                <div class="modal" onclick="event.stopPropagation()" style="max-width: ${isMobile ? '95%' : '900px'};">
                     <button class="modal-close" onclick="closeModal()">
                         <i class="fas fa-times"></i>
                     </button>
@@ -5241,16 +5471,10 @@ async function deleteProduct(productId) {
                         <h2 class="modal-title">
                             <i class="fas fa-shopping-bag"></i>
                             تفاصيل الطلب #${orderId.substring(0, 8)}
-                            <button class="btn btn-orange btn-sm" style="margin-right: 15px;" onclick="changeOrderStatus('${orderId}')">
-                                <i class="fas fa-edit"></i> تغيير الحالة
-                            </button>
-                            <button class="btn btn-primary btn-sm" onclick="shareOrder('${orderId}')">
-                                <i class="fas fa-share-alt"></i> مشاركة
-                            </button>
                         </h2>
                     </div>
                     <div class="modal-body">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                        <div style="display: ${isMobile ? 'block' : 'grid'}; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
                             <div>
                                 <h4 style="margin-bottom: 15px; color: var(--text-primary);">معلومات العميل:</h4>
                                 <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
@@ -5321,7 +5545,7 @@ async function deleteProduct(productId) {
                         ` : ''}
                     </div>
                     
-                    <div class="modal-footer">
+                    <div class="modal-footer" style="flex-wrap: wrap; gap: 10px;">
                         <button class="btn btn-outline" onclick="closeModal()">
                             <i class="fas fa-times"></i> إغلاق
                         </button>
@@ -5358,7 +5582,7 @@ async function deleteProduct(productId) {
       }
       
       let tableHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
           <h3>إدارة التصنيفات</h3>
           <button class="btn btn-primary" onclick="openAddCategoryModal()">
             <i class="fas fa-plus"></i> إضافة تصنيف
@@ -5370,9 +5594,7 @@ async function deleteProduct(productId) {
               <tr>
                 <th>الأيقونة</th>
                 <th>الاسم</th>
-                <th>اللون</th>
                 <th>عدد المنتجات</th>
-                <th>الترتيب</th>
                 <th>الإجراءات</th>
               </tr>
             </thead>
@@ -5387,11 +5609,7 @@ async function deleteProduct(productId) {
               <i class="${category.icon || 'fas fa-tag'}" style="color: ${category.color || '#6B5BFF'}; font-size: 1.5rem;"></i>
             </td>
             <td>${category.name}</td>
-            <td>
-              <div style="width: 20px; height: 20px; background: ${category.color || '#6B5BFF'}; border-radius: 3px;"></div>
-            </td>
             <td>${category.productCount || 0}</td>
-            <td>${category.order || 0}</td>
             <td>
               <button class="btn btn-sm btn-primary" onclick="editCategory('${doc.id}')">
                 <i class="fas fa-edit"></i>
@@ -5577,7 +5795,7 @@ async function deleteCategory(categoryId) {
     try {
       const snapshot = await db.collection('users')
         .orderBy('createdAt', 'desc')
-        .limit(20)
+        .limit(15)
         .get();
       
       if (snapshot.empty) {
@@ -5600,7 +5818,6 @@ async function deleteCategory(categoryId) {
                 <th>الاسم</th>
                 <th>البريد</th>
                 <th>الدور</th>
-                <th>التاريخ</th>
                 <th>الإجراءات</th>
               </tr>
             </thead>
@@ -5623,7 +5840,6 @@ async function deleteCategory(categoryId) {
                 ${user.role === 'admin' ? 'مدير' : 'عميل'}
               </span>
             </td>
-            <td>${user.createdAt?.toDate ? user.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</td>
             <td>
               <button class="btn btn-sm btn-primary" onclick="viewUserAdmin('${doc.id}')">
                 <i class="fas fa-eye"></i>
@@ -5662,6 +5878,7 @@ async function deleteCategory(categoryId) {
         }
         
         const user = userDoc.data();
+        const isMobile = window.innerWidth < 768;
         
         // جلب طلبات المستخدم
         const ordersSnapshot = await db.collection('orders')
@@ -5672,7 +5889,7 @@ async function deleteCategory(categoryId) {
         
         const modalHTML = `
             <div class="modal-overlay" onclick="closeModal()">
-                <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px;">
+                <div class="modal" onclick="event.stopPropagation()" style="max-width: ${isMobile ? '95%' : '800px'};">
                     <button class="modal-close" onclick="closeModal()">
                         <i class="fas fa-times"></i>
                     </button>
@@ -5683,11 +5900,11 @@ async function deleteCategory(categoryId) {
                         </h2>
                     </div>
                     <div class="modal-body">
-                        <div style="display: grid; grid-template-columns: auto 1fr; gap: 30px; margin-bottom: 30px;">
-                            <div>
+                        <div style="display: ${isMobile ? 'block' : 'grid'}; grid-template-columns: auto 1fr; gap: 30px; margin-bottom: 30px;">
+                            <div style="text-align: center;">
                                 <img src="${user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6B5BFF&color=fff&size=128`}" 
                                      alt="${user.name}"
-                                     style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary-color);">
+                                     style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary-color); margin: ${isMobile ? '0 auto 20px' : '0'};">
                             </div>
                             
                             <div>
