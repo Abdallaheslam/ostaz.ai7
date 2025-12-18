@@ -1,0 +1,22 @@
+# سوبر ماركت الأستاذ - ملف روبوتس
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+
+Sitemap: https://supermarket-alostaz.web.app/sitemap.xml
+
+# Crawl-delay: 10
+
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+
+User-agent: Slurp
+Allow: /
+Disallow: /admin/
