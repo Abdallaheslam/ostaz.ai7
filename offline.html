@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سوبر ماركت الأستاذ - عدم الاتصال</title>
+    <title>لا يوجد اتصال - سوبر ماركت الأستاذ</title>
     <style>
         * {
             margin: 0;
@@ -13,15 +13,15 @@
         
         body {
             font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #6B5BFF, #7C64FF);
+            background: linear-gradient(135deg, #6B5BFF 0%, #7C64FF 100%);
             color: white;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
             text-align: center;
-            direction: rtl;
+            padding: 20px;
         }
         
         .container {
@@ -30,47 +30,80 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .icon {
-            font-size: 80px;
+            font-size: 5rem;
             margin-bottom: 20px;
-            animation: pulse 2s infinite;
+            animation: bounce 2s infinite;
         }
         
         h1 {
-            font-size: 28px;
+            font-size: 2rem;
             margin-bottom: 15px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         p {
-            font-size: 16px;
-            line-height: 1.6;
+            font-size: 1.1rem;
             margin-bottom: 25px;
             opacity: 0.9;
+            line-height: 1.6;
         }
         
-        .actions {
+        .features {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: right;
+        }
+        
+        .feature-item {
             display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 12px;
+            padding: 8px 0;
+        }
+        
+        .feature-item i {
+            margin-left: 15px;
+            font-size: 1.3rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
             justify-content: center;
         }
         
-        button {
-            padding: 12px 24px;
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
             border: none;
-            border-radius: 50px;
+            border-radius: 12px;
             font-family: 'Cairo', sans-serif;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            min-width: 120px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 160px;
+            justify-content: center;
         }
         
         .btn-primary {
@@ -78,40 +111,74 @@
             color: #6B5BFF;
         }
         
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
         .btn-secondary {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.2);
             color: white;
-            border: 2px solid white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
         
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
         
-        .features {
-            margin-top: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-        }
-        
-        .feature {
+        .status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 12px 20px;
             background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
             border-radius: 12px;
+            font-size: 0.9rem;
         }
         
-        .feature i {
-            font-size: 24px;
-            margin-bottom: 10px;
+        .status.online {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+        
+        .status.offline {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+        
+        .loading {
+            display: none;
+        }
+        
+        .loading.active {
             display: block;
+            margin: 20px 0;
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        .loading span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 3px;
+            animation: loading 1.4s infinite ease-in-out both;
+        }
+        
+        .loading span:nth-child(1) { animation-delay: -0.32s; }
+        .loading span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        @keyframes loading {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
         }
         
         @media (max-width: 480px) {
@@ -119,21 +186,28 @@
                 padding: 30px 20px;
             }
             
-            h1 {
-                font-size: 24px;
-            }
-            
             .icon {
-                font-size: 60px;
+                font-size: 4rem;
             }
             
-            .features {
-                grid-template-columns: 1fr;
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
             }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -141,60 +215,91 @@
             <i class="fas fa-wifi-slash"></i>
         </div>
         
-        <h1>أنت غير متصل بالإنترنت</h1>
+        <h1>عذراً، أنت غير متصل بالإنترنت</h1>
         
-        <p>
-            لا يمكنك الاتصال بالإنترنت حالياً. يمكنك الاستمرار في تصفح المنتجات المخزنة مسبقاً، 
-            وسيتم مزامنة طلباتك عند عودة الاتصال.
-        </p>
+        <p>يبدو أن اتصالك بالإنترنت غير متوفر حالياً. لا تقلق، يمكنك الاستمرار في استخدام بعض الميزات المتاحة دون اتصال.</p>
         
-        <div class="actions">
-            <button class="btn-primary" onclick="window.location.reload()">
+        <div class="features">
+            <div class="feature-item">
+                <i class="fas fa-shopping-cart"></i>
+                <span>عرض عربة التسوق المحفوظة</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-heart"></i>
+                <span>عرض المنتجات المفضلة</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-box"></i>
+                <span>عرض المنتجات المخزنة مسبقاً</span>
+            </div>
+        </div>
+        
+        <div id="status" class="status offline">
+            <i class="fas fa-circle"></i>
+            <span>غير متصل بالإنترنت</span>
+        </div>
+        
+        <div class="loading" id="loading">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="retryConnection()">
                 <i class="fas fa-redo"></i>
                 إعادة المحاولة
             </button>
-            
-            <button class="btn-secondary" onclick="window.location.href='/'">
+            <button class="btn btn-secondary" onclick="goToHome()">
                 <i class="fas fa-home"></i>
-                الصفحة الرئيسية
+                العودة للرئيسية
             </button>
         </div>
-        
-        <div class="features">
-            <div class="feature">
-                <i class="fas fa-shopping-cart"></i>
-                <div>عرض العربة</div>
-            </div>
-            
-            <div class="feature">
-                <i class="fas fa-heart"></i>
-                <div>المفضلة</div>
-            </div>
-            
-            <div class="feature">
-                <i class="fas fa-box"></i>
-                <div>المنتجات المخزنة</div>
-            </div>
-            
-            <div class="feature">
-                <i class="fas fa-history"></i>
-                <div>الطلبات السابقة</div>
-            </div>
-        </div>
     </div>
-    
+
     <script>
-        // محاولة إعادة الاتصال تلقائياً
-        setInterval(() => {
-            if (navigator.onLine) {
-                window.location.reload();
-            }
-        }, 5000);
+        function retryConnection() {
+            const loading = document.getElementById('loading');
+            const status = document.getElementById('status');
+            
+            loading.classList.add('active');
+            
+            setTimeout(() => {
+                if (navigator.onLine) {
+                    status.innerHTML = '<i class="fas fa-circle" style="color: #2ecc71;"></i><span>تم استعادة الاتصال</span>';
+                    status.className = 'status online';
+                    
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                } else {
+                    loading.classList.remove('active');
+                    status.innerHTML = '<i class="fas fa-circle" style="color: #e74c3c;"></i><span>لا يزال غير متصل</span>';
+                    status.className = 'status offline';
+                }
+            }, 2000);
+        }
         
-        // استماع لتغييرات حالة الاتصال
+        function goToHome() {
+            window.location.href = '/';
+        }
+        
+        // مراقبة حالة الاتصال
         window.addEventListener('online', () => {
-            window.location.reload();
+            document.getElementById('status').innerHTML = '<i class="fas fa-circle" style="color: #2ecc71;"></i><span>متصل بالإنترنت</span>';
+            document.getElementById('status').className = 'status online';
         });
+        
+        window.addEventListener('offline', () => {
+            document.getElementById('status').innerHTML = '<i class="fas fa-circle" style="color: #e74c3c;"></i><span>غير متصل بالإنترنت</span>';
+            document.getElementById('status').className = 'status offline';
+        });
+        
+        // تحديث حالة الاتصال عند التحميل
+        if (navigator.onLine) {
+            document.getElementById('status').innerHTML = '<i class="fas fa-circle" style="color: #2ecc71;"></i><span>متصل بالإنترنت</span>';
+            document.getElementById('status').className = 'status online';
+        }
     </script>
 </body>
 </html>
