@@ -446,8 +446,7 @@
             try {
                 const response = await fetch('/?test=connection', {
                     method: 'HEAD',
-                    cache: 'no-cache',
-                    timeout: 5000
+                    cache: 'no-cache'
                 });
                 
                 if (response.ok) {
@@ -505,7 +504,7 @@
                 
                 // تحديث عدد المنتجات المتاحة
                 if ('caches' in window) {
-                    const cache = await caches.open('static-v2026.4.1');
+                    const cache = await caches.open('assets-v2026.4.1');
                     const keys = await cache.keys();
                     
                     const productCount = keys.filter(key => 
