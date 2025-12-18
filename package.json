@@ -1,32 +1,46 @@
 {
-  "name": "supermarket-alostaz",
+  "name": "supermarket-alostaz-pwa",
   "version": "2026.3.0",
-  "description": "تطبيق سوبر ماركت الأستاذ - PWA متكامل للتسوق الإلكتروني",
+  "description": "سوبر ماركت الأستاذ - تطبيق PWA متكامل للتسوق الإلكتروني",
   "main": "index.html",
   "scripts": {
-    "start": "serve .",
-    "build": "echo 'PWA Build Complete'",
-    "test": "echo 'No tests specified'",
-    "deploy": "firebase deploy"
+    "start": "http-server -c-1 -p 8080",
+    "build": "echo 'Building PWA...'",
+    "test": "echo 'No tests specified' && exit 0",
+    "deploy": "firebase deploy --only hosting",
+    "deploy:rules": "firebase deploy --only firestore:rules",
+    "dev": "live-server --port=8080 --host=localhost"
   },
   "keywords": [
     "pwa",
     "supermarket",
     "ecommerce",
     "shopping",
-    "firebase"
+    "firebase",
+    "progressive-web-app",
+    "egypt",
+    "arabic"
   ],
   "author": "سوبر ماركت الأستاذ",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "serve": "^14.0.0"
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
   },
   "engines": {
     "node": ">=14.0.0"
   },
+  "browserslist": [
+    "last 2 versions",
+    "not dead",
+    "not IE 11",
+    "not op_mini all"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Abdallaheslam/ostaz.ai7.git"
-  }
+  },
+  "homepage": "https://supermarket-alostaz.web.app",
+  "private": true
 }
