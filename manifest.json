@@ -2,113 +2,119 @@
   "name": "سوبر ماركت الأستاذ",
   "short_name": "الأستاذ ماركت",
   "description": "تطبيق سوبر ماركت متكامل مع خدمة التوصيل السريع",
-  "start_url": "/",
+  "start_url": "/ostaz.ai7/",
+  "scope": "/ostaz.ai7/",
   "display": "standalone",
-  "orientation": "portrait",
-  "scope": "/",
-  "background_color": "#ffffff",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#FFFFFF",
   "theme_color": "#6B5BFF",
+  "categories": ["shopping", "food", "business"],
+  "dir": "rtl",
+  "lang": "ar",
+  "prefer_related_applications": false,
+  
   "icons": [
     {
-      "src": "./icons/icon-72x72.png",
+      "src": "/ostaz.ai7/icons/icon-72x72.png",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "./icons/icon-96x96.png",
+      "src": "/ostaz.ai7/icons/icon-96x96.png",
       "sizes": "96x96",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./icons/icon-128x128.png",
+      "src": "/ostaz.ai7/icons/icon-128x128.png",
       "sizes": "128x128",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./icons/icon-144x144.png",
+      "src": "/ostaz.ai7/icons/icon-144x144.png",
       "sizes": "144x144",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./icons/icon-152x152.png",
+      "src": "/ostaz.ai7/icons/icon-152x152.png",
       "sizes": "152x152",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./icons/icon-192x192.png",
+      "src": "/ostaz.ai7/icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./icons/icon-384x384.png",
+      "src": "/ostaz.ai7/icons/icon-384x384.png",
       "sizes": "384x384",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./icons/icon-512x512.png",
+      "src": "/ostaz.ai7/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
+  
   "screenshots": [
     {
-      "src": "./screenshots/screenshot1.png",
-      "sizes": "720x1280",
-      "type": "image/png",
-      "form_factor": "narrow"
-    },
-    {
-      "src": "./screenshots/screenshot2.png",
+      "src": "/ostaz.ai7/screenshots/screenshot1.png",
       "sizes": "1080x1920",
       "type": "image/png",
-      "form_factor": "narrow"
+      "form_factor": "narrow",
+      "label": "الصفحة الرئيسية"
+    },
+    {
+      "src": "/ostaz.ai7/screenshots/screenshot2.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "قائمة المنتجات"
     }
   ],
+  
   "shortcuts": [
     {
       "name": "تصفح العروض",
       "short_name": "العروض",
-      "description": "تصفح جميع العروض المتاحة",
-      "url": "/?tab=offers",
+      "description": "عرض جميع العروض الحصرية",
+      "url": "/ostaz.ai7/#offers",
       "icons": [
         {
-          "src": "./icons/offers-icon-96x96.png",
-          "sizes": "96x96",
-          "type": "image/png"
+          "src": "/ostaz.ai7/icons/offers-icon.png",
+          "sizes": "96x96"
         }
       ]
     },
     {
       "name": "عربة التسوق",
       "short_name": "العربة",
-      "description": "عرض عربة التسوق وإتمام الطلب",
-      "url": "/?tab=cart",
+      "description": "عرض عربة التسوق الخاصة بك",
+      "url": "/ostaz.ai7/#cart",
       "icons": [
         {
-          "src": "./icons/cart-icon-96x96.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "اتصل بنا",
-      "short_name": "الاتصال",
-      "description": "اتصل أو راسلنا عبر واتساب",
-      "url": "/?tab=contact",
-      "icons": [
-        {
-          "src": "./icons/contact-icon-96x96.png",
-          "sizes": "96x96",
-          "type": "image/png"
+          "src": "/ostaz.ai7/icons/cart-icon.png",
+          "sizes": "96x96"
         }
       ]
     }
   ],
-  "categories": ["shopping", "food", "lifestyle"],
-  "lang": "ar",
-  "dir": "rtl",
-  "prefer_related_applications": false
+  
+  "related_applications": [],
+  
+  "protocol_handlers": [
+    {
+      "protocol": "web+ostazmarket",
+      "url": "/ostaz.ai7/?product=%s"
+    }
+  ]
 }
