@@ -1,237 +1,170 @@
-// ==================================================
+// ============================================
 // Service Worker - سوبر ماركت الأستاذ
-// إصدار 2026.3 - مع تقنية Caching متقدمة
-// ==================================================
+// إصدار: 2026.3
+// ============================================
 
-const CACHE_NAME = 'supermarket-cache-v2026.3';
-const OFFLINE_URL = '/offline.html';
+const CACHE_NAME = 'ostaz-market-v2026.3';
+const OFFLINE_URL = '/ostaz.ai7/offline.html';
 
-// الموارد التي سيتم تخزينها في cache عند التثبيت
+// الملفات التي سيتم تخزينها في الكاش عند التثبيت
 const PRECACHE_ASSETS = [
-  '/',
-  '/index.html',
-  '/offline.html',
-  './icons/icon-72x72.png',
-  './icons/icon-192x192.png',
-  './icons/icon-512x512.png',
+  '/ostaz.ai7/',
+  '/ostaz.ai7/index.html',
+  '/ostaz.ai7/offline.html',
+  '/ostaz.ai7/manifest.json',
+  '/ostaz.ai7/icons/icon-72x72.png',
+  '/ostaz.ai7/icons/icon-96x96.png',
+  '/ostaz.ai7/icons/icon-128x128.png',
+  '/ostaz.ai7/icons/icon-144x144.png',
+  '/ostaz.ai7/icons/icon-152x152.png',
+  '/ostaz.ai7/icons/icon-192x192.png',
+  '/ostaz.ai7/icons/icon-384x384.png',
+  '/ostaz.ai7/icons/icon-512x512.png',
   'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
   'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
 ];
 
-// ==================================================
-// مرحلة التثبيت - تخزين الموارد الأساسية
-// ==================================================
-self.addEventListener('install', (event) => {
-  console.log('[Service Worker] التثبيت يبدأ...');
+// ====== تثبيت Service Worker ======
+self.addEventListener('install', event => {
+  console.log('📦 Service Worker: Installing...');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('[Service Worker] جاري تخزين الملفات الأساسية...');
+      .then(cache => {
+        console.log('📦 Service Worker: Caching app shell');
         return cache.addAll(PRECACHE_ASSETS);
       })
       .then(() => {
-        console.log('[Service Worker] التثبيت مكتمل!');
+        console.log('✅ Service Worker: Installation complete');
         return self.skipWaiting();
       })
-      .catch((error) => {
-        console.error('[Service Worker] خطأ في التثبيت:', error);
+      .catch(error => {
+        console.error('❌ Service Worker: Installation failed:', error);
       })
   );
 });
 
-// ==================================================
-// مرحلة التنشيط - تنظيف الذاكرة القديمة
-// ==================================================
-self.addEventListener('activate', (event) => {
-  console.log('[Service Worker] التنشيط يبدأ...');
+// ====== تفعيل Service Worker ======
+self.addEventListener('activate', event => {
+  console.log('🔄 Service Worker: Activating...');
   
-  const cacheWhitelist = [CACHE_NAME];
-  
+  // حذف الكاش القديم
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
+    caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log('[Service Worker] جاري حذف الكاش القديم:', cacheName);
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('🗑️ Service Worker: Deleting old cache', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
-    })
-    .then(() => {
-      console.log('[Service Worker] جميع الكاشات القديمة تم حذفها!');
+    }).then(() => {
+      console.log('✅ Service Worker: Activation complete');
       return self.clients.claim();
     })
   );
 });
 
-// ==================================================
-// استراتيجية التخزين الذكية
-// ==================================================
-self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-  
-  // تجاهل الطلبات غير GET
-  if (event.request.method !== 'GET') {
+// ====== استقبال الطلبات ======
+self.addEventListener('fetch', event => {
+  // تجاهل طلبات POST وطلبات Firebase
+  if (event.request.method !== 'GET' || 
+      event.request.url.includes('firestore.googleapis.com') ||
+      event.request.url.includes('firebasestorage.googleapis.com') ||
+      event.request.url.includes('firebaseapp.com')) {
     return;
   }
   
-  // تجاهل الطلبات من Firebase وغيرها من الـ APIs
-  if (url.hostname.includes('firebase') || 
-      url.hostname.includes('googleapis') || 
-      url.hostname.includes('gstatic')) {
-    return fetch(event.request);
-  }
-  
-  // استراتيجية Cache First مع تحديث في الخلفية
+  // استراتيجية Network First مع fallback للكاش
   event.respondWith(
-    caches.match(event.request)
-      .then((cachedResponse) => {
-        // إرجاع النسخة المخزنة إن وجدت
-        if (cachedResponse) {
-          // تحديث الكاش في الخلفية
-          fetchAndCache(event.request);
-          return cachedResponse;
-        }
-        
-        // إذا لم تكن مخزنة، جلب من الشبكة ثم تخزين
-        return fetchAndCache(event.request);
+    fetch(event.request)
+      .then(response => {
+        // تخزين الاستجابة في الكاش
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME)
+          .then(cache => {
+            cache.put(event.request, responseClone);
+          });
+        return response;
       })
       .catch(() => {
-        // إذا فشل الاتصال، عرض صفحة Offline
-        if (event.request.mode === 'navigate') {
-          return caches.match(OFFLINE_URL);
-        }
-        
-        // للطلبات الأخرى، إرجاع رد افتراضي
-        return new Response('لا يوجد اتصال بالإنترنت', {
-          status: 408,
-          headers: { 'Content-Type': 'text/plain' }
-        });
+        // إذا فشل الاتصال، استخدم الكاش
+        return caches.match(event.request)
+          .then(cachedResponse => {
+            if (cachedResponse) {
+              return cachedResponse;
+            }
+            
+            // إذا لم تكن الصفحة الرئيسية، ارجع لصفحة غير متصل
+            if (event.request.mode === 'navigate') {
+              return caches.match(OFFLINE_URL);
+            }
+            
+            // محاولة جلب من الكاش العام
+            return caches.match(event.request.url);
+          });
       })
   );
 });
 
-// ==================================================
-// دالة مساعدة لجلب وتخزين الطلبات
-// ==================================================
-function fetchAndCache(request) {
-  return fetch(request)
-    .then((response) => {
-      // التحقق من أن الرد صالح للتخزين
-      if (!response || response.status !== 200 || response.type !== 'basic') {
-        return response;
-      }
-      
-      // استنساخ الرد للتخزين
-      const responseToCache = response.clone();
-      
-      // فتح الكاش وتخزين الرد
-      caches.open(CACHE_NAME)
-        .then((cache) => {
-          cache.put(request, responseToCache);
-        });
-      
-      return response;
-    })
-    .catch((error) => {
-      console.error('[Service Worker] خطأ في الجلب:', error);
-      throw error;
-    });
-}
-
-// ==================================================
-// الرسائل من الصفحة الرئيسية
-// ==================================================
-self.addEventListener('message', (event) => {
+// ====== استقبال الرسائل من الصفحة ======
+self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
-  
-  if (event.data && event.data.type === 'UPDATE_CACHE') {
-    updateCache();
-  }
 });
 
-// ==================================================
-// تحديث الكاش يدويًا
-// ==================================================
-function updateCache() {
-  caches.open(CACHE_NAME)
-    .then((cache) => {
-      return cache.addAll(PRECACHE_ASSETS);
-    })
-    .then(() => {
-      console.log('[Service Worker] تم تحديث الكاش بنجاح!');
-    })
-    .catch((error) => {
-      console.error('[Service Worker] خطأ في تحديث الكاش:', error);
-    });
-}
-
-// ==================================================
-// Background Sync (لمزامنة الطلبات عند اتصال الإنترنت)
-// ==================================================
-self.addEventListener('sync', (event) => {
+// ====== تحديث الكاش في الخلفية ======
+self.addEventListener('sync', event => {
   if (event.tag === 'sync-orders') {
+    console.log('🔄 Service Worker: Background sync for orders');
     event.waitUntil(syncOrders());
   }
-  
-  if (event.tag === 'sync-cart') {
-    event.waitUntil(syncCart());
-  }
 });
 
-async function syncOrders() {
-  // هنا يمكنك إضافة منطق مزامنة الطلبات
-  console.log('[Service Worker] جاري مزامنة الطلبات...');
+// دالة لمزامنة الطلبات
+function syncOrders() {
+  return new Promise((resolve, reject) => {
+    // هنا يمكنك إضافة كود مزامنة الطلبات مع السيرفر
+    console.log('🔄 Syncing orders...');
+    resolve();
+  });
 }
 
-async function syncCart() {
-  // هنا يمكنك إضافة منطق مزامنة العربة
-  console.log('[Service Worker] جاري مزامنة العربة...');
-}
-
-// ==================================================
-// Push Notifications
-// ==================================================
-self.addEventListener('push', (event) => {
-  if (!event.data) return;
-  
-  const data = event.data.json();
+// ====== دفع الإشعارات ======
+self.addEventListener('push', event => {
   const options = {
-    body: data.body || 'إشعار جديد من سوبر ماركت الأستاذ',
-    icon: './icons/icon-192x192.png',
-    badge: './icons/icon-72x72.png',
-    vibrate: [100, 50, 100],
+    body: event.data ? event.data.text() : 'رسالة جديدة من سوبر ماركت الأستاذ',
+    icon: '/ostaz.ai7/icons/icon-192x192.png',
+    badge: '/ostaz.ai7/icons/icon-72x72.png',
+    vibrate: [200, 100, 200],
     data: {
-      url: data.url || '/'
-    },
-    actions: [
-      {
-        action: 'open',
-        title: 'فتح التطبيق'
-      },
-      {
-        action: 'close',
-        title: 'إغلاق'
-      }
-    ]
+      url: '/ostaz.ai7/'
+    }
   };
   
   event.waitUntil(
-    self.registration.showNotification(data.title || 'سوبر ماركت الأستاذ', options)
+    self.registration.showNotification('سوبر ماركت الأستاذ', options)
   );
 });
 
-self.addEventListener('notificationclick', (event) => {
+// ====== النقر على الإشعار ======
+self.addEventListener('notificationclick', event => {
   event.notification.close();
   
-  if (event.action === 'open') {
-    event.waitUntil(
-      clients.openWindow(event.notification.data.url)
-    );
-  }
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true })
+      .then(clientList => {
+        for (const client of clientList) {
+          if (client.url === '/' && 'focus' in client) {
+            return client.focus();
+          }
+        }
+        if (clients.openWindow) {
+          return clients.openWindow('/ostaz.ai7/');
+        }
+      })
+  );
 });
