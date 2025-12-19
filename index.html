@@ -1,53 +1,45 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#6B5BFF">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="سوبر ماركت الأستاذ">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="سوبر ماركت الأستاذ">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="HandheldFriendly" content="true">
+  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="theme-color" content="#6B5BFF" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="سوبر ماركت الأستاذ" />
   
   <!-- Meta Tags for SEO -->
-  <meta name="description" content="سوبر ماركت أونلاين - تسوق بسهولة مع توصيل سريع لجميع أنحاء المدينة">
-  <meta name="keywords" content="سوبر ماركت, تسوق, أونلاين, توصيل, بنها, القليوبية">
-  <meta property="og:title" content="سوبر ماركت الأستاذ">
-  <meta property="og:description" content="أفضل سوبر ماركت أونلاين مع توصيل سريع">
-  <meta property="og:image" content="./icons/icon-512x512.png">
-  <meta property="og:type" content="website">
+  <meta name="description" content="سوبر ماركت أونلاين - تسوق بسهولة مع توصيل سريع لجميع أنحاء المدينة" />
+  <meta name="keywords" content="سوبر ماركت, تسوق, أونلاين, توصيل, بنها, القليوبية" />
+  <meta property="og:title" content="سوبر ماركت الأستاذ" />
+  <meta property="og:description" content="أفضل سوبر ماركت أونلاين مع توصيل سريع" />
+  <meta property="og:image" content="./icons/icon-512x512.png" />
+  <meta property="og:type" content="website" />
   
   <!-- iOS Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="سوبر ماركت" />
   <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
-  <link rel="apple-touch-startup-image" href="./icons/apple-splash.png">
   
   <!-- Windows Meta Tags -->
-  <meta name="msapplication-TileColor" content="#6B5BFF">
-  <meta name="msapplication-TileImage" content="./icons/icon-144x144.png">
-  <meta name="msapplication-config" content="none">
+  <meta name="msapplication-TileColor" content="#6B5BFF" />
+  <meta name="msapplication-TileImage" content="./icons/icon-144x144.png" />
   
   <title>سوبر ماركت الأستاذ | الرئيسية</title>
   
   <!-- PWA Manifest -->
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./icons/icon-192x192.png" type="image/png">
-  <link rel="shortcut icon" href="./icons/favicon.ico">
   
   <!-- Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" as="style">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" media="print" onload="this.media='all'">
-  <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap">
-  </noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <!-- Animate.css for animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
   <!-- Structured Data for SEO -->
   <script type="application/ld+json">
@@ -65,9 +57,7 @@
       "addressRegion": "القليوبية",
       "addressCountry": "EG"
     },
-    "openingHours": "Mo-Su 08:00-24:00",
-    "priceRange": "$$",
-    "image": "./icons/icon-512x512.png"
+    "openingHours": "Mo-Su 08:00-24:00"
   }
   </script>
 
@@ -80,8 +70,6 @@
       box-sizing: border-box;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
     
     :root {
@@ -112,42 +100,22 @@
       --transition-slow: 0.5s ease;
       --navbar-height: 60px;
       --bottom-nav-height: 70px;
-      --safe-area-top: env(safe-area-inset-top, 0px);
-      --safe-area-bottom: env(safe-area-inset-bottom, 0px);
-      --safe-area-left: env(safe-area-inset-left, 0px);
-      --safe-area-right: env(safe-area-inset-right, 0px);
     }
     
     html {
       scroll-behavior: smooth;
       font-size: 16px;
-      height: 100%;
-      -webkit-text-size-adjust: 100%;
-      -webkit-touch-callout: none;
-      overscroll-behavior: none;
     }
     
     body {
-      font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      font-family: 'Cairo', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-primary);
       line-height: 1.6;
       direction: rtl;
       overflow-x: hidden;
-      min-height: 100vh;
-      position: relative;
-      padding-top: var(--navbar-height);
       padding-bottom: var(--bottom-nav-height);
-      -webkit-user-select: none;
-      user-select: none;
-    }
-    
-    /* تحسينات للـ PWA عند التثبيت */
-    @media (display-mode: standalone) {
-      body {
-        padding-top: calc(var(--navbar-height) + var(--safe-area-top));
-        padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom));
-      }
+      min-height: 100vh;
     }
     
     /* ====== TYPOGRAPHY ====== */
@@ -155,7 +123,6 @@
       font-weight: 700;
       line-height: 1.3;
       color: var(--text-primary);
-      margin-bottom: 1rem;
     }
     
     h1 { font-size: 2rem; }
@@ -198,14 +165,6 @@
       min-width: 44px;
       position: relative;
       overflow: hidden;
-      -webkit-appearance: none;
-      appearance: none;
-      outline: none;
-    }
-    
-    .btn:focus-visible {
-      outline: 2px solid var(--primary-color);
-      outline-offset: 2px;
     }
     
     .btn::after {
@@ -233,7 +192,7 @@
       box-shadow: var(--shadow-sm);
     }
     
-    .btn-orange:hover, .btn-orange:active {
+    .btn-orange:hover {
       background: linear-gradient(135deg, #FF7F00, #FF9500);
       transform: translateY(-2px);
       box-shadow: var(--shadow-md);
@@ -245,7 +204,7 @@
       box-shadow: var(--shadow-sm);
     }
     
-    .btn-primary:hover, .btn-primary:active {
+    .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-md);
       background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
@@ -257,24 +216,22 @@
       box-shadow: var(--shadow-sm);
     }
     
-    .btn-secondary:hover, .btn-secondary:active {
+    .btn-secondary:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-md);
       background: linear-gradient(135deg, #FF6B00, var(--browse-orange));
     }
-    
-    .btn-coupon {
-      background: linear-gradient(135deg, var(--coupon-purple), var(--primary-light));
-      color: white;
-      box-shadow: var(--shadow-sm);
-    }
+   .btn-coupon {
+  background: linear-gradient(135deg, var(--coupon-purple), var(--primary-light));
+  color: white;
+}
     
     .btn-search {
       background: var(--search-orange);
       color: white;
     }
     
-    .btn-search:hover, .btn-search:active {
+    .btn-search:hover {
       background: #FF8C00;
       transform: translateY(-2px);
       box-shadow: var(--shadow-md);
@@ -301,7 +258,7 @@
       border: 2px solid var(--primary-color);
     }
     
-    .btn-outline:hover, .btn-outline:active {
+    .btn-outline:hover {
       background: var(--primary-color);
       color: white;
     }
@@ -309,15 +266,11 @@
     .btn-sm {
       padding: 8px 16px;
       font-size: 0.875rem;
-      min-height: 36px;
-      min-width: 36px;
     }
     
     .btn-lg {
       padding: 16px 32px;
       font-size: 1.125rem;
-      min-height: 48px;
-      min-width: 48px;
     }
     
     .btn-block {
@@ -327,25 +280,17 @@
     .btn-loading {
       position: relative;
       color: transparent !important;
-      pointer-events: none;
     }
     
     .btn-loading::before {
       content: '';
       position: absolute;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
       border-top-color: white;
       border-radius: 50%;
       animation: spin 1s linear infinite;
-    }
-    
-    .btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none !important;
-      box-shadow: none !important;
     }
     
     /* زر البحث للهواتف */
@@ -363,7 +308,6 @@
       font-size: 1.2rem;
       margin-right: 10px;
       flex-shrink: 0;
-      -webkit-tap-highlight-color: transparent;
     }
     
     .mobile-search-container {
@@ -376,8 +320,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       z-index: 999;
       display: none;
-      padding-left: var(--safe-area-left);
-      padding-right: var(--safe-area-right);
     }
     
     /* ====== NAVBAR REDESIGN - MOBILE FIRST ====== */
@@ -395,14 +337,10 @@
       align-items: center;
       padding: 0 15px;
       transition: all var(--transition-normal);
-      padding-left: calc(15px + var(--safe-area-left));
-      padding-right: calc(15px + var(--safe-area-right));
-      padding-top: var(--safe-area-top);
-      height: calc(var(--navbar-height) + var(--safe-area-top));
     }
     
     .navbar.scrolled {
-      height: calc(56px + var(--safe-area-top));
+      height: 56px;
       box-shadow: 0 2px 10px rgba(107, 91, 255, 0.1);
     }
     
@@ -425,7 +363,6 @@
       flex-shrink: 0;
       min-width: 0;
       overflow: hidden;
-      -webkit-tap-highlight-color: transparent;
     }
     
     .logo-icon {
@@ -491,7 +428,6 @@
       cursor: pointer;
       position: relative;
       flex-shrink: 0;
-      -webkit-tap-highlight-color: transparent;
     }
     
     .user-info {
@@ -505,7 +441,6 @@
       object-fit: cover;
       border: 2px solid rgba(255, 255, 255, 0.3);
       transition: all var(--transition-normal);
-      background-color: white;
     }
     
     .user-name {
@@ -535,8 +470,7 @@
       z-index: 1001;
     }
     
-    .user-profile:hover .user-dropdown,
-    .user-profile:focus-within .user-dropdown {
+    .user-profile:hover .user-dropdown {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
@@ -549,27 +483,18 @@
       padding: 12px 20px;
       color: var(--text-primary);
       transition: all var(--transition-fast);
-      cursor: pointer;
-      border: none;
-      background: none;
-      width: 100%;
-      text-align: right;
-      font-family: 'Cairo', sans-serif;
-      font-size: 0.95rem;
     }
     
-    .dropdown-item:hover, .dropdown-item:focus {
+    .dropdown-item:hover {
       background: rgba(107, 91, 255, 0.05);
       color: var(--primary-color);
       padding-right: 25px;
-      outline: none;
     }
     
     .dropdown-item i {
       width: 20px;
       text-align: center;
       color: var(--text-light);
-      font-size: 1rem;
     }
     
     .dropdown-divider {
@@ -603,16 +528,10 @@
       font-size: 0.95rem;
       color: var(--text-primary);
       min-width: 0;
-      background: transparent;
-      outline: none;
     }
     
     .search-input:focus {
       outline: none;
-    }
-    
-    .search-input::placeholder {
-      color: var(--text-light);
     }
     
     .search-button {
@@ -629,9 +548,8 @@
       font-size: 1rem;
     }
     
-    .search-button:hover, .search-button:focus {
+    .search-button:hover {
       background: #FF8C00;
-      outline: none;
     }
     
     /* ====== BOTTOM NAVIGATION ====== */
@@ -647,10 +565,8 @@
       justify-content: space-around;
       align-items: center;
       z-index: 999;
-      padding-bottom: var(--safe-area-bottom);
+      padding-bottom: env(safe-area-inset-bottom);
       box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-      padding-left: var(--safe-area-left);
-      padding-right: var(--safe-area-right);
     }
     
     .nav-item {
@@ -665,11 +581,6 @@
       position: relative;
       flex: 1;
       max-width: 80px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      font-family: 'Cairo', sans-serif;
-      -webkit-tap-highlight-color: transparent;
     }
     
     .nav-item.active {
@@ -732,23 +643,14 @@
       padding: 0 4px;
       font-weight: 700;
       animation: pulse 2s infinite;
-      transform: translateX(-50%);
     }
     
     /* ====== MAIN CONTENT ====== */
     .main-content {
-      padding: 20px 20px 100px;
+      padding: calc(var(--navbar-height) + 20px) 20px 100px;
       max-width: 1200px;
       margin: 0 auto;
       width: 100%;
-      padding-left: calc(20px + var(--safe-area-left));
-      padding-right: calc(20px + var(--safe-area-right));
-    }
-    
-    @media (display-mode: standalone) {
-      .main-content {
-        padding-top: calc(20px + var(--safe-area-top));
-      }
     }
     
     .hero-section {
@@ -842,15 +744,10 @@
       align-items: center;
       gap: 6px;
       transition: all var(--transition-fast);
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-family: 'Cairo', sans-serif;
     }
     
-    .view-all:hover, .view-all:focus {
+    .view-all:hover {
       gap: 10px;
-      outline: none;
     }
     
     .categories-grid {
@@ -878,15 +775,12 @@
       overflow: hidden;
       border: 1px solid var(--border-color);
       animation: fadeIn 0.6s ease;
-      cursor: pointer;
-      display: block;
     }
     
-    .category-card:hover, .category-card:focus {
+    .category-card:hover {
       transform: translateY(-8px);
       box-shadow: var(--shadow-lg);
       border-color: var(--primary-color);
-      outline: none;
     }
     
     .category-card::before {
@@ -902,7 +796,7 @@
       transition: transform var(--transition-normal);
     }
     
-    .category-card:hover::before, .category-card:focus::before {
+    .category-card:hover::before {
       transform: scaleX(1);
     }
     
@@ -920,8 +814,7 @@
       transition: all var(--transition-normal);
     }
     
-    .category-card:hover .category-icon,
-    .category-card:focus .category-icon {
+    .category-card:hover .category-icon {
       transform: scale(1.1) rotate(5deg);
       background: var(--primary-gradient);
       color: white;
@@ -967,7 +860,7 @@
       animation: fadeInUp 0.6s ease;
     }
     
-    .product-card:hover, .product-card:focus-within {
+    .product-card:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-md);
       border-color: var(--primary-color);
@@ -1009,8 +902,7 @@
       z-index: 2;
     }
     
-    .product-card:hover .product-actions,
-    .product-card:focus-within .product-actions {
+    .product-card:hover .product-actions {
       opacity: 1;
       transform: translateX(0);
     }
@@ -1030,11 +922,10 @@
       box-shadow: var(--shadow-sm);
     }
     
-    .action-btn:hover, .action-btn:focus {
+    .action-btn:hover {
       background: var(--primary-color);
       color: white;
       transform: scale(1.1);
-      outline: none;
     }
     
     .action-btn.active {
@@ -1160,22 +1051,17 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      font-family: 'Cairo', sans-serif;
-      font-size: 0.95rem;
     }
     
-    .add-to-cart-btn:hover:not(:disabled), 
-    .add-to-cart-btn:focus:not(:disabled) {
+    .add-to-cart-btn:hover:not(:disabled) {
       background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(107, 91, 255, 0.3);
-      outline: none;
     }
     
     .add-to-cart-btn:disabled {
       background: var(--text-light);
       cursor: not-allowed;
-      opacity: 0.7;
     }
     
     /* ====== ADMIN PANEL ====== */
@@ -1237,7 +1123,7 @@
       overflow: hidden;
     }
     
-    .stat-card:hover, .stat-card:focus-within {
+    .stat-card:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-md);
       border-color: var(--primary-color);
@@ -1284,12 +1170,6 @@
       padding: 0 25px;
       border-bottom: 1px solid var(--border-color);
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    
-    .admin-tabs::-webkit-scrollbar {
-      display: none;
     }
     
     .admin-tab {
@@ -1303,8 +1183,6 @@
       transition: all var(--transition-fast);
       position: relative;
       white-space: nowrap;
-      flex-shrink: 0;
-      outline: none;
     }
     
     .admin-tab.active {
@@ -1322,10 +1200,9 @@
       border-radius: 3px 3px 0 0;
     }
     
-    .admin-tab:hover:not(.active), .admin-tab:focus:not(.active) {
+    .admin-tab:hover:not(.active) {
       color: var(--primary-dark);
       background: rgba(107, 91, 255, 0.05);
-      outline: none;
     }
     
     .admin-content {
@@ -1348,8 +1225,6 @@
       padding: 15px;
       text-align: right;
       font-weight: 600;
-      position: sticky;
-      top: 0;
     }
     
     .admin-table td {
@@ -1394,7 +1269,6 @@
       font-size: 1rem;
       transition: all var(--transition-fast);
       background: white;
-      outline: none;
     }
     
     .form-control:focus {
@@ -1422,10 +1296,6 @@
       padding: 20px;
       animation: fadeIn 0.3s ease;
       backdrop-filter: blur(5px);
-      padding-left: var(--safe-area-left);
-      padding-right: var(--safe-area-right);
-      padding-top: var(--safe-area-top);
-      padding-bottom: var(--safe-area-bottom);
     }
     
     .modal {
@@ -1438,22 +1308,16 @@
       animation: slideInUp 0.4s ease;
       box-shadow: var(--shadow-lg);
       position: relative;
-      -webkit-overflow-scrolling: touch;
     }
     
     .modal-header {
       padding: 25px 25px 15px;
       border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      background: white;
-      z-index: 1;
     }
     
     .modal-title {
       font-size: 1.5rem;
       color: var(--text-primary);
-      margin: 0;
     }
     
     .modal-close {
@@ -1471,21 +1335,16 @@
       cursor: pointer;
       transition: all var(--transition-fast);
       color: var(--text-secondary);
-      z-index: 2;
-      outline: none;
     }
     
-    .modal-close:hover, .modal-close:focus {
+    .modal-close:hover {
       background: var(--cart-red);
       color: white;
       transform: rotate(90deg);
-      outline: none;
     }
     
     .modal-body {
       padding: 25px;
-      overflow-y: auto;
-      max-height: calc(90vh - 130px);
     }
     
     .modal-footer {
@@ -1494,10 +1353,6 @@
       display: flex;
       gap: 15px;
       justify-content: flex-end;
-      position: sticky;
-      bottom: 0;
-      background: white;
-      z-index: 1;
     }
     
     /* ====== CART ====== */
@@ -1507,7 +1362,6 @@
       padding: 20px;
       border-bottom: 1px solid var(--border-color);
       animation: fadeIn 0.4s ease;
-      align-items: center;
     }
     
     .cart-item:last-child {
@@ -1521,12 +1375,10 @@
       border-radius: var(--border-radius-sm);
       background: rgba(107, 91, 255, 0.05);
       padding: 10px;
-      flex-shrink: 0;
     }
     
     .cart-item-content {
       flex: 1;
-      min-width: 0;
     }
     
     .cart-item-name {
@@ -1545,7 +1397,6 @@
       display: flex;
       align-items: center;
       gap: 15px;
-      flex-shrink: 0;
     }
     
     .quantity-control {
@@ -1570,14 +1421,12 @@
       justify-content: center;
       transition: all var(--transition-fast);
       box-shadow: var(--shadow-sm);
-      outline: none;
     }
     
-    .quantity-btn:hover, .quantity-btn:focus {
+    .quantity-btn:hover {
       background: var(--primary-color);
       color: white;
       transform: scale(1.1);
-      outline: none;
     }
     
     .quantity-value {
@@ -1768,7 +1617,6 @@
       justify-content: center;
       align-items: center;
       min-height: 200px;
-      width: 100%;
     }
     
     .spinner {
@@ -1865,29 +1713,6 @@
       .modal {
         margin: 10px;
       }
-      
-      .modal-header,
-      .modal-body,
-      .modal-footer {
-        padding: 20px 15px;
-      }
-      
-      .modal-title {
-        font-size: 1.3rem;
-      }
-      
-      .admin-content {
-        padding: 15px;
-      }
-      
-      .admin-tabs {
-        padding: 0 15px;
-      }
-      
-      .admin-tab {
-        padding: 12px 15px;
-        font-size: 0.9rem;
-      }
     }
     
     @media (max-width: 480px) {
@@ -1901,6 +1726,15 @@
       
       .admin-stats {
         grid-template-columns: 1fr;
+      }
+      
+      .admin-tabs {
+        padding: 0 15px;
+      }
+      
+      .admin-tab {
+        padding: 12px 15px;
+        font-size: 0.9rem;
       }
       
       .hero-actions {
@@ -1936,21 +1770,6 @@
         height: 30px;
         font-size: 0.9rem;
       }
-      
-      .cart-item {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-      }
-      
-      .cart-item-content {
-        width: 100%;
-      }
-      
-      .cart-item-actions {
-        justify-content: center;
-        width: 100%;
-      }
     }
     
     @media (max-width: 360px) {
@@ -1967,11 +1786,6 @@
         width: 34px;
         height: 34px;
         padding: 6px;
-      }
-      
-      .categories-grid,
-      .products-grid {
-        grid-template-columns: 1fr;
       }
     }
     
@@ -1993,6 +1807,23 @@
     
     ::-webkit-scrollbar-thumb:hover {
       background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    }
+    
+    /* ====== PWA SPECIFIC STYLES ====== */
+    @media (display-mode: standalone) {
+      body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      }
+      
+      .navbar {
+        padding-top: env(safe-area-inset-top);
+        height: calc(var(--navbar-height) + env(safe-area-inset-top));
+      }
+      
+      .main-content {
+        padding-top: calc(var(--navbar-height) + env(safe-area-inset-top) + 20px);
+      }
     }
     
     /* تحسين أزرار الموبايل للـ Touch */
@@ -2020,92 +1851,6 @@
         width: 36px;
         height: 36px;
       }
-      
-      .dropdown-item {
-        padding: 15px 20px;
-      }
-      
-      .nav-item {
-        padding: 10px 5px;
-      }
-      
-      .nav-icon {
-        width: 40px;
-        height: 40px;
-      }
-      
-      .nav-label {
-        font-size: 0.7rem;
-      }
-      
-      .category-card {
-        padding: 15px;
-      }
-      
-      .category-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-      }
-    }
-    
-    /* تحسين أداء الصور */
-    img {
-      max-width: 100%;
-      height: auto;
-      vertical-align: middle;
-      font-style: italic;
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-    
-    /* تحسينات الوصول Accessibility */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-    
-    /* تحسينات للـ PWA عند التثبيت */
-    @media (display-mode: standalone) {
-      body::after {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: var(--safe-area-top);
-        background: var(--primary-gradient);
-        z-index: 9999;
-      }
-    }
-    
-    /* تحسينات للشحنات */
-    input, textarea, select, button {
-      font-size: 16px !important;
-    }
-    
-    @media screen and (max-width: 768px) {
-      input, textarea, select, button {
-        font-size: 16px !important;
-      }
-    }
-    
-    /* تحسينات للـ 3D Touch */
-    @media (hover: none) and (pointer: coarse) {
-      .btn:active,
-      .action-btn:active,
-      .nav-item:active,
-      .category-card:active {
-        transform: scale(0.95);
-        transition: transform 0.1s ease;
-      }
     }
   </style>
   
@@ -2116,7 +1861,7 @@
   <nav class="navbar" id="navbar">
     <div class="navbar-container">
       <!-- Logo -->
-      <div class="logo" onclick="goHome()" role="button" tabindex="0" aria-label="الرئيسية - سوبر ماركت الأستاذ">
+      <div class="logo" onclick="goHome()">
         <div class="logo-icon">
           <i class="fas fa-store"></i>
         </div>
@@ -2127,15 +1872,15 @@
       </div>
       
       <!-- زر البحث للهواتف -->
-      <button class="mobile-search-btn" onclick="toggleMobileSearch()" aria-label="بحث">
+      <button class="mobile-search-btn" onclick="toggleMobileSearch()">
         <i class="fas fa-search"></i>
       </button>
       
       <!-- Search Bar -->
       <div class="search-container">
         <div class="search-box">
-          <input type="search" class="search-input" placeholder="ابحث عن منتج..." aria-label="بحث عن منتج">
-          <button class="search-button" onclick="searchProducts()" aria-label="تنفيذ البحث">
+          <input type="text" class="search-input" placeholder="ابحث عن منتج...">
+          <button class="search-button">
             <i class="fas fa-search"></i>
           </button>
         </div>
@@ -2143,18 +1888,18 @@
       
       <!-- Auth Buttons (Visible when not logged in) -->
       <div class="auth-buttons" id="authButtons">
-        <button class="btn btn-primary btn-sm" onclick="openLoginModal()" aria-label="تسجيل الدخول">
+        <button class="btn btn-primary btn-sm" onclick="openLoginModal()">
           <i class="fas fa-sign-in-alt"></i>
           <span class="auth-btn-text">تسجيل الدخول</span>
         </button>
-        <button class="btn btn-orange btn-sm" onclick="openRegisterModal()" aria-label="إنشاء حساب">
+        <button class="btn btn-orange btn-sm" onclick="openRegisterModal()">
           <i class="fas fa-user-plus"></i>
           <span class="auth-btn-text">إنشاء حساب</span>
         </button>
       </div>
       
       <!-- User Profile (Visible when logged in) -->
-      <div class="user-profile" id="userProfile" style="display: none;" tabindex="0" aria-label="ملف المستخدم">
+      <div class="user-profile" id="userProfile" style="display: none;">
         <div class="user-info">
           <div class="user-name" id="userName">مستخدم</div>
         </div>
@@ -2163,34 +1908,34 @@
              class="user-avatar"
              id="userAvatar">
         <div class="user-dropdown">
-          <button class="dropdown-item" onclick="openProfile()">
+          <a href="#" class="dropdown-item" onclick="openProfile()">
             <i class="fas fa-user"></i>
             <span>حسابي</span>
-          </button>
-          <button class="dropdown-item" onclick="openOrders()">
+          </a>
+          <a href="#" class="dropdown-item" onclick="openOrders()">
             <i class="fas fa-shopping-bag"></i>
             <span>طلباتي</span>
-          </button>
-          <button class="dropdown-item" onclick="openWishlist()">
+          </a>
+          <a href="#" class="dropdown-item" onclick="openWishlist()">
             <i class="fas fa-heart"></i>
             <span>المفضلة</span>
             <span class="nav-badge" id="favoritesBadge" style="position: static; margin-right: auto; display: none;">0</span>
-          </button>
+          </a>
           <div class="dropdown-divider"></div>
-          <button class="dropdown-item" onclick="openAddresses()">
+          <a href="#" class="dropdown-item" onclick="openAddresses()">
             <i class="fas fa-map-marker-alt"></i>
             <span>العناوين</span>
-          </button>
-          <button class="dropdown-item" onclick="openNotifications()">
+          </a>
+          <a href="#" class="dropdown-item" onclick="openNotifications()">
             <i class="fas fa-bell"></i>
             <span>الإشعارات</span>
             <span class="nav-badge" id="notificationBadge" style="position: static; margin-right: auto; display: none;">0</span>
-          </button>
+          </a>
           <div class="dropdown-divider"></div>
-          <button class="dropdown-item" onclick="logoutUser()" style="color: var(--cart-red);">
+          <a href="#" class="dropdown-item" onclick="logoutUser()" style="color: var(--cart-red);">
             <i class="fas fa-sign-out-alt"></i>
             <span>تسجيل الخروج</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -2199,8 +1944,8 @@
   <!-- بحث الهواتف -->
   <div class="mobile-search-container" id="mobileSearch">
     <div class="search-box">
-      <input type="search" class="search-input" id="mobileSearchInput" placeholder="ابحث عن منتج..." aria-label="بحث عن منتج">
-      <button class="search-button" onclick="searchFromMobile()" aria-label="تنفيذ البحث">
+      <input type="text" class="search-input" id="mobileSearchInput" placeholder="ابحث عن منتج...">
+      <button class="search-button" onclick="searchFromMobile()">
         <i class="fas fa-search"></i>
       </button>
     </div>
@@ -2214,11 +1959,11 @@
         <h1 class="hero-title">🎉 عروض 2026 الحصرية 🎉</h1>
         <p class="hero-subtitle">خصومات تصل إلى 50% على جميع المنتجات | توصيل مجاني للطلبات فوق 300 جنيه</p>
         <div class="hero-actions">
-          <button class="btn btn-secondary btn-lg" onclick="showOffersPage()" aria-label="تصفح العروض">
+          <button class="btn btn-secondary btn-lg" onclick="showOffersPage()">
             <i class="fas fa-percentage"></i>
             تصفح العروض
           </button>
-          <button class="btn btn-coupon btn-lg" onclick="openCouponModal()" aria-label="استخدام كوبون">
+          <button class="btn btn-coupon btn-lg" onclick="openCouponModal()">
             <i class="fas fa-tag"></i>
             استخدم كوبون
           </button>
@@ -2227,16 +1972,16 @@
     </section>
 
     <!-- Categories Section -->
-    <section class="section" aria-labelledby="categories-title">
+    <section class="section">
       <div class="section-header">
-        <h2 class="section-title" id="categories-title">
+        <h2 class="section-title">
           <i class="fas fa-tags"></i>
           تصفح التصنيفات
         </h2>
-        <button class="view-all" onclick="showCategoriesPage()">
+        <a href="#" class="view-all" onclick="showCategoriesPage()">
           عرض الكل
           <i class="fas fa-arrow-left"></i>
-        </button>
+        </a>
       </div>
       <div class="categories-grid" id="categoriesContainer">
         <!-- Categories will be loaded here -->
@@ -2244,16 +1989,16 @@
     </section>
 
     <!-- Offers Section -->
-    <section class="section" aria-labelledby="offers-title">
+    <section class="section">
       <div class="section-header">
-        <h2 class="section-title" id="offers-title">
+        <h2 class="section-title">
           <i class="fas fa-fire"></i>
           العروض الخاصة
         </h2>
-        <button class="view-all" onclick="showOffersPage()">
+        <a href="#" class="view-all" onclick="showOffersPage()">
           عرض الكل
           <i class="fas fa-arrow-left"></i>
-        </button>
+        </a>
       </div>
       <div class="products-grid" id="offersContainer">
         <!-- Offers will be loaded here -->
@@ -2261,16 +2006,16 @@
     </section>
 
     <!-- Featured Products -->
-    <section class="section" aria-labelledby="featured-title">
+    <section class="section">
       <div class="section-header">
-        <h2 class="section-title" id="featured-title">
+        <h2 class="section-title">
           <i class="fas fa-star"></i>
           منتجات مميزة
         </h2>
-        <button class="view-all" onclick="showAllProductsPage()">
+        <a href="#" class="view-all" onclick="showAllProductsPage()">
           عرض الكل
           <i class="fas fa-arrow-left"></i>
-        </button>
+        </a>
       </div>
       <div class="products-grid" id="featuredContainer">
         <!-- Featured products will be loaded here -->
@@ -2278,16 +2023,16 @@
     </section>
 
     <!-- New Products -->
-    <section class="section" aria-labelledby="new-products-title">
+    <section class="section">
       <div class="section-header">
-        <h2 class="section-title" id="new-products-title">
+        <h2 class="section-title">
           <i class="fas fa-bolt"></i>
           منتجات جديدة
         </h2>
-        <button class="view-all" onclick="showAllProductsPage()">
+        <a href="#" class="view-all" onclick="showAllProductsPage()">
           عرض الكل
           <i class="fas fa-arrow-left"></i>
-        </button>
+        </a>
       </div>
       <div class="products-grid" id="newProductsContainer">
         <!-- New products will be loaded here -->
@@ -2296,82 +2041,62 @@
   </main>
 
   <!-- Bottom Navigation -->
-  <nav class="bottom-nav" aria-label="التنقل الرئيسي">
-    <button class="nav-item active" onclick="goHome(); setActiveNav(this);" aria-label="الرئيسية" aria-current="page">
+  <nav class="bottom-nav">
+    <a href="#" class="nav-item active" onclick="goHome(); setActiveNav(this);">
       <div class="nav-icon">
         <i class="fas fa-home"></i>
       </div>
       <span class="nav-label">الرئيسية</span>
-    </button>
+    </a>
     
-    <button class="nav-item" onclick="showAllProductsPage(); setActiveNav(this);" aria-label="المنتجات">
+    <a href="#" class="nav-item" onclick="showAllProductsPage(); setActiveNav(this);">
       <div class="nav-icon">
         <i class="fas fa-shopping-bag"></i>
       </div>
       <span class="nav-label">المنتجات</span>
-    </button>
+    </a>
     
-    <button class="nav-item" onclick="showCategoriesPage(); setActiveNav(this);" aria-label="التصنيفات">
+    <a href="#" class="nav-item" onclick="showCategoriesPage(); setActiveNav(this);">
       <div class="nav-icon">
         <i class="fas fa-tags"></i>
       </div>
       <span class="nav-label">التصنيفات</span>
-    </button>
+    </a>
     
-    <button class="nav-item" onclick="showOffersPage(); setActiveNav(this);" aria-label="العروض">
+    <a href="#" class="nav-item" onclick="showOffersPage(); setActiveNav(this);">
       <div class="nav-icon">
         <i class="fas fa-percentage"></i>
       </div>
       <span class="nav-label">العروض</span>
-    </button>
+    </a>
     
-    <button class="nav-item" onclick="openCart(); setActiveNav(this);" aria-label="عربة التسوق">
+    <a href="#" class="nav-item" onclick="openCart(); setActiveNav(this);">
       <div class="nav-icon">
         <i class="fas fa-shopping-cart"></i>
       </div>
       <span class="nav-label">العربة</span>
       <span class="nav-badge" id="cartBadge">0</span>
-    </button>
+    </a>
     
-    <button class="nav-item" onclick="openWishlist(); setActiveNav(this);" aria-label="المفضلة">
+    <a href="#" class="nav-item" onclick="openWishlist(); setActiveNav(this);">
       <div class="nav-icon">
         <i class="fas fa-heart"></i>
       </div>
       <span class="nav-label">المفضلة</span>
       <span class="nav-badge" id="favoritesBottomBadge" style="display: none;">0</span>
-    </button>
+    </a>
     
-    <button class="nav-item" onclick="openNotifications(); setActiveNav(this);" aria-label="الإشعارات">
+    <a href="#" class="nav-item" onclick="openNotifications(); setActiveNav(this);">
       <div class="nav-icon">
         <i class="fas fa-bell"></i>
       </div>
       <span class="nav-label">الإشعارات</span>
       <span class="nav-badge" id="notifBadge">0</span>
-    </button>
+    </a>
   </nav>
 
   <!-- Modals Container -->
-  <div id="modalsContainer" aria-live="polite" aria-atomic="true"></div>
-
-  <!-- Install App Button -->
-  <button id="installAppBtn" class="btn btn-primary" style="
-    position: fixed;
-    bottom: 300px;
-    left: 20px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    z-index: 998;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-lg);
-    animation: bounce 2s infinite;
-    padding: 0;
-    border: none;
-  " onclick="installPWA()" aria-label="تثبيت التطبيق" title="تثبيت التطبيق">
-    <i class="fas fa-download"></i>
-  </button>
+  <div id="modalsContainer"></div>
 
   <!-- Admin Floating Button (Only for Admins) -->
   <button id="adminFloatBtn" class="btn btn-primary" style="
@@ -2387,9 +2112,7 @@
     justify-content: center;
     box-shadow: var(--shadow-lg);
     animation: pulse 2s infinite;
-    padding: 0;
-    border: none;
-  " onclick="openAdminPanel()" aria-label="لوحة التحكم" title="لوحة التحكم">
+  " onclick="openAdminPanel()" title="لوحة التحكم">
     <i class="fas fa-tools"></i>
   </button>
 
@@ -2407,9 +2130,7 @@
     justify-content: center;
     box-shadow: var(--shadow-lg);
     animation: bounce 2s infinite;
-    padding: 0;
-    border: none;
-  " onclick="openWhatsapp()" aria-label="واتساب" title="واتساب">
+  " onclick="openWhatsapp()" title="واتساب">
     <i class="fab fa-whatsapp"></i>
   </button>
 
@@ -2427,9 +2148,7 @@
     justify-content: center;
     box-shadow: var(--shadow-lg);
     animation: bounce 2s infinite 0.2s;
-    padding: 0;
-    border: none;
-  " onclick="openPhone()" aria-label="اتصل بنا" title="اتصل بنا">
+  " onclick="openPhone()" title="اتصل بنا">
     <i class="fas fa-phone"></i>
   </button>
 
@@ -2443,7 +2162,7 @@
   <!-- JavaScript Application Code -->
   <script>
   /**************************************************************************
-   * تطبيق سوبر ماركت الأستاذ - النسخة المحسنة PWA
+   * تطبيق سوبر ماركت الأستاذ - النسخة المحسنة
    * إصدار 2026.3 - مع إصلاح جميع المشاكل
    **************************************************************************/
 
@@ -2462,53 +2181,22 @@
     },
     whatsapp: "201550462808",
     phone: "01550462808",
-    address: "شارع عبدالحافظ، بنها، القليوبية",
-    shipping: {
-      standard: 20,
-      freeThreshold: 300,
-      enabled: true
-    }
+    address: "شارع عبدالحافظ، بنها، القليوبية"
   };
 
   // ---------- تهيئة Firebase ----------
-  let db, auth, storage;
-  
   try {
     firebase.initializeApp(APP_CONFIG.firebase);
-    db = firebase.firestore();
-    auth = firebase.auth();
-    storage = firebase.storage();
-    
     if (APP_CONFIG.firebase.measurementId) {
-      try { 
-        firebase.analytics(); 
-        console.log('📊 Firebase Analytics initialized');
-      } catch(e) { 
-        console.log('📊 Analytics disabled'); 
-      }
+      try { firebase.analytics(); } catch(e) { console.log('Analytics disabled'); }
     }
-    
-    // تحسين أداء Firebase
-    db.settings({
-      cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED
-    });
-    
-    // تمكين الاستمرارية
-    db.enablePersistence()
-      .then(() => {
-        console.log('✅ Firebase persistence enabled');
-      })
-      .catch((err) => {
-        if (err.code === 'failed-precondition') {
-          console.log('⚠️ Multiple tabs open, persistence disabled');
-        } else if (err.code === 'unimplemented') {
-          console.log('⚠️ Persistence not supported');
-        }
-      });
-      
   } catch (error) {
-    console.error('❌ Firebase initialization error:', error);
+    console.error('Firebase initialization error:', error);
   }
+
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+  const storage = firebase.storage();
 
   // ---------- متغيرات التطبيق ----------
   let currentUser = null;
@@ -2517,9 +2205,7 @@
   let cart = [];
   let favorites = [];
   let notifications = [];
-  let deferredPrompt = null;
   let adminFloatBtn = null;
-  let installAppBtn = null;
 
   // ---------- تهيئة التطبيق ----------
   document.addEventListener('DOMContentLoaded', async () => {
@@ -2527,7 +2213,6 @@
     
     // تهيئة العناصر
     adminFloatBtn = document.getElementById('adminFloatBtn');
-    installAppBtn = document.getElementById('installAppBtn');
     
     // إعداد المستخدم
     setupAuth();
@@ -2544,94 +2229,12 @@
     // إعداد الأحداث
     setupEventListeners();
     
-    // إعداد PWA Install Prompt
-    setupPWAInstall();
-    
-    // تحقق من وضع العرض
-    checkDisplayMode();
-    
     console.log('✅ التطبيق جاهز للاستخدام');
   });
-
-  // ---------- PWA Installation ----------
-  function setupPWAInstall() {
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      
-      // إظهار زر التثبيت بعد 5 ثواني
-      setTimeout(() => {
-        if (deferredPrompt && !isRunningInStandaloneMode()) {
-          showInstallButton();
-        }
-      }, 5000);
-    });
-    
-    window.addEventListener('appinstalled', () => {
-      console.log('✅ PWA installed successfully');
-      deferredPrompt = null;
-      hideInstallButton();
-      showNotification('تم تثبيت التطبيق بنجاح!', 'success');
-    });
-  }
-  
-  function showInstallButton() {
-    if (installAppBtn) {
-      installAppBtn.style.display = 'flex';
-      installAppBtn.classList.add('animate__bounce');
-    }
-  }
-  
-  function hideInstallButton() {
-    if (installAppBtn) {
-      installAppBtn.style.display = 'none';
-      installAppBtn.classList.remove('animate__bounce');
-    }
-  }
-  
-  async function installPWA() {
-    if (!deferredPrompt) {
-      showNotification('التطبيق مثبت بالفعل', 'info');
-      return;
-    }
-    
-    try {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      
-      if (outcome === 'accepted') {
-        console.log('✅ User accepted PWA installation');
-      } else {
-        console.log('❌ User dismissed PWA installation');
-      }
-      
-      deferredPrompt = null;
-      hideInstallButton();
-    } catch (error) {
-      console.error('Error installing PWA:', error);
-      showNotification('حدث خطأ أثناء التثبيت', 'error');
-    }
-  }
-  
-  function isRunningInStandaloneMode() {
-    return window.matchMedia('(display-mode: standalone)').matches || 
-           window.navigator.standalone ||
-           document.referrer.includes('android-app://');
-  }
-  
-  function checkDisplayMode() {
-    if (isRunningInStandaloneMode()) {
-      console.log('📱 Running in standalone mode');
-      document.body.classList.add('standalone-mode');
-    }
-  }
 
   // ---------- تحميل البيانات الأولية ----------
   async function loadInitialData() {
     try {
-      // عرض حالة التحميل
-      showLoadingState();
-      
       // تحميل التصنيفات
       await loadCategories();
       
@@ -2648,32 +2251,10 @@
       updateCartBadge();
       updateFavoritesBadge();
       
-      // إخفاء حالة التحميل
-      hideLoadingState();
-      
     } catch (error) {
       console.error('Error loading initial data:', error);
       showNotification('حدث خطأ في تحميل البيانات', 'error');
-      hideLoadingState();
     }
-  }
-  
-  function showLoadingState() {
-    const containers = ['categoriesContainer', 'offersContainer', 'featuredContainer', 'newProductsContainer'];
-    containers.forEach(containerId => {
-      const container = document.getElementById(containerId);
-      if (container) {
-        container.innerHTML = `
-          <div class="loading" style="grid-column: 1/-1;">
-            <div class="spinner"></div>
-          </div>
-        `;
-      }
-    });
-  }
-  
-  function hideLoadingState() {
-    // يمكن إضافة أي منطق لإخفاء التحميل هنا
   }
 
   // ---------- إعداد المصادقة ----------
@@ -2683,52 +2264,45 @@
       
       if (user) {
         // تحميل بيانات المستخدم
-        try {
-          const userDoc = await db.collection('users').doc(user.uid).get();
-          userData = userDoc.exists ? userDoc.data() : null;
+        const userDoc = await db.collection('users').doc(user.uid).get();
+        userData = userDoc.exists ? userDoc.data() : null;
+        
+        if (!userData) {
+          // إنشاء مستخدم جديد
+          userData = {
+            name: user.displayName || user.email?.split('@')[0] || 'مستخدم',
+            email: user.email,
+            phone: '',
+            address: '',
+            role: 'customer',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            photoURL: user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}&background=6B5BFF&color=fff&size=64`
+          };
           
-          if (!userData) {
-            // إنشاء مستخدم جديد
-            userData = {
-              name: user.displayName || user.email?.split('@')[0] || 'مستخدم',
-              email: user.email,
-              phone: '',
-              address: '',
-              role: 'customer',
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              photoURL: user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}&background=6B5BFF&color=fff&size=64`
-            };
-            
-            await db.collection('users').doc(user.uid).set(userData);
-            
-            // إشعار المديرين بمستخدم جديد
-            notifyAdminsNewUser(user.uid, userData.name, user.email);
-          }
+          await db.collection('users').doc(user.uid).set(userData);
           
-          // تحديث الصورة الشخصية
-          updateUserProfile();
-          
-          // إظهار زر الإدارة إذا كان المدير
-          if (userData.role === 'admin' && adminFloatBtn) {
-            adminFloatBtn.style.display = 'flex';
-          }
-          
-          // تحميل الإشعارات
-          await loadNotifications();
-          
-          // إخفاء أزرار تسجيل الدخول واظهار صورة المستخدم
-          document.getElementById('authButtons').style.display = 'none';
-          document.getElementById('userProfile').style.display = 'flex';
-          
-        } catch (error) {
-          console.error('Error loading user data:', error);
+          // إشعار المديرين بمستخدم جديد
+          notifyAdminsNewUser(user.uid, userData.name, user.email);
         }
+        
+        // تحديث الصورة الشخصية
+        updateUserProfile();
+        
+        // إظهار زر الإدارة إذا كان المدير
+        if (userData.role === 'admin') {
+          adminFloatBtn.style.display = 'flex';
+        }
+        
+        // تحميل الإشعارات
+        await loadNotifications();
+        
+        // إخفاء أزرار تسجيل الدخول واظهار صورة المستخدم
+        document.getElementById('authButtons').style.display = 'none';
+        document.getElementById('userProfile').style.display = 'flex';
         
       } else {
         userData = null;
-        if (adminFloatBtn) {
-          adminFloatBtn.style.display = 'none';
-        }
+        adminFloatBtn.style.display = 'none';
         
         // اظهار أزرار تسجيل الدخول وإخفاء صورة المستخدم
         document.getElementById('authButtons').style.display = 'flex';
@@ -2760,58 +2334,9 @@
       try {
         const registration = await navigator.serviceWorker.register('./sw.js');
         console.log('✅ Service Worker registered:', registration.scope);
-        
-        // التحقق من التحديثات
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              showUpdateNotification();
-            }
-          });
-        });
-        
       } catch (error) {
         console.error('❌ Service Worker registration failed:', error);
       }
-    }
-  }
-  
-  function showUpdateNotification() {
-    const modalHTML = `
-      <div class="modal-overlay">
-        <div class="modal">
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-sync-alt"></i>
-              تحديث متوفر
-            </h2>
-          </div>
-          <div class="modal-body">
-            <p>يتوفر تحديث جديد للتطبيق. هل تريد تحديثه الآن؟</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-outline" onclick="closeModal()">
-              لاحقاً
-            </button>
-            <button class="btn btn-primary" onclick="updateApp()">
-              تحديث الآن
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-  
-  function updateApp() {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then(registration => {
-        registration.unregister().then(() => {
-          window.location.reload();
-        });
-      });
     }
   }
 
@@ -2821,13 +2346,6 @@
     if (!container) return;
     
     try {
-      // عرض حالة التحميل
-      container.innerHTML = `
-        <div class="loading" style="grid-column: 1/-1;">
-          <div class="spinner"></div>
-        </div>
-      `;
-      
       const snapshot = await db.collection('categories')
         .orderBy('order', 'asc')
         .limit(8)
@@ -2847,7 +2365,7 @@
         ];
         
         container.innerHTML = defaultCategories.map(cat => `
-          <div class="category-card" onclick="filterByCategory('${cat.name}')" role="button" tabindex="0">
+          <div class="category-card" onclick="filterByCategory('${cat.name}')">
             <div class="category-icon" style="color: ${cat.color}">
               <i class="${cat.icon}"></i>
             </div>
@@ -2857,18 +2375,15 @@
         `).join('');
         
         // حفظ التصنيفات في قاعدة البيانات
-        const batch = db.batch();
-        defaultCategories.forEach(cat => {
-          const docRef = db.collection('categories').doc();
-          batch.set(docRef, cat);
+        defaultCategories.forEach(async cat => {
+          await db.collection('categories').add(cat);
         });
-        await batch.commit();
         
       } else {
         container.innerHTML = snapshot.docs.map(doc => {
           const cat = doc.data();
           return `
-            <div class="category-card" onclick="filterByCategory('${cat.name}')" role="button" tabindex="0">
+            <div class="category-card" onclick="filterByCategory('${cat.name}')">
               <div class="category-icon" style="color: ${cat.color || '#6B5BFF'}">
                 <i class="${cat.icon || 'fas fa-tag'}"></i>
               </div>
@@ -2956,14 +2471,13 @@
           <div class="product-actions">
             <button class="action-btn ${isFavorite ? 'active' : ''}" 
                     onclick="toggleFavorite('${doc.id}', this)"
-                    title="المفضلة"
-                    aria-label="${isFavorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}">
+                    title="المفضلة">
               <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
             </button>
-            <button class="action-btn" onclick="shareProduct('${doc.id}')" title="مشاركة" aria-label="مشاركة المنتج">
+            <button class="action-btn" onclick="shareProduct('${doc.id}')" title="مشاركة">
               <i class="fas fa-share-alt"></i>
             </button>
-            <button class="action-btn" onclick="quickView('${doc.id}')" title="عرض سريع" aria-label="عرض سريع للمنتج">
+            <button class="action-btn" onclick="quickView('${doc.id}')" title="عرض سريع">
               <i class="fas fa-eye"></i>
             </button>
           </div>
@@ -2971,7 +2485,6 @@
           <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                alt="${product.name}"
                class="product-image"
-               loading="lazy"
                onerror="this.src='https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'">
           
           <div class="product-info">
@@ -3003,8 +2516,7 @@
             
             <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" 
                     onclick="addToCart('${doc.id}', this)"
-                    ${product.stock === 0 ? 'disabled' : ''}
-                    aria-label="${isInCart ? 'المنتج موجود في العربة' : product.stock === 0 ? 'المنتج غير متوفر' : 'إضافة المنتج إلى العربة'}">
+                    ${product.stock === 0 ? 'disabled' : ''}>
               <i class="${isInCart ? 'fas fa-check' : 'fas fa-cart-plus'}"></i>
               ${isInCart ? 'في العربة' : product.stock === 0 ? 'نفذت الكمية' : 'أضف إلى العربة'}
             </button>
@@ -3051,43 +2563,21 @@
     if (button) {
       button.classList.add('btn-success');
       button.innerHTML = '<i class="fas fa-check"></i> في العربة';
-      button.setAttribute('aria-label', 'المنتج موجود في العربة');
     }
     
     // حفظ العربة
-    saveCart();
+    localStorage.setItem('cart', JSON.stringify(cart));
     
     // تحديث العداد
     updateCartBadge();
     
     // إظهار الإشعار
     showNotification(`تمت إضافة "${product.name}" إلى العربة`, 'success');
-    
-    // اهتزاز الهاتف (إذا مدعوم)
-    if ('vibrate' in navigator) {
-      navigator.vibrate(50);
-    }
-  }
-  
-  function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    // مزامنة مع Service Worker
-    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-      navigator.serviceWorker.controller.postMessage({
-        type: 'SYNC_CART',
-        cart: cart
-      });
-    }
   }
 
   function updateCartBadge() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const cartBadge = document.getElementById('cartBadge');
-    if (cartBadge) {
-      cartBadge.textContent = totalItems;
-      cartBadge.style.display = totalItems > 0 ? 'flex' : 'none';
-    }
+    document.getElementById('cartBadge').textContent = totalItems;
   }
 
   // ---------- نظام المفضلة ----------
@@ -3106,7 +2596,6 @@
       if (button) {
         button.classList.remove('active');
         button.innerHTML = '<i class="far fa-heart"></i>';
-        button.setAttribute('aria-label', 'إضافة إلى المفضلة');
       }
       showNotification('تمت الإزالة من المفضلة', 'info');
     } else {
@@ -3118,7 +2607,6 @@
         if (button) {
           button.classList.add('active');
           button.innerHTML = '<i class="fas fa-heart"></i>';
-          button.setAttribute('aria-label', 'إزالة من المفضلة');
         }
         showNotification('تمت الإضافة للمفضلة', 'success');
       }
@@ -3136,14 +2624,14 @@
     const favoritesBadge = document.getElementById('favoritesBadge');
     const favoritesBottomBadge = document.getElementById('favoritesBottomBadge');
     
-    if (favoritesBadge) {
+    if (totalFavorites > 0) {
       favoritesBadge.textContent = totalFavorites;
-      favoritesBadge.style.display = totalFavorites > 0 ? 'flex' : 'none';
-    }
-    
-    if (favoritesBottomBadge) {
+      favoritesBadge.style.display = 'flex';
       favoritesBottomBadge.textContent = totalFavorites;
-      favoritesBottomBadge.style.display = totalFavorites > 0 ? 'flex' : 'none';
+      favoritesBottomBadge.style.display = 'flex';
+    } else {
+      favoritesBadge.style.display = 'none';
+      favoritesBottomBadge.style.display = 'none';
     }
   }
 
@@ -3228,12 +2716,11 @@
     if (!product) return;
     
     const isFavorite = favorites.some(fav => fav.id === productId);
-    const isInCart = cart.some(item => item.id === productId);
     
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px;">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -3245,14 +2732,13 @@
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x300/6B5BFF/ffffff?text=صورة+المنتج'}" 
                      alt="${product.name}"
                      style="width: 100%; border-radius: var(--border-radius-md);"
-                     loading="lazy"
                      onerror="this.src='https://via.placeholder.com/300x300/6B5BFF/ffffff?text=صورة+المنتج'">
                 
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
-                  <button class="btn btn-primary btn-block" onclick="addToCart('${productId}'); closeModal();" ${product.stock === 0 ? 'disabled' : ''}>
-                    <i class="fas fa-cart-plus"></i> ${product.stock === 0 ? 'نفذت الكمية' : 'أضف إلى العربة'}
+                  <button class="btn btn-primary btn-block" onclick="addToCart('${productId}'); closeModal();">
+                    <i class="fas fa-cart-plus"></i> أضف إلى العربة
                   </button>
-                  <button class="btn btn-outline" onclick="toggleFavorite('${productId}')" aria-label="${isFavorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}">
+                  <button class="btn btn-outline" onclick="toggleFavorite('${productId}')">
                     <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
                   </button>
                 </div>
@@ -3331,20 +2817,11 @@
       url: window.location.href
     };
     
-    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+    if (navigator.share) {
       navigator.share(shareData).catch(console.error);
     } else {
       // نسخ الرابط
       navigator.clipboard.writeText(shareData.url).then(() => {
-        showNotification('تم نسخ رابط المنتج', 'success');
-      }).catch(() => {
-        // طريقة احتياطية
-        const textArea = document.createElement('textarea');
-        textArea.value = shareData.url;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
         showNotification('تم نسخ رابط المنتج', 'success');
       });
     }
@@ -3355,58 +2832,30 @@
     // إنشاء عنصر الإشعار
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
-    notification.setAttribute('role', 'alert');
-    notification.setAttribute('aria-live', 'assertive');
-    
-    const colors = {
-      success: '#25D366',
-      error: '#FF2D55',
-      warning: '#FF9500',
-      info: '#6B5BFF'
-    };
-    
     notification.innerHTML = `
-      <div style="position: fixed; top: 100px; right: 20px; background: ${colors[type] || '#6B5BFF'}; color: white; padding: 15px 25px; border-radius: var(--border-radius-md); z-index: 9999; box-shadow: var(--shadow-lg); animation: slideInDown 0.3s ease; max-width: 300px; backdrop-filter: blur(10px);">
-        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+      <div style="position: fixed; top: 80px; right: 20px; background: ${type === 'success' ? '#25D366' : type === 'error' ? '#FF2D55' : '#6B5BFF'}; color: white; padding: 15px 25px; border-radius: var(--border-radius-md); z-index: 9999; box-shadow: var(--shadow-lg); animation: slideInDown 0.3s ease;">
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
         ${message}
       </div>
     `;
     
     document.body.appendChild(notification);
     
-    // اهتزاز الهاتف للإشعارات المهمة
-    if (type === 'success' || type === 'error') {
-      if ('vibrate' in navigator) {
-        navigator.vibrate([100, 50, 100]);
-      }
-    }
-    
     // إزالة الإشعار بعد 3 ثواني
     setTimeout(() => {
-      notification.style.animation = 'fadeOut 0.3s ease';
-      setTimeout(() => {
-        if (notification.parentNode) {
-          notification.parentNode.removeChild(notification);
-        }
-      }, 300);
+      notification.remove();
     }, 3000);
   }
 
   function setActiveNav(item) {
     document.querySelectorAll('.nav-item').forEach(nav => {
       nav.classList.remove('active');
-      nav.setAttribute('aria-current', null);
     });
     item.classList.add('active');
-    item.setAttribute('aria-current', 'page');
   }
 
   function closeModal() {
     document.getElementById('modalsContainer').innerHTML = '';
-    // إعادة التركيز على العنصر الذي فتح المودال
-    if (document.activeElement && document.activeElement.blur) {
-      document.activeElement.blur();
-    }
   }
 
   function updateUserProfile() {
@@ -3422,11 +2871,12 @@
 
   // ---------- دوال التنقل ----------
   function goHome() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setActiveNav(document.querySelector('.nav-item[aria-label="الرئيسية"]'));
+    // إعادة تحميل الصفحة الرئيسية
+    location.reload();
   }
 
   function showAllProductsPage() {
+    // إظهار جميع المنتجات
     const content = `
       <section class="hero-section" style="margin-bottom: 30px;">
         <div class="hero-content">
@@ -3441,7 +2891,7 @@
             <i class="fas fa-list"></i>
             جميع المنتجات
           </h2>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <div style="display: flex; gap: 10px;">
             <select class="form-control" style="width: auto;" onchange="filterProducts(this.value)" id="filterSelect">
               <option value="">جميع التصنيفات</option>
               <option value="discount">العروض</option>
@@ -3464,7 +2914,6 @@
     
     document.getElementById('mainContent').innerHTML = content;
     document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-    setActiveNav(document.querySelector('.nav-item[aria-label="المنتجات"]'));
   }
 
   function renderAllProducts(products) {
@@ -3492,22 +2941,20 @@
           <div class="product-actions">
             <button class="action-btn ${isFavorite ? 'active' : ''}" 
                     onclick="toggleFavorite('${product.id}', this)"
-                    title="المفضلة"
-                    aria-label="${isFavorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}">
+                    title="المفضلة">
               <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
             </button>
-            <button class="action-btn" onclick="shareProduct('${product.id}')" title="مشاركة" aria-label="مشاركة المنتج">
+            <button class="action-btn" onclick="shareProduct('${product.id}')" title="مشاركة">
               <i class="fas fa-share-alt"></i>
             </button>
-            <button class="action-btn" onclick="quickView('${product.id}')" title="عرض سريع" aria-label="عرض سريع للمنتج">
+            <button class="action-btn" onclick="quickView('${product.id}')" title="عرض سريع">
               <i class="fas fa-eye"></i>
             </button>
           </div>
           
           <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                alt="${product.name}"
-               class="product-image"
-               loading="lazy">
+               class="product-image">
           
           <div class="product-info">
             <h3 class="product-name">${product.name}</h3>
@@ -3524,8 +2971,7 @@
             
             <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" 
                     onclick="addToCart('${product.id}', this)"
-                    ${product.stock === 0 ? 'disabled' : ''}
-                    aria-label="${isInCart ? 'المنتج موجود في العربة' : product.stock === 0 ? 'المنتج غير متوفر' : 'إضافة المنتج إلى العربة'}">
+                    ${product.stock === 0 ? 'disabled' : ''}>
               <i class="${isInCart ? 'fas fa-check' : 'fas fa-cart-plus'}"></i>
               ${isInCart ? 'في العربة' : product.stock === 0 ? 'نفذت الكمية' : 'أضف إلى العربة'}
             </button>
@@ -3535,6 +2981,7 @@
     }).join('');
   }
 
+  // دالة الفلترة
   function filterProducts(filterType) {
     let filteredProducts = [...globalProducts];
     
@@ -3561,6 +3008,7 @@
     document.getElementById('allProductsGrid').innerHTML = renderAllProducts(sortedProducts);
   }
 
+  // دالة الترتيب
   function sortProducts(sortType) {
     const currentFilter = document.getElementById('filterSelect')?.value || '';
     let filteredProducts = [...globalProducts];
@@ -3625,6 +3073,7 @@
   }
 
   function showOffersPage() {
+    // إظهار صفحة العروض
     const offers = globalProducts.filter(p => p.discount > 0);
     
     const content = `
@@ -3658,18 +3107,17 @@
                 </div>
                 
                 <div class="product-actions">
-                  <button class="action-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${product.id}', this)" aria-label="${isFavorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}">
+                  <button class="action-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${product.id}', this)">
                     <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
                   </button>
-                  <button class="action-btn" onclick="shareProduct('${product.id}')" aria-label="مشاركة المنتج">
+                  <button class="action-btn" onclick="shareProduct('${product.id}')">
                     <i class="fas fa-share-alt"></i>
                   </button>
                 </div>
                 
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                      alt="${product.name}"
-                     class="product-image"
-                     loading="lazy">
+                     class="product-image">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
@@ -3686,9 +3134,9 @@
                     وفر ${(product.price * product.discount / 100).toFixed(2)} جنيه
                   </div>
                   
-                  <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" onclick="addToCart('${product.id}', this)" ${product.stock === 0 ? 'disabled' : ''}>
+                  <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" onclick="addToCart('${product.id}', this)">
                     <i class="fas fa-cart-plus"></i>
-                    ${product.stock === 0 ? 'نفذت الكمية' : 'أضف إلى العربة'}
+                    أضف إلى العربة
                   </button>
                 </div>
               </div>
@@ -3709,10 +3157,10 @@
     
     document.getElementById('mainContent').innerHTML = content;
     document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-    setActiveNav(document.querySelector('.nav-item[aria-label="العروض"]'));
   }
 
   function showCategoriesPage() {
+    // إظهار جميع التصنيفات
     const content = `
       <section class="hero-section" style="background: linear-gradient(135deg, rgba(107, 91, 255, 0.9), rgba(124, 100, 255, 0.9)), url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); margin-bottom: 30px;">
         <div class="hero-content">
@@ -3733,6 +3181,7 @@
           </div>
         </div>
         <div class="categories-grid" id="allCategoriesGrid">
+          <!-- سيتم تحميل التصنيفات هنا -->
           <div class="loading" style="grid-column: 1/-1;">
             <div class="spinner"></div>
           </div>
@@ -3746,7 +3195,6 @@
     loadAllCategories();
     
     document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-    setActiveNav(document.querySelector('.nav-item[aria-label="التصنيفات"]'));
   }
 
   async function loadAllCategories() {
@@ -3767,7 +3215,7 @@
       container.innerHTML = snapshot.docs.map(doc => {
         const cat = doc.data();
         return `
-          <div class="category-card" onclick="filterByCategory('${cat.name}')" role="button" tabindex="0">
+          <div class="category-card" onclick="filterByCategory('${cat.name}')">
             <div class="category-icon" style="color: ${cat.color || '#6B5BFF'}">
               <i class="${cat.icon || 'fas fa-tag'}"></i>
             </div>
@@ -3799,8 +3247,8 @@
             <i class="fas fa-filter"></i>
             ${categoryName}
           </h2>
-          <div class="view-all" onclick="showCategoriesPage()">
-            العودة للتصنيفات
+          <div class="view-all" onclick="goHome()">
+            العودة للرئيسية
             <i class="fas fa-arrow-left"></i>
           </div>
         </div>
@@ -3818,18 +3266,17 @@
                 ` : ''}
                 
                 <div class="product-actions">
-                  <button class="action-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${product.id}', this)" aria-label="${isFavorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}">
+                  <button class="action-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${product.id}', this)">
                     <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
                   </button>
-                  <button class="action-btn" onclick="shareProduct('${product.id}')" aria-label="مشاركة المنتج">
+                  <button class="action-btn" onclick="shareProduct('${product.id}')">
                     <i class="fas fa-share-alt"></i>
                   </button>
                 </div>
                 
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                      alt="${product.name}"
-                     class="product-image"
-                     loading="lazy">
+                     class="product-image">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
@@ -3843,9 +3290,9 @@
                     ` : ''}
                   </div>
                   
-                  <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" onclick="addToCart('${product.id}', this)" ${product.stock === 0 ? 'disabled' : ''}>
+                  <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" onclick="addToCart('${product.id}', this)">
                     <i class="fas fa-cart-plus"></i>
-                    ${product.stock === 0 ? 'نفذت الكمية' : 'أضف إلى العربة'}
+                    أضف إلى العربة
                   </button>
                 </div>
               </div>
@@ -3873,7 +3320,7 @@
       const modalHTML = `
         <div class="modal-overlay" onclick="closeModal()">
           <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+            <button class="modal-close" onclick="closeModal()">
               <i class="fas fa-times"></i>
             </button>
             <div class="modal-body">
@@ -3900,13 +3347,13 @@
       return sum + (item.price * (1 - item.discount / 100) * item.quantity);
     }, 0);
     
-    const shipping = subtotal > APP_CONFIG.shipping.freeThreshold ? 0 : APP_CONFIG.shipping.standard;
+    const shipping = subtotal > 300 ? 0 : 20;
     const total = subtotal + shipping;
     
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px;">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -3923,8 +3370,7 @@
               <div class="cart-item">
                 <img src="${item.image || 'https://via.placeholder.com/80/6B5BFF/ffffff?text=صورة'}" 
                      alt="${item.name}"
-                     class="cart-item-image"
-                     loading="lazy">
+                     class="cart-item-image">
                 
                 <div class="cart-item-content">
                   <h3 class="cart-item-name">${item.name}</h3>
@@ -3940,16 +3386,16 @@
                 
                 <div class="cart-item-actions">
                   <div class="quantity-control">
-                    <button class="quantity-btn" onclick="updateCartQuantity(${index}, -1)" aria-label="تقليل الكمية">
+                    <button class="quantity-btn" onclick="updateCartQuantity(${index}, -1)">
                       <i class="fas fa-minus"></i>
                     </button>
                     <span class="quantity-value">${item.quantity}</span>
-                    <button class="quantity-btn" onclick="updateCartQuantity(${index}, 1)" aria-label="زيادة الكمية">
+                    <button class="quantity-btn" onclick="updateCartQuantity(${index}, 1)">
                       <i class="fas fa-plus"></i>
                     </button>
                   </div>
                   
-                  <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})" aria-label="حذف المنتج">
+                  <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">
                     <i class="fas fa-trash"></i>
                   </button>
                 </div>
@@ -3973,10 +3419,10 @@
               <span>${total.toFixed(2)} جنيه</span>
             </div>
             
-            ${subtotal < APP_CONFIG.shipping.freeThreshold ? `
+            ${subtotal < 300 ? `
               <div class="text-center text-muted mt-3" style="font-size: 0.9rem;">
                 <i class="fas fa-info-circle"></i>
-                أضف ${(APP_CONFIG.shipping.freeThreshold - subtotal).toFixed(2)} جنيه أخرى للحصول على شحن مجاني
+                أضف ${(300 - subtotal).toFixed(2)} جنيه أخرى للحصول على شحن مجاني
               </div>
             ` : `
               <div class="text-center text-success mt-3" style="font-size: 0.9rem;">
@@ -4001,7 +3447,6 @@
     `;
     
     document.getElementById('modalsContainer').innerHTML = modalHTML;
-    setActiveNav(document.querySelector('.nav-item[aria-label="عربة التسوق"]'));
   }
 
   function updateCartQuantity(index, change) {
@@ -4021,7 +3466,7 @@
       item.quantity = product.stock;
     }
     
-    saveCart();
+    localStorage.setItem('cart', JSON.stringify(cart));
     updateCartBadge();
     openCart(); // إعادة فتح العربة للتحديث
   }
@@ -4029,7 +3474,7 @@
   function removeFromCart(index) {
     const item = cart[index];
     cart.splice(index, 1);
-    saveCart();
+    localStorage.setItem('cart', JSON.stringify(cart));
     updateCartBadge();
     showNotification(`تمت إزالة "${item.name}" من العربة`, 'info');
     
@@ -4057,13 +3502,13 @@
       return sum + (item.price * (1 - item.discount / 100) * item.quantity);
     }, 0);
     
-    const shipping = subtotal > APP_CONFIG.shipping.freeThreshold ? 0 : APP_CONFIG.shipping.standard;
+    const shipping = subtotal > 300 ? 0 : 20;
     const total = subtotal + shipping;
     
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()" style="max-width: 600px;">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -4074,19 +3519,19 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label class="form-label">الاسم الكامل *</label>
+              <label class="form-label">الاسم الكامل</label>
               <input type="text" class="form-control" id="checkoutName" 
                      value="${userData?.name || ''}" required>
             </div>
             
             <div class="form-group">
-              <label class="form-label">رقم الهاتف *</label>
+              <label class="form-label">رقم الهاتف</label>
               <input type="tel" class="form-control" id="checkoutPhone" 
-                     value="${userData?.phone || ''}" required pattern="[0-9]{10,15}">
+                     value="${userData?.phone || ''}" required>
             </div>
             
             <div class="form-group">
-              <label class="form-label">عنوان التوصيل *</label>
+              <label class="form-label">عنوان التوصيل</label>
               <textarea class="form-control" id="checkoutAddress" rows="3" required>${userData?.address || ''}</textarea>
             </div>
             
@@ -4160,17 +3605,11 @@
         return;
       }
       
-      // تحقق من صحة رقم الهاتف
-      if (!/^[0-9]{10,15}$/.test(phone)) {
-        showNotification('يرجى إدخال رقم هاتف صحيح', 'warning');
-        return;
-      }
-      
       const subtotal = cart.reduce((sum, item) => {
         return sum + (item.price * (1 - item.discount / 100) * item.quantity);
       }, 0);
       
-      const shipping = subtotal > APP_CONFIG.shipping.freeThreshold ? 0 : APP_CONFIG.shipping.standard;
+      const shipping = subtotal > 300 ? 0 : 20;
       const total = subtotal + shipping;
       
       const orderData = {
@@ -4196,19 +3635,23 @@
         paymentMethod: paymentMethod,
         paymentStatus: paymentMethod === 'cash' ? 'pending' : 'paid',
         
-        status: 'pending',
+        status: {
+          pending: true,
+          confirmed: false,
+          preparing: false,
+          on_way: false,
+          delivered: false
+        },
         
         notes: notes,
         
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
       };
       
       // إضافة الطلب إلى قاعدة البيانات
       const docRef = await db.collection('orders').add(orderData);
       
       // تحديث مخزون المنتجات
-      const batch = db.batch();
       for (const item of cart) {
         const productRef = db.collection('products').doc(item.id);
         const productDoc = await productRef.get();
@@ -4216,10 +3659,9 @@
         if (productDoc.exists) {
           const product = productDoc.data();
           const newStock = Math.max(0, (product.stock || 0) - item.quantity);
-          batch.update(productRef, { stock: newStock });
+          await productRef.update({ stock: newStock });
         }
       }
-      await batch.commit();
       
       // إرسال إشعار للمستخدم
       await db.collection('notifications').add({
@@ -4236,7 +3678,7 @@
       
       // مسح العربة
       cart = [];
-      saveCart();
+      localStorage.removeItem('cart');
       updateCartBadge();
       
       // إغلاق المودال
@@ -4246,7 +3688,7 @@
       const successHTML = `
         <div class="modal-overlay" onclick="closeModal()">
           <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+            <button class="modal-close" onclick="closeModal()">
               <i class="fas fa-times"></i>
             </button>
             <div class="modal-body">
@@ -4286,7 +3728,7 @@
       const modalHTML = `
         <div class="modal-overlay" onclick="closeModal()">
           <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+            <button class="modal-close" onclick="closeModal()">
               <i class="fas fa-times"></i>
             </button>
             <div class="modal-body">
@@ -4329,24 +3771,23 @@
         </div>
         <div class="products-grid">
           ${favorites.map(product => {
-            const isFavorite = true;
+            const isFavorite = true; // كلها في المفضلة
             const isInCart = cart.some(item => item.id === product.id);
             
             return `
               <div class="product-card" data-id="${product.id}">
                 <div class="product-actions">
-                  <button class="action-btn active" onclick="toggleFavorite('${product.id}', this)" aria-label="إزالة من المفضلة">
+                  <button class="action-btn active" onclick="toggleFavorite('${product.id}', this)">
                     <i class="fas fa-heart"></i>
                   </button>
-                  <button class="action-btn" onclick="shareProduct('${product.id}')" aria-label="مشاركة المنتج">
+                  <button class="action-btn" onclick="shareProduct('${product.id}')">
                     <i class="fas fa-share-alt"></i>
                   </button>
                 </div>
                 
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                      alt="${product.name}"
-                     class="product-image"
-                     loading="lazy">
+                     class="product-image">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
@@ -4361,9 +3802,9 @@
                     ` : ''}
                   </div>
                   
-                  <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" onclick="addToCart('${product.id}', this)" ${product.stock === 0 ? 'disabled' : ''}>
+                  <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" onclick="addToCart('${product.id}', this)">
                     <i class="fas fa-cart-plus"></i>
-                    ${product.stock === 0 ? 'نفذت الكمية' : 'أضف إلى العربة'}
+                    أضف إلى العربة
                   </button>
                 </div>
               </div>
@@ -4375,7 +3816,6 @@
     
     document.getElementById('mainContent').innerHTML = content;
     document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-    setActiveNav(document.querySelector('.nav-item[aria-label="المفضلة"]'));
   }
 
   function openNotifications() {
@@ -4388,7 +3828,7 @@
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()" style="max-width: 500px;">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -4428,7 +3868,6 @@
     `;
     
     document.getElementById('modalsContainer').innerHTML = modalHTML;
-    setActiveNav(document.querySelector('.nav-item[aria-label="الإشعارات"]'));
   }
 
   function openProfile() {
@@ -4441,7 +3880,7 @@
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()" style="max-width: 500px;">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -4559,30 +3998,22 @@
         <div style="background: white; border-radius: var(--border-radius-md); overflow: hidden;">
           ${snapshot.docs.map(doc => {
             const order = doc.data();
+            const status = order.status || {};
             let statusText = 'قيد الانتظار';
             let statusColor = '#FF9500';
             
-            switch(order.status) {
-              case 'confirmed':
-                statusText = 'تم التأكيد';
-                statusColor = '#673ab7';
-                break;
-              case 'preparing':
-                statusText = 'قيد التحضير';
-                statusColor = '#9c27b0';
-                break;
-              case 'on_way':
-                statusText = 'في الطريق';
-                statusColor = '#6B5BFF';
-                break;
-              case 'delivered':
-                statusText = 'تم التوصيل';
-                statusColor = '#25D366';
-                break;
-              case 'cancelled':
-                statusText = 'ملغي';
-                statusColor = '#FF2D55';
-                break;
+            if (status.delivered) {
+              statusText = 'تم التوصيل';
+              statusColor = '#25D366';
+            } else if (status.on_way) {
+              statusText = 'في الطريق';
+              statusColor = '#6B5BFF';
+            } else if (status.preparing) {
+              statusText = 'قيد التحضير';
+              statusColor = '#9c27b0';
+            } else if (status.confirmed) {
+              statusText = 'تم التأكيد';
+              statusColor = '#673ab7';
             }
             
             return `
@@ -4636,29 +4067,17 @@
         const order = orderDoc.data();
         
         // تحويل حالة الطلب لنص مفهوم
+        const status = order.status || {};
         let statusText = 'قيد الانتظار';
-        switch(order.status) {
-          case 'confirmed':
-            statusText = 'تم التأكيد';
-            break;
-          case 'preparing':
-            statusText = 'قيد التحضير';
-            break;
-          case 'on_way':
-            statusText = 'في الطريق';
-            break;
-          case 'delivered':
-            statusText = 'تم التوصيل';
-            break;
-          case 'cancelled':
-            statusText = 'ملغي';
-            break;
-        }
+        if (status.delivered) statusText = 'تم التوصيل';
+        else if (status.on_way) statusText = 'في الطريق';
+        else if (status.preparing) statusText = 'قيد التحضير';
+        else if (status.confirmed) statusText = 'تم التأكيد';
         
         const modalHTML = `
             <div class="modal-overlay" onclick="closeModal()">
                 <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px;">
-                    <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+                    <button class="modal-close" onclick="closeModal()">
                         <i class="fas fa-times"></i>
                     </button>
                     <div class="modal-header">
@@ -4696,8 +4115,7 @@
                             ${order.items?.map(item => `
                                 <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color);">
                                     <img src="${item.image || 'https://via.placeholder.com/50/6B5BFF/ffffff?text=صورة'}" 
-                                         style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 15px;"
-                                         loading="lazy">
+                                         style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 15px;">
                                     <div style="flex: 1;">
                                         <p style="margin: 0; font-weight: 600;">${item.name}</p>
                                         <p style="margin: 5px 0; color: var(--text-light);">الكمية: ${item.quantity}</p>
@@ -4759,7 +4177,7 @@
         console.error('Error loading order details:', error);
         showNotification('حدث خطأ في تحميل تفاصيل الطلب', 'error');
     }
-  }
+}
 
   function openAddresses() {
     if (!currentUser) {
@@ -4771,7 +4189,7 @@
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -4806,7 +4224,7 @@
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -4822,24 +4240,24 @@
             </div>
             
             <div class="form-group">
-              <label class="form-label">الاسم الكامل *</label>
-              <input type="text" class="form-control" id="addressName" value="${userData?.name || ''}" required>
+              <label class="form-label">الاسم الكامل</label>
+              <input type="text" class="form-control" id="addressName" value="${userData?.name || ''}">
             </div>
             
             <div class="form-group">
-              <label class="form-label">رقم الهاتف *</label>
-              <input type="tel" class="form-control" id="addressPhone" value="${userData?.phone || ''}" required pattern="[0-9]{10,15}">
+              <label class="form-label">رقم الهاتف</label>
+              <input type="tel" class="form-control" id="addressPhone" value="${userData?.phone || ''}">
             </div>
             
             <div class="form-group">
-              <label class="form-label">العنوان التفصيلي *</label>
+              <label class="form-label">العنوان التفصيلي</label>
               <textarea class="form-control" id="addressDetails" rows="3" 
-                        placeholder="الحي، الشارع، المبنى، الشقة..." required></textarea>
+                        placeholder="الحي، الشارع، المبنى، الشقة..."></textarea>
             </div>
             
             <div class="form-group">
-              <label class="form-label">المدينة *</label>
-              <input type="text" class="form-control" id="addressCity" placeholder="بنها" required>
+              <label class="form-label">المدينة</label>
+              <input type="text" class="form-control" id="addressCity" placeholder="بنها">
             </div>
             
             <button class="btn btn-primary btn-block" onclick="saveAddress()">
@@ -4873,12 +4291,6 @@
             return;
         }
         
-        // تحقق من صحة رقم الهاتف
-        if (!/^[0-9]{10,15}$/.test(addressData.phone)) {
-            showNotification('يرجى إدخال رقم هاتف صحيح', 'warning');
-            return;
-        }
-        
         // حفظ العنوان في قاعدة البيانات
         await db.collection('addresses').add(addressData);
         
@@ -4904,9 +4316,9 @@
         console.error('Error saving address:', error);
         showNotification('حدث خطأ في حفظ العنوان', 'error');
     }
-  }
+}
 
-  async function loadUserAddresses() {
+async function loadUserAddresses() {
     try {
         const snapshot = await db.collection('addresses')
             .where('userId', '==', currentUser.uid)
@@ -4952,14 +4364,14 @@
     } catch (error) {
         console.error('Error loading addresses:', error);
     }
-  }
+}
 
   // ---------- دوال المصادقة ----------
   function openLoginModal() {
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -4970,20 +4382,20 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label class="form-label">البريد الإلكتروني *</label>
-              <input type="email" class="form-control" id="loginEmail" placeholder="example@email.com" required>
+              <label class="form-label">البريد الإلكتروني</label>
+              <input type="email" class="form-control" id="loginEmail" placeholder="example@email.com">
             </div>
             
             <div class="form-group">
-              <label class="form-label">كلمة المرور *</label>
-              <input type="password" class="form-control" id="loginPassword" placeholder="********" required>
+              <label class="form-label">كلمة المرور</label>
+              <input type="password" class="form-control" id="loginPassword" placeholder="********">
             </div>
             
             <div style="text-align: left; margin-bottom: 15px;">
-              <button class="btn btn-link" onclick="openForgotPasswordModal()" style="color: var(--primary-color); font-size: 0.9rem; padding: 0; border: none; background: none;">
+              <a href="#" onclick="openForgotPasswordModal()" style="color: var(--primary-color); font-size: 0.9rem;">
                 <i class="fas fa-question-circle"></i>
                 نسيت كلمة المرور؟
-              </button>
+              </a>
             </div>
             
             <button class="btn btn-primary btn-block mb-3" onclick="emailLogin()">
@@ -5004,9 +4416,7 @@
             </button>
             
             <div style="text-align: center; margin-top: 20px;">
-              <button class="btn btn-link" onclick="openRegisterModal()" style="color: var(--primary-color); padding: 0; border: none; background: none;">
-                ليس لديك حساب؟ إنشاء حساب جديد
-              </button>
+              <a href="#" onclick="openRegisterModal()" style="color: var(--primary-color);">ليس لديك حساب؟ إنشاء حساب جديد</a>
             </div>
           </div>
         </div>
@@ -5020,7 +4430,7 @@
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -5031,8 +4441,8 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label class="form-label">أدخل بريدك الإلكتروني *</label>
-              <input type="email" class="form-control" id="forgotEmail" placeholder="example@email.com" required>
+              <label class="form-label">أدخل بريدك الإلكتروني</label>
+              <input type="email" class="form-control" id="forgotEmail" placeholder="example@email.com">
               <small style="color: var(--text-light);">سنرسل رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني</small>
             </div>
             
@@ -5042,9 +4452,7 @@
             </button>
             
             <div style="text-align: center; margin-top: 20px;">
-              <button class="btn btn-link" onclick="openLoginModal()" style="color: var(--primary-color); padding: 0; border: none; background: none;">
-                العودة لتسجيل الدخول
-              </button>
+              <a href="#" onclick="openLoginModal()" style="color: var(--primary-color);">العودة لتسجيل الدخول</a>
             </div>
           </div>
         </div>
@@ -5095,8 +4503,6 @@
         errorMessage = 'كلمة المرور غير صحيحة';
       } else if (error.code === 'auth/too-many-requests') {
         errorMessage = 'تم محاولة تسجيل الدخول مرات كثيرة، حاول لاحقاً';
-      } else if (error.code === 'auth/user-disabled') {
-        errorMessage = 'تم تعطيل هذا الحساب';
       }
       
       showNotification(errorMessage, 'error');
@@ -5106,9 +4512,6 @@
   async function googleSignIn() {
     try {
       const provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope('profile');
-      provider.addScope('email');
-      
       await auth.signInWithPopup(provider);
       showNotification('تم تسجيل الدخول بنجاح', 'success');
       closeModal();
@@ -5122,7 +4525,7 @@
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -5133,24 +4536,24 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label class="form-label">الاسم الكامل *</label>
-              <input type="text" class="form-control" id="registerName" placeholder="أحمد محمد" required>
+              <label class="form-label">الاسم الكامل</label>
+              <input type="text" class="form-control" id="registerName" placeholder="أحمد محمد">
             </div>
             
             <div class="form-group">
-              <label class="form-label">البريد الإلكتروني *</label>
-              <input type="email" class="form-control" id="registerEmail" placeholder="example@email.com" required>
+              <label class="form-label">البريد الإلكتروني</label>
+              <input type="email" class="form-control" id="registerEmail" placeholder="example@email.com">
             </div>
             
             <div class="form-group">
-              <label class="form-label">كلمة المرور *</label>
-              <input type="password" class="form-control" id="registerPassword" placeholder="********" required minlength="6">
+              <label class="form-label">كلمة المرور</label>
+              <input type="password" class="form-control" id="registerPassword" placeholder="********">
               <small style="color: var(--text-light);">يجب أن تكون 6 أحرف على الأقل</small>
             </div>
             
             <div class="form-group">
-              <label class="form-label">تأكيد كلمة المرور *</label>
-              <input type="password" class="form-control" id="registerConfirmPassword" placeholder="********" required minlength="6">
+              <label class="form-label">تأكيد كلمة المرور</label>
+              <input type="password" class="form-control" id="registerConfirmPassword" placeholder="********">
             </div>
             
             <button class="btn btn-primary btn-block" onclick="emailRegister()">
@@ -5159,9 +4562,7 @@
             </button>
             
             <div style="text-align: center; margin-top: 20px;">
-              <button class="btn btn-link" onclick="openLoginModal()" style="color: var(--primary-color); padding: 0; border: none; background: none;">
-                لديك حساب بالفعل؟ سجل دخول
-              </button>
+              <a href="#" onclick="openLoginModal()" style="color: var(--primary-color);">لديك حساب بالفعل؟ سجل دخول</a>
             </div>
           </div>
         </div>
@@ -5197,8 +4598,7 @@
       
       // تحديث الاسم المعروض
       await userCredential.user.updateProfile({
-        displayName: name,
-        photoURL: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=6B5BFF&color=fff&size=64`
+        displayName: name
       });
       
       // إنشاء مستند المستخدم
@@ -5223,8 +4623,6 @@
         errorMessage = 'بريد إلكتروني غير صالح';
       } else if (error.code === 'auth/weak-password') {
         errorMessage = 'كلمة المرور ضعيفة جداً';
-      } else if (error.code === 'auth/operation-not-allowed') {
-        errorMessage = 'عملية التسجيل غير مسموح بها';
       }
       
       showNotification(errorMessage, 'error');
@@ -5252,7 +4650,7 @@
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="admin-panel" onclick="event.stopPropagation()" style="max-width: 1200px; margin: 20px; width: calc(100% - 40px);">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق" style="position: absolute; top: 20px; left: 20px;">
+          <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 20px; left: 20px;">
             <i class="fas fa-times"></i>
           </button>
           
@@ -5299,19 +4697,19 @@
           </div>
           
           <div class="admin-tabs">
-            <button class="admin-tab active" onclick="showAdminTab('products', this)" aria-label="إدارة المنتجات">
+            <button class="admin-tab active" onclick="showAdminTab('products', this)">
               <i class="fas fa-box"></i> المنتجات
             </button>
-            <button class="admin-tab" onclick="showAdminTab('orders', this)" aria-label="إدارة الطلبات">
+            <button class="admin-tab" onclick="showAdminTab('orders', this)">
               <i class="fas fa-shopping-cart"></i> الطلبات
             </button>
-            <button class="admin-tab" onclick="showAdminTab('categories', this)" aria-label="إدارة التصنيفات">
+            <button class="admin-tab" onclick="showAdminTab('categories', this)">
               <i class="fas fa-tags"></i> التصنيفات
             </button>
-            <button class="admin-tab" onclick="showAdminTab('users', this)" aria-label="إدارة المستخدمين">
+            <button class="admin-tab" onclick="showAdminTab('users', this)">
               <i class="fas fa-users"></i> المستخدمين
             </button>
-            <button class="admin-tab" onclick="showAdminTab('settings', this)" aria-label="الإعدادات">
+            <button class="admin-tab" onclick="showAdminTab('settings', this)">
               <i class="fas fa-cog"></i> الإعدادات
             </button>
           </div>
@@ -5361,10 +4759,8 @@
     // تحديث التبويبات النشطة
     document.querySelectorAll('.admin-tab').forEach(tab => {
       tab.classList.remove('active');
-      tab.setAttribute('aria-selected', 'false');
     });
     button.classList.add('active');
-    button.setAttribute('aria-selected', 'true');
     
     const contentEl = document.getElementById('adminContent');
     
@@ -5434,8 +4830,7 @@
             <td>
               <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/50/6B5BFF/ffffff?text=صورة'}" 
                    alt="${product.name}"
-                   style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;"
-                   loading="lazy">
+                   style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
             </td>
             <td>${product.name}</td>
             <td>${product.price?.toFixed(2) || '0'} جنيه</td>
@@ -5443,10 +4838,10 @@
             <td>${product.stock || 0}</td>
             <td>${product.category || 'عام'}</td>
             <td>
-              <button class="btn btn-sm btn-primary" onclick="editProduct('${doc.id}')" aria-label="تعديل المنتج">
+              <button class="btn btn-sm btn-primary" onclick="editProduct('${doc.id}')">
                 <i class="fas fa-edit"></i>
               </button>
-              <button class="btn btn-sm btn-danger" onclick="deleteProduct('${doc.id}')" aria-label="حذف المنتج">
+              <button class="btn btn-sm btn-danger" onclick="deleteProduct('${doc.id}')">
                 <i class="fas fa-trash"></i>
               </button>
             </td>
@@ -5477,7 +4872,7 @@
     const modalHTML = `
         <div class="modal-overlay" onclick="closeModal()">
             <div class="modal" onclick="event.stopPropagation()" style="max-width: 700px;">
-                <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+                <button class="modal-close" onclick="closeModal()">
                     <i class="fas fa-times"></i>
                 </button>
                 <div class="modal-header">
@@ -5555,9 +4950,9 @@
     `;
     
     document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
+}
 
-  async function saveNewProduct() {
+async function saveNewProduct() {
     try {
         const productData = {
             name: document.getElementById('productName').value.trim(),
@@ -5594,9 +4989,9 @@
         console.error('Error saving product:', error);
         showNotification('حدث خطأ في حفظ المنتج', 'error');
     }
-  }
+}
 
-  async function editProduct(productId) {
+async function editProduct(productId) {
     try {
         const productDoc = await db.collection('products').doc(productId).get();
         
@@ -5610,7 +5005,7 @@
         const modalHTML = `
             <div class="modal-overlay" onclick="closeModal()">
                 <div class="modal" onclick="event.stopPropagation()" style="max-width: 700px;">
-                    <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+                    <button class="modal-close" onclick="closeModal()">
                         <i class="fas fa-times"></i>
                     </button>
                     <div class="modal-header">
@@ -5693,9 +5088,9 @@
         console.error('Error loading product for edit:', error);
         showNotification('حدث خطأ في تحميل بيانات المنتج', 'error');
     }
-  }
+}
 
-  async function updateProduct(productId) {
+async function updateProduct(productId) {
     try {
         const productData = {
             name: document.getElementById('editProductName').value.trim(),
@@ -5724,9 +5119,9 @@
         console.error('Error updating product:', error);
         showNotification('حدث خطأ في تحديث المنتج', 'error');
     }
-  }
+}
 
-  async function deleteProduct(productId) {
+async function deleteProduct(productId) {
     if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
     
     try {
@@ -5743,7 +5138,7 @@
         console.error('Error deleting product:', error);
         showNotification('حدث خطأ في حذف المنتج', 'error');
     }
-  }
+}
 
   async function loadAdminOrders(container) {
     try {
@@ -5781,25 +5176,13 @@
       
       snapshot.docs.forEach(doc => {
         const order = doc.data();
+        const status = order.status || {};
         let statusText = 'قيد الانتظار';
         
-        switch(order.status) {
-          case 'confirmed':
-            statusText = 'تم التأكيد';
-            break;
-          case 'preparing':
-            statusText = 'قيد التحضير';
-            break;
-          case 'on_way':
-            statusText = 'في الطريق';
-            break;
-          case 'delivered':
-            statusText = 'تم التوصيل';
-            break;
-          case 'cancelled':
-            statusText = 'ملغي';
-            break;
-        }
+        if (status.delivered) statusText = 'تم التوصيل';
+        else if (status.on_way) statusText = 'في الطريق';
+        else if (status.preparing) statusText = 'قيد التحضير';
+        else if (status.confirmed) statusText = 'تم التأكيد';
         
         tableHTML += `
           <tr>
@@ -5809,7 +5192,7 @@
             <td>${statusText}</td>
             <td>${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</td>
             <td>
-              <button class="btn btn-sm btn-primary" onclick="viewOrderAdmin('${doc.id}')" aria-label="عرض تفاصيل الطلب">
+              <button class="btn btn-sm btn-primary" onclick="viewOrderAdmin('${doc.id}')">
                 <i class="fas fa-eye"></i>
               </button>
             </td>
@@ -5850,7 +5233,7 @@
         const modalHTML = `
             <div class="modal-overlay" onclick="closeModal()">
                 <div class="modal" onclick="event.stopPropagation()" style="max-width: 900px;">
-                    <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+                    <button class="modal-close" onclick="closeModal()">
                         <i class="fas fa-times"></i>
                     </button>
                     <div class="modal-header">
@@ -5893,8 +5276,7 @@
                             ${order.items?.map(item => `
                                 <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color);">
                                     <img src="${item.image || 'https://via.placeholder.com/50/6B5BFF/ffffff?text=صورة'}" 
-                                         style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 15px;"
-                                         loading="lazy">
+                                         style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 15px;">
                                     <div style="flex: 1;">
                                         <p style="margin: 0; font-weight: 600;">${item.name}</p>
                                         <p style="margin: 5px 0; color: var(--text-light);">الكمية: ${item.quantity}</p>
@@ -5956,7 +5338,7 @@
         console.error('Error viewing admin order:', error);
         showNotification('حدث خطأ في تحميل تفاصيل الطلب', 'error');
     }
-  }
+}
 
   async function loadAdminCategories(container) {
     try {
@@ -6010,10 +5392,10 @@
             <td>${category.productCount || 0}</td>
             <td>${category.order || 0}</td>
             <td>
-              <button class="btn btn-sm btn-primary" onclick="editCategory('${doc.id}')" aria-label="تعديل التصنيف">
+              <button class="btn btn-sm btn-primary" onclick="editCategory('${doc.id}')">
                 <i class="fas fa-edit"></i>
               </button>
-              <button class="btn btn-sm btn-danger" onclick="deleteCategory('${doc.id}')" aria-label="حذف التصنيف">
+              <button class="btn btn-sm btn-danger" onclick="deleteCategory('${doc.id}')">
                 <i class="fas fa-trash"></i>
               </button>
             </td>
@@ -6044,7 +5426,7 @@
     const modalHTML = `
         <div class="modal-overlay" onclick="closeModal()">
             <div class="modal" onclick="event.stopPropagation()">
-                <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+                <button class="modal-close" onclick="closeModal()">
                     <i class="fas fa-times"></i>
                 </button>
                 <div class="modal-header">
@@ -6091,9 +5473,9 @@
     `;
     
     document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
+}
 
-  async function editCategory(categoryId) {
+async function editCategory(categoryId) {
     try {
         const categoryDoc = await db.collection('categories').doc(categoryId).get();
         
@@ -6107,7 +5489,7 @@
         const modalHTML = `
             <div class="modal-overlay" onclick="closeModal()">
                 <div class="modal" onclick="event.stopPropagation()">
-                    <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+                    <button class="modal-close" onclick="closeModal()">
                         <i class="fas fa-times"></i>
                     </button>
                     <div class="modal-header">
@@ -6158,22 +5540,15 @@
         console.error('Error loading category:', error);
         showNotification('حدث خطأ في تحميل التصنيف', 'error');
     }
-  }
+}
 
-  async function deleteCategory(categoryId) {
+async function deleteCategory(categoryId) {
     if (!confirm('هل أنت متأكد من حذف هذا التصنيف؟')) return;
     
     try {
         // التحقق من وجود منتجات في هذا التصنيف
-        const categoryDoc = await db.collection('categories').doc(categoryId).get();
-        if (!categoryDoc.exists) {
-            showNotification('التصنيف غير موجود', 'error');
-            return;
-        }
-        
-        const categoryName = categoryDoc.data().name;
         const productsSnapshot = await db.collection('products')
-            .where('category', '==', categoryName)
+            .where('category', '==', (await db.collection('categories').doc(categoryId).get()).data().name)
             .limit(1)
             .get();
         
@@ -6195,7 +5570,7 @@
         console.error('Error deleting category:', error);
         showNotification('حدث خطأ في حذف التصنيف', 'error');
     }
-  }
+}
 
   async function loadAdminUsers(container) {
     try {
@@ -6238,8 +5613,7 @@
             <td>
               <img src="${user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6B5BFF&color=fff&size=40`}" 
                    alt="${user.name}"
-                   style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;"
-                   loading="lazy">
+                   style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
             </td>
             <td>${user.name}</td>
             <td>${user.email}</td>
@@ -6250,7 +5624,7 @@
             </td>
             <td>${user.createdAt?.toDate ? user.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</td>
             <td>
-              <button class="btn btn-sm btn-primary" onclick="viewUserAdmin('${doc.id}')" aria-label="عرض تفاصيل المستخدم">
+              <button class="btn btn-sm btn-primary" onclick="viewUserAdmin('${doc.id}')">
                 <i class="fas fa-eye"></i>
               </button>
             </td>
@@ -6298,7 +5672,7 @@
         const modalHTML = `
             <div class="modal-overlay" onclick="closeModal()">
                 <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px;">
-                    <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+                    <button class="modal-close" onclick="closeModal()">
                         <i class="fas fa-times"></i>
                     </button>
                     <div class="modal-header">
@@ -6312,8 +5686,7 @@
                             <div>
                                 <img src="${user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6B5BFF&color=fff&size=128`}" 
                                      alt="${user.name}"
-                                     style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary-color);"
-                                     loading="lazy">
+                                     style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary-color);">
                             </div>
                             
                             <div>
@@ -6334,22 +5707,10 @@
                             <div style="background: white; border-radius: var(--border-radius-md); overflow: hidden; border: 1px solid var(--border-color);">
                                 ${ordersSnapshot.docs.map(doc => {
                                     const order = doc.data();
+                                    const status = order.status || {};
                                     let statusText = 'قيد الانتظار';
-                                    
-                                    switch(order.status) {
-                                        case 'confirmed':
-                                            statusText = 'تم التأكيد';
-                                            break;
-                                        case 'preparing':
-                                            statusText = 'قيد التحضير';
-                                            break;
-                                        case 'on_way':
-                                            statusText = 'في الطريق';
-                                            break;
-                                        case 'delivered':
-                                            statusText = 'تم التوصيل';
-                                            break;
-                                    }
+                                    if (status.delivered) statusText = 'تم التوصيل';
+                                    else if (status.on_way) statusText = 'في الطريق';
                                     
                                     return `
                                         <div style="padding: 15px; border-bottom: 1px solid var(--border-color);">
@@ -6386,13 +5747,17 @@
         console.error('Error loading user details:', error);
         showNotification('حدث خطأ في تحميل بيانات المستخدم', 'error');
     }
-  }
+}
 
   async function loadAdminSettings(container) {
     try {
         // جلب إعدادات الشحن
         const settingsDoc = await db.collection('settings').doc('shipping').get();
-        const settings = settingsDoc.exists ? settingsDoc.data() : APP_CONFIG.shipping;
+        const settings = settingsDoc.exists ? settingsDoc.data() : {
+            standard: 20,
+            freeThreshold: 300,
+            enabled: true
+        };
         
         const html = `
             <h3 style="margin-bottom: 20px;">إعدادات الشحن</h3>
@@ -6428,9 +5793,9 @@
         console.error('Error loading settings:', error);
         container.innerHTML = '<p class="text-danger">حدث خطأ في تحميل الإعدادات</p>';
     }
-  }
+}
 
-  async function saveShippingSettings() {
+async function saveShippingSettings() {
     try {
         const settings = {
             standard: parseInt(document.getElementById('shippingStandard').value) || 20,
@@ -6441,16 +5806,13 @@
         
         await db.collection('settings').doc('shipping').set(settings, { merge: true });
         
-        // تحديث الإعدادات المحلية
-        APP_CONFIG.shipping = settings;
-        
         showNotification('تم حفظ إعدادات الشحن بنجاح', 'success');
         
     } catch (error) {
         console.error('Error saving settings:', error);
         showNotification('حدث خطأ في حفظ الإعدادات', 'error');
     }
-  }
+}
 
   // ---------- دوال المساعدة ----------
   function openWhatsapp() {
@@ -6465,7 +5827,7 @@
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -6527,7 +5889,7 @@
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()" aria-label="إغلاق">
+          <button class="modal-close" onclick="closeModal()">
             <i class="fas fa-times"></i>
           </button>
           <div class="modal-header">
@@ -6656,22 +6018,6 @@
         mobileSearch.style.display = 'none';
       }
     });
-    
-    // منع التكبير غير المقصود على الموبايل
-    document.addEventListener('touchstart', function(event) {
-      if (event.touches.length > 1) {
-        event.preventDefault();
-      }
-    }, { passive: false });
-    
-    // تحسين أداء التمرير
-    let lastScrollTop = 0;
-    window.addEventListener('scroll', () => {
-      const st = window.pageYOffset || document.documentElement.scrollTop;
-      if (Math.abs(st - lastScrollTop) > 100) {
-        lastScrollTop = st;
-      }
-    }, { passive: true });
   }
 
   function searchProducts() {
@@ -6717,18 +6063,17 @@
                 ` : ''}
                 
                 <div class="product-actions">
-                  <button class="action-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${product.id}', this)" aria-label="${isFavorite ? 'إزالة من المفضلة' : 'إضافة إلى المفضلة'}">
+                  <button class="action-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${product.id}', this)">
                     <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
                   </button>
-                  <button class="action-btn" onclick="shareProduct('${product.id}')" aria-label="مشاركة المنتج">
+                  <button class="action-btn" onclick="shareProduct('${product.id}')">
                     <i class="fas fa-share-alt"></i>
                   </button>
                 </div>
                 
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                      alt="${product.name}"
-                     class="product-image"
-                     loading="lazy">
+                     class="product-image">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
@@ -6743,9 +6088,9 @@
                     ` : ''}
                   </div>
                   
-                  <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" onclick="addToCart('${product.id}', this)" ${product.stock === 0 ? 'disabled' : ''}>
+                  <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" onclick="addToCart('${product.id}', this)">
                     <i class="fas fa-cart-plus"></i>
-                    ${product.stock === 0 ? 'نفذت الكمية' : 'أضف إلى العربة'}
+                    أضف إلى العربة
                   </button>
                 </div>
               </div>
@@ -6804,7 +6149,7 @@
             url: window.location.href
         };
         
-        if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        if (navigator.share) {
             await navigator.share(shareData);
         } else {
             // نسخ النص
@@ -6818,24 +6163,16 @@
         console.error('Error sharing order:', error);
         showNotification('حدث خطأ في مشاركة الطلب', 'error');
     }
-  }
+}
 
-  function getOrderStatusText(status) {
-    switch(status) {
-      case 'confirmed':
-        return 'تم التأكيد';
-      case 'preparing':
-        return 'قيد التحضير';
-      case 'on_way':
-        return 'في الطريق';
-      case 'delivered':
-        return 'تم التوصيل';
-      case 'cancelled':
-        return 'ملغي';
-      default:
-        return 'قيد الانتظار';
-    }
-  }
+function getOrderStatusText(status) {
+    if (!status) return 'قيد الانتظار';
+    if (status.delivered) return 'تم التوصيل';
+    if (status.on_way) return 'في الطريق';
+    if (status.preparing) return 'قيد التحضير';
+    if (status.confirmed) return 'تم التأكيد';
+    return 'قيد الانتظار';
+}
 
   // ---------- التعديلات الخاصة بالموقع ----------
   function notifyAdminsNewUser(userId, userName, userEmail) {
@@ -6856,6 +6193,7 @@
         });
       });
   }
+
 
   function notifyAdminsNewOrder(orderId, userName, total) {
     // هذه الدالة لإشعار المديرين بطلب جديد
@@ -6878,24 +6216,6 @@
 
   // ---------- تهيئة نهائية ----------
   console.log('🎉 تطبيق سوبر ماركت الأستاذ جاهز!');
-  
-  // إضافة فاصل زمني للتأكد من أن التطبيق يعمل
-  setInterval(() => {
-    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-      navigator.serviceWorker.controller.postMessage({
-        type: 'HEARTBEAT',
-        timestamp: Date.now()
-      });
-    }
-  }, 30000);
-  
-  // التحقق من تحديثات التطبيق
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      window.location.reload();
-    });
-  }
-  
   </script>
 </body>
 </html>
