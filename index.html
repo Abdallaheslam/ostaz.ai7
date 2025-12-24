@@ -73,34 +73,34 @@
     }
     
     :root {
-      --primary-gradient: linear-gradient(135deg, #6B5BFF 0%, #7C64FF 100%);
-      --primary-color: #6B5BFF;
-      --primary-dark: #5A4BFF;
-      --primary-light: #8C7CFF;
-      --search-orange: #FFA500;
-      --browse-orange: #FF7F00;
-      --coupon-purple: #6B5BFF;
-      --cart-red: #FF2D55;
-      --phone-orange: #FF9500;
-      --whatsapp-green: #25D366;
-      --bg-color: #FFFFFF;
-      --text-primary: #333333;
-      --text-secondary: #666666;
-      --text-light: #999999;
-      --card-bg: #ffffff;
-      --border-color: #e0e0e0;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-      --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
-      --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
-      --border-radius-sm: 8px;
-      --border-radius-md: 12px;
-      --border-radius-lg: 16px;
-      --transition-fast: 0.2s ease;
-      --transition-normal: 0.3s ease;
-      --transition-slow: 0.5s ease;
-      --navbar-height: 60px;
-      --bottom-nav-height: 70px;
-    }
+  --primary-gradient: linear-gradient(135deg, #6B5BFF 0%, #7C64FF 100%);
+  --primary-color: #6B5BFF;
+  --primary-dark: #5A4BFF;
+  --primary-light: #8C7CFF; /* ← أضف هذا السطر */
+  --search-orange: #FFA500;
+  --browse-orange: #FF7F00;
+  --coupon-purple: #6B5BFF;
+  --cart-red: #FF2D55;
+  --phone-orange: #FF9500;
+  --whatsapp-green: #25D366;
+  --bg-color: #FFFFFF;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-light: #999999;
+  --card-bg: #ffffff;
+  --border-color: #e0e0e0;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --navbar-height: 60px;
+  --bottom-nav-height: 70px;
+}
     
     html {
       scroll-behavior: smooth;
@@ -223,9 +223,9 @@
     }
     
     .btn-coupon {
-      background: linear-gradient(135deg, var(--coupon-purple), var(--primary-light));
-      color: white;
-    }
+  background: linear-gradient(135deg, var(--coupon-purple), var(--primary-light));
+  color: white;
+}
     
     .btn-search {
       background: var(--search-orange);
@@ -707,7 +707,7 @@
       animation: fadeInUp 0.8s ease 0.6s both;
     }
     
-    /* ====== CATEGORIES - تحسين عرض التصنيفات ====== */
+    /* ====== CATEGORIES ====== */
     .section {
       background: var(--card-bg);
       border-radius: var(--border-radius-lg);
@@ -753,7 +753,7 @@
     
     .categories-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 20px;
     }
     
@@ -774,7 +774,7 @@
     .category-card {
       background: var(--card-bg);
       border-radius: var(--border-radius-md);
-      padding: 20px 15px;
+      padding: 20px;
       text-align: center;
       text-decoration: none;
       color: var(--text-primary);
@@ -783,11 +783,6 @@
       overflow: hidden;
       border: 1px solid var(--border-color);
       animation: fadeIn 0.6s ease;
-      min-height: 160px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
     }
     
     .category-card:hover {
@@ -838,55 +833,42 @@
       font-size: 1rem;
       margin-bottom: 8px;
       color: var(--text-primary);
-      line-height: 1.3;
     }
     
     .category-count {
       font-size: 0.8rem;
       color: var(--text-light);
       background: rgba(107, 91, 255, 0.1);
-      padding: 4px 12px;
-      border-radius: 20px;
+      padding: 3px 10px;
+      border-radius: 12px;
       display: inline-block;
-      margin-top: 5px;
     }
     
-    /* ====== PRODUCTS - عرض 5 منتجات في الصف ====== */
+    /* ====== PRODUCTS ====== */
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 20px;
     }
     
-    @media (max-width: 1200px) {
+    @media (max-width: 1024px) {
       .products-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-    
-    @media (max-width: 992px) {
-      .products-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(5, 1fr);
+        gap: 15px;
       }
     }
     
     @media (max-width: 768px) {
       .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
       }
     }
     
     @media (max-width: 480px) {
       .products-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-      }
-    }
-    
-    @media (max-width: 360px) {
-      .products-grid {
-        grid-template-columns: repeat(1, 1fr);
+        gap: 10px;
       }
     }
     
@@ -898,9 +880,6 @@
       transition: all var(--transition-normal);
       border: 1px solid var(--border-color);
       animation: fadeInUp 0.6s ease;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
     }
     
     .product-card:hover {
@@ -915,9 +894,9 @@
       left: 12px;
       background: linear-gradient(135deg, var(--cart-red), #FF4757);
       color: white;
-      padding: 5px 12px;
-      border-radius: 15px;
-      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
       font-weight: 700;
       z-index: 2;
       box-shadow: 0 2px 8px rgba(255, 45, 85, 0.3);
@@ -980,20 +959,12 @@
       color: white;
     }
     
-    .product-image-container {
-      height: 200px;
-      overflow: hidden;
-      background: rgba(107, 91, 255, 0.05);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    
     .product-image {
       width: 100%;
-      height: 100%;
+      height: 180px;
       object-fit: contain;
+      background: rgba(107, 91, 255, 0.05);
+      padding: 20px;
       transition: transform var(--transition-normal);
     }
     
@@ -1003,9 +974,6 @@
     
     .product-info {
       padding: 20px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
     }
     
     .product-name {
@@ -1028,7 +996,6 @@
       border-radius: 12px;
       font-size: 0.8rem;
       margin-bottom: 12px;
-      align-self: flex-start;
     }
     
     .product-price {
@@ -1036,7 +1003,6 @@
       align-items: center;
       gap: 10px;
       margin-bottom: 12px;
-      flex-wrap: wrap;
     }
     
     .price-current {
@@ -1107,7 +1073,6 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      margin-top: auto;
     }
     
     .add-to-cart-btn:hover:not(:disabled) {
@@ -1121,7 +1086,7 @@
       cursor: not-allowed;
     }
     
-    /* ====== ADMIN PANEL - MOBILE FRIENDLY مع إصلاح المشاكل ====== */
+    /* ====== ADMIN PANEL - MOBILE FRIENDLY ====== */
     .admin-panel {
       background: white;
       border-radius: var(--border-radius-lg);
@@ -1346,21 +1311,6 @@
     
     .form-control::placeholder {
       color: var(--text-light);
-    }
-    
-    /* تحسين حقل اللون في لوحة الإدارة */
-    input[type="color"] {
-      height: 50px;
-      cursor: pointer;
-      border: 2px solid var(--border-color);
-      border-radius: var(--border-radius-sm);
-      padding: 5px;
-      background: white;
-    }
-    
-    input[type="color"]:focus {
-      border-color: var(--primary-color);
-      outline: none;
     }
     
     /* ====== MODALS ====== */
@@ -1940,10 +1890,6 @@
     }
     
     @media (max-width: 480px) {
-      .categories-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
       .admin-stats {
         grid-template-columns: 1fr;
       }
@@ -2083,7 +2029,7 @@
     }
     
     ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary-color);
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
     }
     
     /* ====== PWA SPECIFIC STYLES ====== */
@@ -2217,207 +2163,29 @@
     
     /* ====== FOOTER STYLES ====== */
     .footer {
-      background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
-      color: white;
-      padding: 40px 20px 20px;
+      text-align: center;
+      padding: 30px 20px;
       margin-top: 50px;
-      border-top: 3px solid var(--primary-color);
-    }
-    
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-    }
-    
-    .footer-section h3 {
-      color: white;
-      margin-bottom: 20px;
-      font-size: 1.2rem;
-      position: relative;
-      padding-bottom: 10px;
-    }
-    
-    .footer-section h3::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 40px;
-      height: 2px;
-      background: var(--primary-color);
-    }
-    
-    .footer-links {
-      list-style: none;
-    }
-    
-    .footer-links li {
-      margin-bottom: 10px;
-    }
-    
-    .footer-links a {
-      color: #ccc;
-      text-decoration: none;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .footer-links a:hover {
-      color: var(--primary-color);
-      transform: translateX(-5px);
-    }
-    
-    .footer-contact p {
-      color: #ccc;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .footer-contact i {
-      color: var(--primary-color);
-      width: 20px;
-    }
-    
-    .footer-social {
-      display: flex;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    
-    .footer-social a {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-    
-    .footer-social a:hover {
-      background: var(--primary-color);
-      transform: translateY(-3px);
-    }
-    
-    .copyright {
-      text-align: center;
-      padding-top: 20px;
-      margin-top: 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: #aaa;
-      font-size: 0.9rem;
-    }
-    
-    .copyright a {
-      color: var(--primary-color);
-      text-decoration: none;
-    }
-    
-    .copyright a:hover {
-      text-decoration: underline;
-    }
-    
-    .dev-credit {
-      background: rgba(107, 91, 255, 0.1);
-      padding: 10px;
-      border-radius: var(--border-radius-sm);
-      margin-top: 15px;
-      text-align: center;
-      border: 1px solid rgba(107, 91, 255, 0.2);
-    }
-    
-    .dev-credit p {
-      margin: 5px 0;
-      color: #ccc;
-      font-size: 0.85rem;
-    }
-    
-    .dev-credit a {
-      color: var(--primary-color);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    
-    .dev-credit a:hover {
-      text-decoration: underline;
-    }
-    
-    /* ====== PWA INSTALL BANNER ====== */
-    .pwa-install-banner {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: white;
-      border-radius: var(--border-radius-lg);
-      box-shadow: var(--shadow-lg);
-      padding: 15px;
-      z-index: 9998;
-      animation: slideInUp 0.5s ease;
-      border: 2px solid var(--primary-color);
-      max-width: 300px;
-    }
-    
-    .pwa-install-banner.hidden {
-      display: none;
-    }
-    
-    .pwa-install-banner .close-btn {
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      background: none;
-      border: none;
+      border-top: 1px solid var(--border-color);
       color: var(--text-light);
-      cursor: pointer;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .pwa-install-banner .close-btn:hover {
-      background: rgba(0, 0, 0, 0.1);
-    }
-    
-    .pwa-install-banner-content {
-      padding: 10px;
-    }
-    
-    .pwa-install-banner h4 {
-      color: var(--primary-color);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .pwa-install-banner p {
-      color: var(--text-secondary);
       font-size: 0.9rem;
-      margin-bottom: 15px;
+      background: rgba(107, 91, 255, 0.02);
     }
     
-    .pwa-install-banner-buttons {
-      display: flex;
-      gap: 10px;
+    .footer p {
+      margin-bottom: 10px;
+      color: var(--text-light);
     }
     
-    .pwa-install-banner-buttons .btn {
-      flex: 1;
-      padding: 8px 12px;
-      font-size: 0.85rem;
+    .footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    
+    .footer a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
     }
   </style>
   
@@ -2605,61 +2373,6 @@
         <!-- New products will be loaded here -->
       </div>
     </section>
-
-    <!-- Footer Section -->
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-section">
-          <h3>سوبر ماركت الأستاذ</h3>
-          <p style="color: #ccc; line-height: 1.6;">أفضل سوبر ماركت أونلاين مع توصيل سريع لكل أنحاء المدينة. نحن نقدم لكم أفضل المنتجات بأسعار تنافسية.</p>
-          <div class="footer-social">
-            <a href="#" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" title="تويتر"><i class="fab fa-twitter"></i></a>
-            <a href="#" title="إنستجرام"><i class="fab fa-instagram"></i></a>
-            <a href="https://wa.me/201550462808" title="واتساب" target="_blank"><i class="fab fa-whatsapp"></i></a>
-          </div>
-        </div>
-        
-        <div class="footer-section">
-          <h3>روابط سريعة</h3>
-          <ul class="footer-links">
-            <li><a href="#" onclick="goHome()"><i class="fas fa-home"></i> الرئيسية</a></li>
-            <li><a href="#" onclick="showAllProductsPage()"><i class="fas fa-shopping-bag"></i> جميع المنتجات</a></li>
-            <li><a href="#" onclick="showOffersPage()"><i class="fas fa-percentage"></i> العروض</a></li>
-            <li><a href="#" onclick="showCategoriesPage()"><i class="fas fa-tags"></i> التصنيفات</a></li>
-            <li><a href="#" onclick="openCart()"><i class="fas fa-shopping-cart"></i> عربة التسوق</a></li>
-          </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h3>معلومات الاتصال</h3>
-          <div class="footer-contact">
-            <p><i class="fas fa-map-marker-alt"></i> شارع عبدالحافظ، بنها، القليوبية</p>
-            <p><i class="fas fa-phone"></i> 01550462808</p>
-            <p><i class="fas fa-whatsapp"></i> 201550462808</p>
-            <p><i class="fas fa-envelope"></i> info@supermarket-alostaz.com</p>
-            <p><i class="fas fa-clock"></i> الأحد - الخميس: 8 صباحًا - 12 مساءً</p>
-          </div>
-        </div>
-        
-        <div class="footer-section">
-          <h3>تطبيق الموبايل</h3>
-          <p style="color: #ccc; margin-bottom: 15px;">حمل تطبيقنا الآن لتجربة تسوق أفضل مع إشعارات فورية بالعروض!</p>
-          <button class="btn btn-primary" onclick="showPWAInstallBanner()" style="width: 100%;">
-            <i class="fas fa-download"></i> تثبيت التطبيق
-          </button>
-          <div class="dev-credit">
-            <p>تم التطوير بواسطة: <a href="https://ai7-dev.netlify.app/" target="_blank">AI7</a></p>
-            <p>https://ai7-dev.netlify.app/</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="copyright">
-        <p>© 2026 سوبر ماركت الأستاذ. جميع الحقوق محفوظة.</p>
-        <p>تم التطوير بواسطة <a href="https://ai7-dev.netlify.app/" target="_blank">AI7</a></p>
-      </div>
-    </footer>
   </main>
 
   <!-- Bottom Navigation -->
@@ -2717,23 +2430,23 @@
     </a>
   </nav>
 
+  <!-- Footer with Developer Credit -->
+  <div class="footer">
+    <p>Developed by AI7</p>
+    <p>
+      <a href="https://ai7-dev.netlify.app/" 
+         target="_blank"
+         style="color: var(--primary-color); text-decoration: none;">
+        https://ai7-dev.netlify.app/
+      </a>
+    </p>
+  </div>
+
   <!-- Modals Container -->
   <div id="modalsContainer"></div>
 
-  <!-- PWA Install Banner -->
-  <div class="pwa-install-banner hidden" id="pwaInstallBanner">
-    <button class="close-btn" onclick="hidePWAInstallBanner()">
-      <i class="fas fa-times"></i>
-    </button>
-    <div class="pwa-install-banner-content">
-      <h4><i class="fas fa-rocket"></i> تثبيت التطبيق</h4>
-      <p>تثبيت التطبيق يعطيك تجربة أسرع، إشعارات مباشرة، وإمكانية استخدامه بدون إنترنت!</p>
-      <div class="pwa-install-banner-buttons">
-        <button class="btn btn-outline" onclick="hidePWAInstallBanner()">لاحقاً</button>
-        <button class="btn btn-primary" onclick="installPWA()">تثبيت الآن</button>
-      </div>
-    </div>
-  </div>
+  <!-- Install Button (Will be added dynamically) -->
+  <div id="installButtonContainer"></div>
 
   <!-- Admin Floating Button (Only for Admins) -->
   <button id="adminFloatBtn" class="btn btn-primary" style="
@@ -2843,7 +2556,6 @@
   let favorites = [];
   let notifications = [];
   let adminFloatBtn = null;
-  let deferredPrompt = null;
 
   // ---------- تهيئة التطبيق ----------
   document.addEventListener('DOMContentLoaded', async () => {
@@ -2868,72 +2580,10 @@
     setupEventListeners();
     
     // إعداد إشعار التثبيت
-    setupPWAInstall();
+    setupInstallPrompt();
     
     console.log('✅ التطبيق جاهز للاستخدام');
   });
-
-  // ---------- إعداد PWA Install ----------
-  function setupPWAInstall() {
-    // استمع لحدث beforeinstallprompt
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      
-      // عرض بانر التثبيت بعد 5 ثواني
-      setTimeout(() => {
-        if (!isPWAInstalled()) {
-          showPWAInstallBanner();
-        }
-      }, 5000);
-    });
-    
-    // استمع لحدث التثبيت الناجح
-    window.addEventListener('appinstalled', () => {
-      console.log('🎉 PWA installed successfully');
-      hidePWAInstallBanner();
-      showNotification('تم تثبيت التطبيق بنجاح!', 'success');
-    });
-  }
-
-  function isPWAInstalled() {
-    return window.matchMedia('(display-mode: standalone)').matches || 
-           window.navigator.standalone ||
-           document.referrer.includes('android-app://');
-  }
-
-  function showPWAInstallBanner() {
-    const banner = document.getElementById('pwaInstallBanner');
-    if (banner && deferredPrompt && !isPWAInstalled()) {
-      banner.classList.remove('hidden');
-    }
-  }
-
-  function hidePWAInstallBanner() {
-    const banner = document.getElementById('pwaInstallBanner');
-    if (banner) {
-      banner.classList.add('hidden');
-    }
-  }
-
-  async function installPWA() {
-    if (!deferredPrompt) {
-      showNotification('يمكنك تثبيت التطبيق من قائمة المتصفح', 'info');
-      return;
-    }
-    
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      console.log('✅ User accepted the install prompt');
-    } else {
-      console.log('❌ User dismissed the install prompt');
-    }
-    
-    deferredPrompt = null;
-    hidePWAInstallBanner();
-  }
 
   // ---------- تحميل البيانات الأولية ----------
   async function loadInitialData() {
@@ -3108,7 +2758,7 @@
       // تحميل المنتجات المميزة
       const featuredSnapshot = await db.collection('products')
         .where('featured', '==', true)
-        .limit(10)
+        .limit(6)
         .get();
       
       renderProducts('featuredContainer', featuredSnapshot.docs);
@@ -3116,7 +2766,7 @@
       // تحميل العروض
       const offersSnapshot = await db.collection('products')
         .where('discount', '>', 0)
-        .limit(10)
+        .limit(6)
         .get();
       
       renderProducts('offersContainer', offersSnapshot.docs);
@@ -3124,13 +2774,13 @@
       // تحميل المنتجات الجديدة
       const newSnapshot = await db.collection('products')
         .orderBy('createdAt', 'desc')
-        .limit(10)
+        .limit(6)
         .get();
       
       renderProducts('newProductsContainer', newSnapshot.docs);
       
       // حفظ جميع المنتجات للمستقبل
-      const allSnapshot = await db.collection('products').limit(100).get();
+      const allSnapshot = await db.collection('products').limit(50).get();
       globalProducts = allSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       
     } catch (error) {
@@ -3185,12 +2835,10 @@
             </button>
           </div>
           
-          <div class="product-image-container">
-            <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-                 alt="${product.name}"
-                 class="product-image"
-                 onerror="this.src='https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'">
-          </div>
+          <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
+               alt="${product.name}"
+               class="product-image"
+               onerror="this.src='https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'">
           
           <div class="product-info">
             <h3 class="product-name">${product.name}</h3>
@@ -3596,7 +3244,7 @@
             <i class="fas fa-list"></i>
             جميع المنتجات
           </h2>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <div style="display: flex; gap: 10px;">
             <select class="form-control" style="width: auto;" onchange="filterProducts(this.value)" id="filterSelect">
               <option value="">جميع التصنيفات</option>
               <option value="discount">العروض</option>
@@ -3657,11 +3305,9 @@
             </button>
           </div>
           
-          <div class="product-image-container">
-            <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-                 alt="${product.name}"
-                 class="product-image">
-          </div>
+          <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
+               alt="${product.name}"
+               class="product-image">
           
           <div class="product-info">
             <h3 class="product-name">${product.name}</h3>
@@ -3822,11 +3468,9 @@
                   </button>
                 </div>
                 
-                <div class="product-image-container">
-                  <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-                       alt="${product.name}"
-                       class="product-image">
-                </div>
+                <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
+                     alt="${product.name}"
+                     class="product-image">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
@@ -3983,11 +3627,9 @@
                   </button>
                 </div>
                 
-                <div class="product-image-container">
-                  <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-                       alt="${product.name}"
-                       class="product-image">
-                </div>
+                <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
+                     alt="${product.name}"
+                     class="product-image">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
@@ -4496,11 +4138,9 @@
                   </button>
                 </div>
                 
-                <div class="product-image-container">
-                  <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-                       alt="${product.name}"
-                       class="product-image">
-                </div>
+                <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
+                     alt="${product.name}"
+                     class="product-image">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
@@ -5352,7 +4992,7 @@
     }
   }
 
-  // =============== لوحة التحكم المحسنة للهواتف مع إصلاح المشاكل ===============
+  // =============== لوحة التحكم المحسنة للهواتف ===============
 
   function openAdminPanelMobile() {
     if (!currentUser || userData?.role !== 'admin') {
@@ -6859,11 +6499,9 @@
                   </button>
                 </div>
                 
-                <div class="product-image-container">
-                  <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-                       alt="${product.name}"
-                       class="product-image">
-                </div>
+                <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
+                     alt="${product.name}"
+                     class="product-image">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
@@ -7001,6 +6639,214 @@
           });
         });
       });
+  }
+
+  // ---------- إعداد إشعار التثبيت ----------
+  let deferredPrompt;
+  
+  function setupInstallPrompt() {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      showInstallNotification();
+    });
+    
+    window.addEventListener('appinstalled', () => {
+      console.log('🎉 تم تثبيت التطبيق بنجاح!');
+      showNotification('تم تثبيت التطبيق بنجاح! يمكنك استخدامه الآن دون الحاجة للإنترنت.', 'success');
+      
+      // إخفاء إشعار التثبيت إذا كان ظاهراً
+      const installNotification = document.querySelector('.install-notification');
+      if (installNotification) {
+        installNotification.remove();
+      }
+      
+      // إخفاء زر التثبيت العائم
+      const installButton = document.getElementById('floatingInstallButton');
+      if (installButton) {
+        installButton.style.display = 'none';
+      }
+    });
+  }
+  
+  function showInstallNotification() {
+    // إنشاء إشعار التثبيت
+    const installNotification = document.createElement('div');
+    installNotification.className = 'install-notification';
+    installNotification.innerHTML = `
+      <div style="
+        position: fixed;
+        bottom: 100px;
+        left: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #6B5BFF, #8C7CFF);
+        color: white;
+        padding: 15px 20px;
+        border-radius: var(--border-radius-lg);
+        z-index: 9999;
+        box-shadow: var(--shadow-lg);
+        animation: slideInUp 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      ">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-download" style="font-size: 1.5rem;"></i>
+          <div>
+            <div style="font-weight: 600; font-size: 1rem;">تثبيت التطبيق</div>
+            <div style="font-size: 0.85rem; opacity: 0.9;">استخدم التطبيق بدون إنترنت وسرعة أفضل</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="hideInstallNotification()" style="
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 15px;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+          ">
+            لاحقاً
+          </button>
+          <button onclick="installApp()" style="
+            background: white;
+            color: #6B5BFF;
+            border: none;
+            padding: 8px 20px;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+          ">
+            تثبيت
+          </button>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(installNotification);
+    
+    // إضافة زر تثبيت عائم
+    const floatingButton = document.createElement('button');
+    floatingButton.id = 'floatingInstallButton';
+    floatingButton.innerHTML = '<i class="fas fa-download"></i>';
+    floatingButton.style.cssText = `
+      position: fixed;
+      bottom: 90px;
+      left: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6B5BFF, #8C7CFF);
+      color: white;
+      border: none;
+      cursor: pointer;
+      z-index: 9998;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: var(--shadow-lg);
+      animation: pulse 2s infinite;
+    `;
+    floatingButton.onclick = installApp;
+    
+    document.body.appendChild(floatingButton);
+    
+    // حفظ في localStorage أن الإشعار تم عرضه
+    localStorage.setItem('install_notification_shown', 'true');
+  }
+  
+  function hideInstallNotification() {
+    const installNotification = document.querySelector('.install-notification');
+    if (installNotification) {
+      installNotification.remove();
+    }
+    
+    const floatingButton = document.getElementById('floatingInstallButton');
+    if (floatingButton) {
+      floatingButton.style.display = 'none';
+    }
+  }
+  
+  async function installApp() {
+    if (!deferredPrompt) {
+      showNotification('خاصية التثبيت غير متاحة حالياً', 'warning');
+      return;
+    }
+    
+    try {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      
+      if (outcome === 'accepted') {
+        console.log('✅ تم قبول تثبيت التطبيق');
+        // إخفاء الإشعارات بعد التثبيت
+        hideInstallNotification();
+      } else {
+        console.log('❌ تم رفض تثبيت التطبيق');
+        showNotification('يمكنك تثبيت التطبيق لاحقاً من القائمة', 'info');
+      }
+      
+      deferredPrompt = null;
+    } catch (error) {
+      console.error('❌ خطأ في تثبيت التطبيق:', error);
+      showNotification('حدث خطأ أثناء التثبيت', 'error');
+    }
+  }
+  
+  // ---------- عرض إشعار تثبيت بعد فترة ----------
+  setTimeout(() => {
+    // التحقق مما إذا كان التطبيق مثبتاً بالفعل
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    const notificationShown = localStorage.getItem('install_notification_shown');
+    
+    if (!isStandalone && !notificationShown && 'beforeinstallprompt' in window) {
+      // عرض إشعار تلميح بعد 10 ثواني
+      setTimeout(() => {
+        showNotification('💡 تثبيت التطبيق يمنحك تجربة أسرع ويمكنك استخدامه بدون إنترنت!', 'info');
+      }, 10000);
+    }
+  }, 1000);
+  
+  // ---------- تحسينات Mobile UX ----------
+  function enhanceMobileUX() {
+    // منع zoom غير مقصود
+    document.addEventListener('touchstart', function(e) {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+    
+    // تحسين keyboard behavior
+    const inputs = document.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        setTimeout(() => {
+          input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      });
+    });
+  }
+  
+  // تشغيل تحسينات Mobile UX
+  document.addEventListener('DOMContentLoaded', enhanceMobileUX);
+  
+  // تسجيل Service Worker مع تحسينات
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(registration => {
+          console.log('✅ ServiceWorker registered with scope:', registration.scope);
+        })
+        .catch(error => {
+          console.log('❌ ServiceWorker registration failed:', error);
+        });
+    });
   }
 
   // ---------- تهيئة نهائية ----------
