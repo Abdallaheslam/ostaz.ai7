@@ -1065,13 +1065,14 @@
       cursor: not-allowed;
     }
     
-    /* ====== ADMIN PANEL ====== */
+    /* ====== ADMIN PANEL - MOBILE FRIENDLY ====== */
     .admin-panel {
       background: white;
       border-radius: var(--border-radius-lg);
       overflow: hidden;
       box-shadow: var(--shadow-lg);
       animation: slideInUp 0.6s ease;
+      max-width: 100%;
     }
     
     .admin-header {
@@ -1171,6 +1172,12 @@
       padding: 0 25px;
       border-bottom: 1px solid var(--border-color);
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    
+    .admin-tabs::-webkit-scrollbar {
+      display: none;
     }
     
     .admin-tab {
@@ -1184,6 +1191,7 @@
       transition: all var(--transition-fast);
       position: relative;
       white-space: nowrap;
+      flex-shrink: 0;
     }
     
     .admin-tab.active {
@@ -1209,6 +1217,7 @@
     .admin-content {
       padding: 25px;
       min-height: 400px;
+      overflow-x: auto;
     }
     
     .admin-table {
@@ -1218,6 +1227,7 @@
       border-radius: var(--border-radius-md);
       overflow: hidden;
       box-shadow: var(--shadow-sm);
+      min-width: 600px;
     }
     
     .admin-table th {
@@ -1707,12 +1717,158 @@
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       }
       
+      /* ADMIN PANEL MOBILE RESPONSIVE */
+      .admin-panel {
+        margin: 10px;
+        width: calc(100% - 20px);
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      
+      .admin-header {
+        padding: 20px 15px;
+      }
+      
+      .admin-title {
+        font-size: 1.5rem;
+      }
+      
+      .admin-subtitle {
+        font-size: 0.9rem;
+      }
+      
       .admin-stats {
         grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 15px;
+      }
+      
+      .stat-card {
+        padding: 15px 10px;
+      }
+      
+      .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+      
+      .stat-value {
+        font-size: 1.5rem;
+      }
+      
+      .stat-label {
+        font-size: 0.8rem;
+      }
+      
+      .admin-tabs {
+        padding: 0 10px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .admin-tab {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      
+      .admin-content {
+        padding: 15px;
+        min-height: 300px;
+        overflow-x: auto;
+      }
+      
+      .admin-table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .admin-table th,
+      .admin-table td {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+        min-width: 80px;
+      }
+      
+      .admin-table th:nth-child(1),
+      .admin-table td:nth-child(1) {
+        min-width: 60px;
+      }
+      
+      .admin-form {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .modal-close {
+        top: 10px;
+        left: 10px;
+        width: 36px;
+        height: 36px;
       }
       
       .modal {
         margin: 10px;
+        width: calc(100% - 20px);
+      }
+      
+      .modal-header {
+        padding: 20px 20px 10px;
+      }
+      
+      .modal-title {
+        font-size: 1.3rem;
+        margin-right: 40px;
+      }
+      
+      .modal-body {
+        padding: 20px;
+      }
+      
+      .modal-footer {
+        padding: 10px 20px 20px;
+        flex-direction: column-reverse;
+        gap: 10px;
+      }
+      
+      .modal-footer .btn {
+        width: 100%;
+      }
+      
+      .admin-table th:nth-child(7),
+      .admin-table td:nth-child(7) {
+        min-width: 100px;
+      }
+      
+      .admin-table th:nth-child(6),
+      .admin-table td:nth-child(6) {
+        display: none;
+      }
+      
+      .product-details-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .admin-actions {
+        display: flex;
+        gap: 5px;
+      }
+      
+      .admin-actions .btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+      
+      .order-details-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
       }
     }
     
@@ -1771,6 +1927,39 @@
         height: 30px;
         font-size: 0.9rem;
       }
+      
+      .admin-tab {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+      }
+      
+      .admin-tab i {
+        margin-left: 5px;
+      }
+      
+      .admin-table {
+        font-size: 0.8rem;
+      }
+      
+      .admin-table th,
+      .admin-table td {
+        padding: 8px 6px;
+      }
+      
+      .admin-table th:nth-child(5),
+      .admin-table td:nth-child(5),
+      .admin-table th:nth-child(4),
+      .admin-table td:nth-child(4) {
+        display: none;
+      }
+      
+      .stat-card {
+        padding: 12px 8px;
+      }
+      
+      .stat-value {
+        font-size: 1.3rem;
+      }
     }
     
     @media (max-width: 360px) {
@@ -1787,6 +1976,30 @@
         width: 34px;
         height: 34px;
         padding: 6px;
+      }
+      
+      .admin-tab {
+        padding: 8px 10px;
+        font-size: 0.75rem;
+      }
+      
+      .admin-tab i {
+        font-size: 0.9rem;
+      }
+      
+      .admin-table th,
+      .admin-table td {
+        padding: 6px 4px;
+        font-size: 0.75rem;
+      }
+      
+      .modal {
+        margin: 5px;
+        width: calc(100% - 10px);
+      }
+      
+      .modal-body {
+        padding: 15px;
       }
     }
     
@@ -1851,6 +2064,91 @@
       .quantity-btn {
         width: 36px;
         height: 36px;
+      }
+    }
+    
+    /* ADMIN MOBILE SPECIFIC STYLES */
+    .admin-mobile-view {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .admin-desktop-view {
+        display: none;
+      }
+      
+      .admin-mobile-view {
+        display: block;
+      }
+      
+      .admin-mobile-card {
+        background: white;
+        border-radius: var(--border-radius-md);
+        padding: 15px;
+        margin-bottom: 10px;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+      }
+      
+      .admin-mobile-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border-color);
+      }
+      
+      .admin-mobile-card-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 1rem;
+      }
+      
+      .admin-mobile-card-body {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+      
+      .admin-mobile-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      
+      .admin-mobile-actions .btn {
+        flex: 1;
+        padding: 8px;
+        font-size: 0.8rem;
+      }
+      
+      .admin-mobile-list {
+        max-height: 400px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .admin-mobile-list-item {
+        padding: 12px 15px;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .admin-mobile-list-item:last-child {
+        border-bottom: none;
+      }
+      
+      .admin-mobile-list-item-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 5px;
+      }
+      
+      .admin-mobile-list-item-subtitle {
+        color: var(--text-light);
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -2113,7 +2411,7 @@
     justify-content: center;
     box-shadow: var(--shadow-lg);
     animation: pulse 2s infinite;
-  " onclick="openAdminPanel()" title="لوحة التحكم">
+  " onclick="openAdminPanelMobile()" title="لوحة التحكم">
     <i class="fas fa-tools"></i>
   </button>
 
@@ -4640,20 +4938,9 @@
     }
   }
 
-  // =============== لوحة التحكم الاحترافية للمدير ===============
+  // =============== لوحة التحكم المحسنة للهواتف ===============
 
-  // إظهار زر لوحة التحكم الثابت (فقط للمديرين)
-  function setupAdminFloatingButton() {
-    const adminFloatBtn = document.getElementById('adminFloatBtn');
-    if (currentUser && userData && userData.role === 'admin') {
-      adminFloatBtn.style.display = 'flex';
-    } else {
-      adminFloatBtn.style.display = 'none';
-    }
-  }
-
-  // فتح لوحة التحكم الرئيسية
-  function openAdminPanel() {
+  function openAdminPanelMobile() {
     if (!currentUser || userData?.role !== 'admin') {
       showNotification('ليس لديك صلاحية الوصول إلى لوحة التحكم', 'error');
       return;
@@ -4661,12 +4948,12 @@
     
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
-        <div class="admin-panel" onclick="event.stopPropagation()" style="max-width: 1200px; margin: 20px; width: calc(100% - 40px);">
-          <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 20px; left: 20px;">
+        <div class="admin-panel" onclick="event.stopPropagation()" style="max-width: 100%; margin: 0; border-radius: 0; width: 100vw; height: 100vh;">
+          <button class="modal-close" onclick="closeModal()" style="position: fixed; top: 15px; left: 15px; z-index: 100; background: white;">
             <i class="fas fa-times"></i>
           </button>
           
-          <div class="admin-header">
+          <div class="admin-header" style="padding-top: 60px;">
             <h2 class="admin-title">
               <i class="fas fa-tools"></i>
               لوحة تحكم المدير
@@ -4674,7 +4961,12 @@
             <p class="admin-subtitle">إدارة المتجر بالكامل من مكان واحد</p>
           </div>
           
-          <div class="admin-stats" id="adminStats">
+          <div class="admin-stats" id="adminStats" style="
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 15px;
+          ">
             <div class="stat-card">
               <div class="stat-icon">
                 <i class="fas fa-shopping-cart"></i>
@@ -4708,27 +5000,48 @@
             </div>
           </div>
           
-          <div class="admin-tabs">
-            <button class="admin-tab active" onclick="showAdminTab('products', this)">
-              <i class="fas fa-box"></i> المنتجات
+          <div class="admin-tabs" style="
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            padding: 0 10px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+          ">
+            <button class="admin-tab active" onclick="showAdminTabMobile('products', this)">
+              <i class="fas fa-box"></i>
+              <span>المنتجات</span>
             </button>
-            <button class="admin-tab" onclick="showAdminTab('orders', this)">
-              <i class="fas fa-shopping-cart"></i> الطلبات
+            <button class="admin-tab" onclick="showAdminTabMobile('orders', this)">
+              <i class="fas fa-shopping-cart"></i>
+              <span>الطلبات</span>
             </button>
-            <button class="admin-tab" onclick="showAdminTab('categories', this)">
-              <i class="fas fa-tags"></i> التصنيفات
+            <button class="admin-tab" onclick="showAdminTabMobile('categories', this)">
+              <i class="fas fa-tags"></i>
+              <span>التصنيفات</span>
             </button>
-            <button class="admin-tab" onclick="showAdminTab('users', this)">
-              <i class="fas fa-users"></i> المستخدمين
+            <button class="admin-tab" onclick="showAdminTabMobile('users', this)">
+              <i class="fas fa-users"></i>
+              <span>المستخدمين</span>
             </button>
-            <button class="admin-tab" onclick="showAdminTab('settings', this)">
-              <i class="fas fa-cog"></i> الإعدادات
+            <button class="admin-tab" onclick="showAdminTabMobile('settings', this)">
+              <i class="fas fa-cog"></i>
+              <span>الإعدادات</span>
             </button>
           </div>
           
-          <div class="admin-content" id="adminContent">
+          <div class="admin-content" id="adminContent" style="
+            padding: 15px;
+            min-height: 300px;
+            overflow-y: auto;
+            max-height: calc(100vh - 350px);
+            -webkit-overflow-scrolling: touch;
+          ">
             <div class="loading">
               <div class="spinner"></div>
+              <p style="margin-top: 10px; color: var(--text-light);">جاري تحميل لوحة التحكم...</p>
             </div>
           </div>
         </div>
@@ -4738,13 +5051,15 @@
     document.getElementById('modalsContainer').innerHTML = modalHTML;
     
     // تحميل الإحصائيات
-    loadAdminStats();
+    loadAdminStatsMobile();
     
     // تحميل أول تبويب
-    showAdminTab('products', document.querySelector('.admin-tab.active'));
+    setTimeout(() => {
+      showAdminTabMobile('products', document.querySelector('.admin-tab.active'));
+    }, 100);
   }
 
-  async function loadAdminStats() {
+  async function loadAdminStatsMobile() {
     try {
       const [ordersSnapshot, productsSnapshot, usersSnapshot] = await Promise.all([
         db.collection('orders').get(),
@@ -4767,7 +5082,7 @@
     }
   }
 
-  async function showAdminTab(tabName, button) {
+  async function showAdminTabMobile(tabName, button) {
     // تحديث التبويبات النشطة
     document.querySelectorAll('.admin-tab').forEach(tab => {
       tab.classList.remove('active');
@@ -4778,24 +5093,24 @@
     
     switch (tabName) {
       case 'products':
-        await loadAdminProducts(contentEl);
+        await loadAdminProductsMobile(contentEl);
         break;
       case 'orders':
-        await loadAdminOrders(contentEl);
+        await loadAdminOrdersMobile(contentEl);
         break;
       case 'categories':
-        await loadAdminCategories(contentEl);
+        await loadAdminCategoriesMobile(contentEl);
         break;
       case 'users':
-        await loadAdminUsers(contentEl);
+        await loadAdminUsersMobile(contentEl);
         break;
       case 'settings':
-        await loadAdminSettings(contentEl);
+        await loadAdminSettingsMobile(contentEl);
         break;
     }
   }
 
-  async function loadAdminProducts(container) {
+  async function loadAdminProductsMobile(container) {
     try {
       const snapshot = await db.collection('products')
         .orderBy('createdAt', 'desc')
@@ -4812,62 +5127,57 @@
         return;
       }
       
-      let tableHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-          <h3>إدارة المنتجات</h3>
-          <button class="btn btn-primary" onclick="openAddProductModal()">
-            <i class="fas fa-plus"></i> إضافة منتج
-          </button>
-        </div>
-        <div style="overflow-x: auto;">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>الصورة</th>
-                <th>الاسم</th>
-                <th>السعر</th>
-                <th>الخصم</th>
-                <th>المخزون</th>
-                <th>التصنيف</th>
-                <th>الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
+      let html = `
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="margin: 0;">إدارة المنتجات</h3>
+            <button class="btn btn-primary btn-sm" onclick="openAddProductModalMobile()">
+              <i class="fas fa-plus"></i> إضافة
+            </button>
+          </div>
+          
+          <div class="admin-mobile-list">
       `;
       
       snapshot.docs.forEach(doc => {
         const product = doc.data();
-        tableHTML += `
-          <tr>
-            <td>
-              <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/50/6B5BFF/ffffff?text=صورة'}" 
-                   alt="${product.name}"
-                   style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
-            </td>
-            <td>${product.name}</td>
-            <td>${product.price?.toFixed(2) || '0'} جنيه</td>
-            <td>${product.discount || 0}%</td>
-            <td>${product.stock || 0}</td>
-            <td>${product.category || 'عام'}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" onclick="editProduct('${doc.id}')">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button class="btn btn-sm btn-danger" onclick="deleteProduct('${doc.id}')">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          </tr>
+        html += `
+          <div class="admin-mobile-card">
+            <div class="admin-mobile-card-header">
+              <div class="admin-mobile-card-title">${product.name}</div>
+              <div style="display: flex; gap: 5px;">
+                <button class="btn btn-sm btn-primary" onclick="editProductMobile('${doc.id}')">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-danger" onclick="deleteProduct('${doc.id}')">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+            <div class="admin-mobile-card-body">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span>السعر:</span>
+                <span style="font-weight: 600; color: var(--primary-color);">${product.price?.toFixed(2) || '0'} جنيه</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span>المخزون:</span>
+                <span>${product.stock || 0}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>التصنيف:</span>
+                <span>${product.category || 'عام'}</span>
+              </div>
+            </div>
+          </div>
         `;
       });
       
-      tableHTML += `
-            </tbody>
-          </table>
+      html += `
+          </div>
         </div>
       `;
       
-      container.innerHTML = tableHTML;
+      container.innerHTML = html;
       
     } catch (error) {
       console.error('Error loading admin products:', error);
@@ -4880,80 +5190,80 @@
     }
   }
 
-  function openAddProductModal() {
+  function openAddProductModalMobile() {
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 700px;">
-          <button class="modal-close" onclick="closeModal()">
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: 100%; margin: 0; border-radius: 0; width: 100vw; height: 100vh;">
+          <button class="modal-close" onclick="closeModal()" style="position: fixed; top: 15px; left: 15px; z-index: 100; background: white;">
             <i class="fas fa-times"></i>
           </button>
-          <div class="modal-header">
+          
+          <div class="modal-header" style="padding-top: 60px;">
             <h2 class="modal-title">
               <i class="fas fa-plus"></i>
               إضافة منتج جديد
             </h2>
           </div>
-          <div class="modal-body">
-            <div class="admin-form">
-              <div class="form-group">
-                <label class="form-label">اسم المنتج *</label>
-                <input type="text" class="form-control" id="productName" required>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">وصف المنتج</label>
-                <textarea class="form-control" id="productDescription" rows="3"></textarea>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">السعر (جنيه) *</label>
-                <input type="number" class="form-control" id="productPrice" step="0.01" min="0" required>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">الخصم (%)</label>
-                <input type="number" class="form-control" id="productDiscount" min="0" max="100" value="0">
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">المخزون *</label>
-                <input type="number" class="form-control" id="productStock" min="0" required>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">التصنيف</label>
-                <select class="form-control" id="productCategory">
-                  <option value="">اختر التصنيف</option>
-                  <option value="معلبات">معلبات</option>
-                  <option value="ألبان وأجبان">ألبان وأجبان</option>
-                  <option value="مشروبات">مشروبات</option>
-                  <option value="حلويات">حلويات</option>
-                  <option value="مخبوزات">مخبوزات</option>
-                  <option value="أرز ومكرونة">أرز ومكرونة</option>
-                  <option value="لحوم ودواجن">لحوم ودواجن</option>
-                  <option value="خضروات وفواكه">خضروات وفواكه</option>
-                </select>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">صورة المنتج (رابط URL) *</label>
-                <input type="url" class="form-control" id="productImage" required>
-              </div>
-              
-              <div class="form-group" style="grid-column: 1/-1;">
-                <label>
-                  <input type="checkbox" id="productFeatured">
-                  <span style="margin-right: 8px;">منتج مميز</span>
-                </label>
-              </div>
+          
+          <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+            <div class="form-group">
+              <label class="form-label">اسم المنتج *</label>
+              <input type="text" class="form-control" id="productNameMobile" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">وصف المنتج</label>
+              <textarea class="form-control" id="productDescriptionMobile" rows="3"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">السعر (جنيه) *</label>
+              <input type="number" class="form-control" id="productPriceMobile" step="0.01" min="0" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">الخصم (%)</label>
+              <input type="number" class="form-control" id="productDiscountMobile" min="0" max="100" value="0">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">المخزون *</label>
+              <input type="number" class="form-control" id="productStockMobile" min="0" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">التصنيف</label>
+              <select class="form-control" id="productCategoryMobile">
+                <option value="">اختر التصنيف</option>
+                <option value="معلبات">معلبات</option>
+                <option value="ألبان وأجبان">ألبان وأجبان</option>
+                <option value="مشروبات">مشروبات</option>
+                <option value="حلويات">حلويات</option>
+                <option value="مخبوزات">مخبوزات</option>
+                <option value="أرز ومكرونة">أرز ومكرونة</option>
+                <option value="لحوم ودواجن">لحوم ودواجن</option>
+                <option value="خضروات وفواكه">خضروات وفواكه</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">صورة المنتج (رابط URL) *</label>
+              <input type="url" class="form-control" id="productImageMobile" required>
+            </div>
+            
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="productFeaturedMobile">
+                <span style="margin-right: 8px;">منتج مميز</span>
+              </label>
             </div>
           </div>
           
-          <div class="modal-footer">
-            <button class="btn btn-outline" onclick="closeModal()">
+          <div class="modal-footer" style="position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; border-top: 1px solid var(--border-color);">
+            <button class="btn btn-outline" onclick="closeModal()" style="flex: 1;">
               <i class="fas fa-times"></i> إلغاء
             </button>
-            <button class="btn btn-primary" onclick="saveNewProduct()">
+            <button class="btn btn-primary" onclick="saveNewProductMobile()" style="flex: 2; margin-right: 10px;">
               <i class="fas fa-save"></i> حفظ المنتج
             </button>
           </div>
@@ -4964,17 +5274,17 @@
     document.getElementById('modalsContainer').innerHTML = modalHTML;
   }
 
-  async function saveNewProduct() {
+  async function saveNewProductMobile() {
     try {
       const productData = {
-        name: document.getElementById('productName').value.trim(),
-        description: document.getElementById('productDescription').value.trim(),
-        price: parseFloat(document.getElementById('productPrice').value),
-        discount: parseInt(document.getElementById('productDiscount').value) || 0,
-        stock: parseInt(document.getElementById('productStock').value),
-        category: document.getElementById('productCategory').value || 'عام',
-        image: document.getElementById('productImage').value.trim(),
-        featured: document.getElementById('productFeatured').checked,
+        name: document.getElementById('productNameMobile').value.trim(),
+        description: document.getElementById('productDescriptionMobile').value.trim(),
+        price: parseFloat(document.getElementById('productPriceMobile').value),
+        discount: parseInt(document.getElementById('productDiscountMobile').value) || 0,
+        stock: parseInt(document.getElementById('productStockMobile').value),
+        category: document.getElementById('productCategoryMobile').value || 'عام',
+        image: document.getElementById('productImageMobile').value.trim(),
+        featured: document.getElementById('productFeaturedMobile').checked,
         rating: 0,
         ratingCount: 0,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -4994,7 +5304,7 @@
       // تحديث قائمة المنتجات
       const currentTab = document.querySelector('.admin-tab.active');
       if (currentTab.textContent.includes('المنتجات')) {
-        showAdminTab('products', currentTab);
+        showAdminTabMobile('products', currentTab);
       }
       
     } catch (error) {
@@ -5003,7 +5313,7 @@
     }
   }
 
-  async function editProduct(productId) {
+  async function editProductMobile(productId) {
     try {
       const productDoc = await db.collection('products').doc(productId).get();
       
@@ -5016,77 +5326,77 @@
       
       const modalHTML = `
         <div class="modal-overlay" onclick="closeModal()">
-          <div class="modal" onclick="event.stopPropagation()" style="max-width: 700px;">
-            <button class="modal-close" onclick="closeModal()">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width: 100%; margin: 0; border-radius: 0; width: 100vw; height: 100vh;">
+            <button class="modal-close" onclick="closeModal()" style="position: fixed; top: 15px; left: 15px; z-index: 100; background: white;">
               <i class="fas fa-times"></i>
             </button>
-            <div class="modal-header">
+            
+            <div class="modal-header" style="padding-top: 60px;">
               <h2 class="modal-title">
                 <i class="fas fa-edit"></i>
                 تعديل المنتج
               </h2>
             </div>
-            <div class="modal-body">
-              <div class="admin-form">
-                <div class="form-group">
-                  <label class="form-label">اسم المنتج *</label>
-                  <input type="text" class="form-control" id="editProductName" value="${product.name || ''}" required>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">وصف المنتج</label>
-                  <textarea class="form-control" id="editProductDescription" rows="3">${product.description || ''}</textarea>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">السعر (جنيه) *</label>
-                  <input type="number" class="form-control" id="editProductPrice" step="0.01" min="0" value="${product.price || 0}" required>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">الخصم (%)</label>
-                  <input type="number" class="form-control" id="editProductDiscount" min="0" max="100" value="${product.discount || 0}">
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">المخزون *</label>
-                  <input type="number" class="form-control" id="editProductStock" min="0" value="${product.stock || 0}" required>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">التصنيف</label>
-                  <select class="form-control" id="editProductCategory">
-                    <option value="">اختر التصنيف</option>
-                    <option value="معلبات" ${product.category === 'معلبات' ? 'selected' : ''}>معلبات</option>
-                    <option value="ألبان وأجبان" ${product.category === 'ألبان وأجبان' ? 'selected' : ''}>ألبان وأجبان</option>
-                    <option value="مشروبات" ${product.category === 'مشروبات' ? 'selected' : ''}>مشروبات</option>
-                    <option value="حلويات" ${product.category === 'حلويات' ? 'selected' : ''}>حلويات</option>
-                    <option value="مخبوزات" ${product.category === 'مخبوزات' ? 'selected' : ''}>مخبوزات</option>
-                    <option value="أرز ومكرونة" ${product.category === 'أرز ومكرونة' ? 'selected' : ''}>أرز ومكرونة</option>
-                    <option value="لحوم ودواجن" ${product.category === 'لحوم ودواجن' ? 'selected' : ''}>لحوم ودواجن</option>
-                    <option value="خضروات وفواكه" ${product.category === 'خضروات وفواكه' ? 'selected' : ''}>خضروات وفواكه</option>
-                  </select>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">صورة المنتج (رابط URL) *</label>
-                  <input type="url" class="form-control" id="editProductImage" value="${product.image || ''}" required>
-                </div>
-                
-                <div class="form-group" style="grid-column: 1/-1;">
-                  <label>
-                    <input type="checkbox" id="editProductFeatured" ${product.featured ? 'checked' : ''}>
-                    <span style="margin-right: 8px;">منتج مميز</span>
-                  </label>
-                </div>
+            
+            <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+              <div class="form-group">
+                <label class="form-label">اسم المنتج *</label>
+                <input type="text" class="form-control" id="editProductNameMobile" value="${product.name || ''}" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">وصف المنتج</label>
+                <textarea class="form-control" id="editProductDescriptionMobile" rows="3">${product.description || ''}</textarea>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">السعر (جنيه) *</label>
+                <input type="number" class="form-control" id="editProductPriceMobile" step="0.01" min="0" value="${product.price || 0}" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">الخصم (%)</label>
+                <input type="number" class="form-control" id="editProductDiscountMobile" min="0" max="100" value="${product.discount || 0}">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">المخزون *</label>
+                <input type="number" class="form-control" id="editProductStockMobile" min="0" value="${product.stock || 0}" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">التصنيف</label>
+                <select class="form-control" id="editProductCategoryMobile">
+                  <option value="">اختر التصنيف</option>
+                  <option value="معلبات" ${product.category === 'معلبات' ? 'selected' : ''}>معلبات</option>
+                  <option value="ألبان وأجبان" ${product.category === 'ألبان وأجبان' ? 'selected' : ''}>ألبان وأجبان</option>
+                  <option value="مشروبات" ${product.category === 'مشروبات' ? 'selected' : ''}>مشروبات</option>
+                  <option value="حلويات" ${product.category === 'حلويات' ? 'selected' : ''}>حلويات</option>
+                  <option value="مخبوزات" ${product.category === 'مخبوزات' ? 'selected' : ''}>مخبوزات</option>
+                  <option value="أرز ومكرونة" ${product.category === 'أرز ومكرونة' ? 'selected' : ''}>أرز ومكرونة</option>
+                  <option value="لحوم ودواجن" ${product.category === 'لحوم ودواجن' ? 'selected' : ''}>لحوم ودواجن</option>
+                  <option value="خضروات وفواكه" ${product.category === 'خضروات وفواكه' ? 'selected' : ''}>خضروات وفواكه</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">صورة المنتج (رابط URL) *</label>
+                <input type="url" class="form-control" id="editProductImageMobile" value="${product.image || ''}" required>
+              </div>
+              
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" id="editProductFeaturedMobile" ${product.featured ? 'checked' : ''}>
+                  <span style="margin-right: 8px;">منتج مميز</span>
+                </label>
               </div>
             </div>
             
-            <div class="modal-footer">
-              <button class="btn btn-outline" onclick="closeModal()">
+            <div class="modal-footer" style="position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; border-top: 1px solid var(--border-color);">
+              <button class="btn btn-outline" onclick="closeModal()" style="flex: 1;">
                 <i class="fas fa-times"></i> إلغاء
               </button>
-              <button class="btn btn-primary" onclick="updateProduct('${productId}')">
+              <button class="btn btn-primary" onclick="updateProductMobile('${productId}')" style="flex: 2; margin-right: 10px;">
                 <i class="fas fa-save"></i> حفظ التعديلات
               </button>
             </div>
@@ -5102,17 +5412,17 @@
     }
   }
 
-  async function updateProduct(productId) {
+  async function updateProductMobile(productId) {
     try {
       const productData = {
-        name: document.getElementById('editProductName').value.trim(),
-        description: document.getElementById('editProductDescription').value.trim(),
-        price: parseFloat(document.getElementById('editProductPrice').value),
-        discount: parseInt(document.getElementById('editProductDiscount').value) || 0,
-        stock: parseInt(document.getElementById('editProductStock').value),
-        category: document.getElementById('editProductCategory').value || 'عام',
-        image: document.getElementById('editProductImage').value.trim(),
-        featured: document.getElementById('editProductFeatured').checked,
+        name: document.getElementById('editProductNameMobile').value.trim(),
+        description: document.getElementById('editProductDescriptionMobile').value.trim(),
+        price: parseFloat(document.getElementById('editProductPriceMobile').value),
+        discount: parseInt(document.getElementById('editProductDiscountMobile').value) || 0,
+        stock: parseInt(document.getElementById('editProductStockMobile').value),
+        category: document.getElementById('editProductCategoryMobile').value || 'عام',
+        image: document.getElementById('editProductImageMobile').value.trim(),
+        featured: document.getElementById('editProductFeaturedMobile').checked,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       };
       
@@ -5124,7 +5434,7 @@
       // تحديث القائمة
       const currentTab = document.querySelector('.admin-tab.active');
       if (currentTab.textContent.includes('المنتجات')) {
-        showAdminTab('products', currentTab);
+        showAdminTabMobile('products', currentTab);
       }
       
     } catch (error) {
@@ -5143,7 +5453,7 @@
       // تحديث القائمة
       const currentTab = document.querySelector('.admin-tab.active');
       if (currentTab.textContent.includes('المنتجات')) {
-        showAdminTab('products', currentTab);
+        showAdminTabMobile('products', currentTab);
       }
       
     } catch (error) {
@@ -5152,7 +5462,7 @@
     }
   }
 
-  async function loadAdminOrders(container) {
+  async function loadAdminOrdersMobile(container) {
     try {
       const snapshot = await db.collection('orders')
         .orderBy('createdAt', 'desc')
@@ -5169,56 +5479,65 @@
         return;
       }
       
-      let tableHTML = `
-        <h3 style="margin-bottom: 20px;">إدارة الطلبات</h3>
-        <div style="overflow-x: auto;">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>رقم الطلب</th>
-                <th>العميل</th>
-                <th>القيمة</th>
-                <th>الحالة</th>
-                <th>التاريخ</th>
-                <th>الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
+      let html = `
+        <div style="margin-bottom: 20px;">
+          <h3 style="margin-bottom: 15px;">إدارة الطلبات</h3>
+          
+          <div class="admin-mobile-list">
       `;
       
       snapshot.docs.forEach(doc => {
         const order = doc.data();
         const status = order.status || {};
         let statusText = 'قيد الانتظار';
+        let statusColor = '#FF9500';
         
-        if (status.delivered) statusText = 'تم التوصيل';
-        else if (status.on_way) statusText = 'في الطريق';
-        else if (status.preparing) statusText = 'قيد التحضير';
-        else if (status.confirmed) statusText = 'تم التأكيد';
+        if (status.delivered) {
+          statusText = 'تم التوصيل';
+          statusColor = '#25D366';
+        } else if (status.on_way) {
+          statusText = 'في الطريق';
+          statusColor = '#6B5BFF';
+        } else if (status.preparing) {
+          statusText = 'قيد التحضير';
+          statusColor = '#9c27b0';
+        } else if (status.confirmed) {
+          statusText = 'تم التأكيد';
+          statusColor = '#673ab7';
+        }
         
-        tableHTML += `
-          <tr>
-            <td>#${doc.id.substring(0, 8)}</td>
-            <td>${order.userName || 'غير معروف'}</td>
-            <td>${order.total?.toFixed(2) || '0'} جنيه</td>
-            <td>${statusText}</td>
-            <td>${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" onclick="viewOrderAdmin('${doc.id}')">
-                <i class="fas fa-eye"></i>
-              </button>
-            </td>
-          </tr>
+        html += `
+          <div class="admin-mobile-card" onclick="viewOrderAdminMobile('${doc.id}')" style="cursor: pointer;">
+            <div class="admin-mobile-card-header">
+              <div class="admin-mobile-card-title">طلب #${doc.id.substring(0, 8)}</div>
+              <span style="background: ${statusColor}; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem;">
+                ${statusText}
+              </span>
+            </div>
+            <div class="admin-mobile-card-body">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span>العميل:</span>
+                <span style="font-weight: 600;">${order.userName || 'غير معروف'}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span>القيمة:</span>
+                <span style="font-weight: 600; color: var(--primary-color);">${order.total?.toFixed(2) || '0'} جنيه</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>التاريخ:</span>
+                <span>${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</span>
+              </div>
+            </div>
+          </div>
         `;
       });
       
-      tableHTML += `
-            </tbody>
-          </table>
+      html += `
+          </div>
         </div>
       `;
       
-      container.innerHTML = tableHTML;
+      container.innerHTML = html;
       
     } catch (error) {
       console.error('Error loading admin orders:', error);
@@ -5231,7 +5550,7 @@
     }
   }
 
-  async function viewOrderAdmin(orderId) {
+  async function viewOrderAdminMobile(orderId) {
     try {
       const orderDoc = await db.collection('orders').doc(orderId).get();
       
@@ -5244,70 +5563,55 @@
       
       const modalHTML = `
         <div class="modal-overlay" onclick="closeModal()">
-          <div class="modal" onclick="event.stopPropagation()" style="max-width: 900px;">
-            <button class="modal-close" onclick="closeModal()">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width: 100%; margin: 0; border-radius: 0; width: 100vw; height: 100vh;">
+            <button class="modal-close" onclick="closeModal()" style="position: fixed; top: 15px; left: 15px; z-index: 100; background: white;">
               <i class="fas fa-times"></i>
             </button>
-            <div class="modal-header">
+            
+            <div class="modal-header" style="padding-top: 60px;">
               <h2 class="modal-title">
                 <i class="fas fa-shopping-bag"></i>
                 تفاصيل الطلب #${orderId.substring(0, 8)}
-                <button class="btn btn-orange btn-sm" style="margin-right: 15px;" onclick="changeOrderStatus('${orderId}')">
-                  <i class="fas fa-edit"></i> تغيير الحالة
-                </button>
-                <button class="btn btn-primary btn-sm" onclick="shareOrder('${orderId}')">
-                  <i class="fas fa-share-alt"></i> مشاركة
-                </button>
               </h2>
             </div>
-            <div class="modal-body">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
-                <div>
-                  <h4 style="margin-bottom: 15px; color: var(--text-primary);">معلومات العميل:</h4>
-                  <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
-                    <p><strong>الاسم:</strong> ${order.userName || 'غير معروف'}</p>
-                    <p><strong>الهاتف:</strong> ${order.userPhone || 'غير معروف'}</p>
-                    <p><strong>البريد:</strong> ${order.userEmail || 'غير معروف'}</p>
-                    <p><strong>العنوان:</strong> ${order.userAddress || 'غير معروف'}</p>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 style="margin-bottom: 15px; color: var(--text-primary);">معلومات الطلب:</h4>
-                  <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
-                    <p><strong>رقم الطلب:</strong> #${orderId.substring(0, 8)}</p>
-                    <p><strong>تاريخ الطلب:</strong> ${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</p>
-                    <p><strong>طريقة الدفع:</strong> ${order.paymentMethod === 'cash' ? 'الدفع عند الاستلام' : 'بطاقة ائتمان'}</p>
-                    <p><strong>حالة الدفع:</strong> ${order.paymentStatus === 'paid' ? 'مدفوع' : 'قيد الانتظار'}</p>
-                  </div>
-                </div>
+            
+            <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+              <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px; margin-bottom: 15px;">
+                <h4 style="margin-bottom: 10px; color: var(--text-primary);">معلومات العميل:</h4>
+                <p><strong>الاسم:</strong> ${order.userName || 'غير معروف'}</p>
+                <p><strong>الهاتف:</strong> ${order.userPhone || 'غير معروف'}</p>
+                <p><strong>البريد:</strong> ${order.userEmail || 'غير معروف'}</p>
+                <p><strong>العنوان:</strong> ${order.userAddress || 'غير معروف'}</p>
               </div>
               
-              <h4 style="margin-bottom: 15px; color: var(--text-primary);">المنتجات:</h4>
-              <div style="margin-bottom: 30px;">
+              <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px; margin-bottom: 15px;">
+                <h4 style="margin-bottom: 10px; color: var(--text-primary);">معلومات الطلب:</h4>
+                <p><strong>رقم الطلب:</strong> #${orderId.substring(0, 8)}</p>
+                <p><strong>تاريخ الطلب:</strong> ${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</p>
+                <p><strong>طريقة الدفع:</strong> ${order.paymentMethod === 'cash' ? 'الدفع عند الاستلام' : 'بطاقة ائتمان'}</p>
+                <p><strong>حالة الدفع:</strong> ${order.paymentStatus === 'paid' ? 'مدفوع' : 'قيد الانتظار'}</p>
+              </div>
+              
+              <h4 style="margin-bottom: 10px; color: var(--text-primary);">المنتجات:</h4>
+              <div style="margin-bottom: 15px;">
                 ${order.items?.map(item => `
-                  <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color);">
+                  <div style="display: flex; align-items: center; padding: 10px; border-bottom: 1px solid var(--border-color);">
                     <img src="${item.image || 'https://via.placeholder.com/50/6B5BFF/ffffff?text=صورة'}" 
-                         style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 15px;">
+                         style="width: 40px; height: 40px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 10px;">
                     <div style="flex: 1;">
-                      <p style="margin: 0; font-weight: 600;">${item.name}</p>
-                      <p style="margin: 5px 0; color: var(--text-light);">الكمية: ${item.quantity}</p>
+                      <p style="margin: 0; font-weight: 600; font-size: 0.9rem;">${item.name}</p>
+                      <p style="margin: 5px 0; color: var(--text-light); font-size: 0.8rem;">الكمية: ${item.quantity}</p>
                     </div>
                     <div>
-                      <p style="margin: 0; font-weight: 600; color: var(--primary-color);">
+                      <p style="margin: 0; font-weight: 600; color: var(--primary-color); font-size: 0.9rem;">
                         ${(item.price * (1 - (item.discount || 0) / 100) * item.quantity).toFixed(2)} جنيه
                       </p>
-                      ${item.discount > 0 ? `
-                        <p style="margin: 5px 0; color: var(--text-light); text-decoration: line-through;">
-                          ${(item.price * item.quantity).toFixed(2)} جنيه
-                        </p>
-                      ` : ''}
                     </div>
                   </div>
                 `).join('')}
               </div>
               
-              <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 20px;">
+              <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                   <span>المجموع:</span>
                   <span>${order.subtotal?.toFixed(2) || '0'} جنيه</span>
@@ -5316,27 +5620,18 @@
                   <span>الشحن:</span>
                   <span>${order.shipping === 0 ? 'مجاني' : order.shipping?.toFixed(2) + ' جنيه'}</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; border-top: 2px solid var(--border-color); padding-top: 10px; font-weight: 800; font-size: 1.2rem;">
+                <div style="display: flex; justify-content: space-between; border-top: 2px solid var(--border-color); padding-top: 10px; font-weight: 800; font-size: 1.1rem;">
                   <span>الإجمالي:</span>
                   <span>${order.total?.toFixed(2) || '0'} جنيه</span>
                 </div>
               </div>
-              
-              ${order.notes ? `
-                <div style="margin-top: 20px;">
-                  <h4 style="margin-bottom: 10px; color: var(--text-primary);">ملاحظات:</h4>
-                  <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
-                    ${order.notes}
-                  </div>
-                </div>
-              ` : ''}
             </div>
             
-            <div class="modal-footer">
-              <button class="btn btn-outline" onclick="closeModal()">
+            <div class="modal-footer" style="position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; border-top: 1px solid var(--border-color);">
+              <button class="btn btn-outline" onclick="closeModal()" style="flex: 1;">
                 <i class="fas fa-times"></i> إغلاق
               </button>
-              <button class="btn btn-primary" onclick="shareOrder('${orderId}')">
+              <button class="btn btn-primary" onclick="shareOrder('${orderId}')" style="flex: 2; margin-right: 10px;">
                 <i class="fas fa-share-alt"></i> مشاركة
               </button>
             </div>
@@ -5352,7 +5647,7 @@
     }
   }
 
-  async function loadAdminCategories(container) {
+  async function loadAdminCategoriesMobile(container) {
     try {
       const snapshot = await db.collection('categories')
         .orderBy('order', 'asc')
@@ -5368,60 +5663,52 @@
         return;
       }
       
-      let tableHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-          <h3>إدارة التصنيفات</h3>
-          <button class="btn btn-primary" onclick="openAddCategoryModal()">
-            <i class="fas fa-plus"></i> إضافة تصنيف
-          </button>
-        </div>
-        <div style="overflow-x: auto;">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>الأيقونة</th>
-                <th>الاسم</th>
-                <th>اللون</th>
-                <th>عدد المنتجات</th>
-                <th>الترتيب</th>
-                <th>الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
+      let html = `
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="margin: 0;">إدارة التصنيفات</h3>
+            <button class="btn btn-primary btn-sm" onclick="openAddCategoryModalMobile()">
+              <i class="fas fa-plus"></i> إضافة
+            </button>
+          </div>
+          
+          <div class="admin-mobile-list">
       `;
       
       snapshot.docs.forEach(doc => {
         const category = doc.data();
-        tableHTML += `
-          <tr>
-            <td>
-              <i class="${category.icon || 'fas fa-tag'}" style="color: ${category.color || '#6B5BFF'}; font-size: 1.5rem;"></i>
-            </td>
-            <td>${category.name}</td>
-            <td>
-              <div style="width: 20px; height: 20px; background: ${category.color || '#6B5BFF'}; border-radius: 3px;"></div>
-            </td>
-            <td>${category.productCount || 0}</td>
-            <td>${category.order || 0}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" onclick="editCategory('${doc.id}')">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button class="btn btn-sm btn-danger" onclick="deleteCategory('${doc.id}')">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          </tr>
+        html += `
+          <div class="admin-mobile-card">
+            <div class="admin-mobile-card-header">
+              <div class="admin-mobile-card-title" style="display: flex; align-items: center; gap: 10px;">
+                <i class="${category.icon || 'fas fa-tag'}" style="color: ${category.color || '#6B5BFF'}"></i>
+                ${category.name}
+              </div>
+              <div style="display: flex; gap: 5px;">
+                <button class="btn btn-sm btn-primary" onclick="editCategoryMobile('${doc.id}')">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-danger" onclick="deleteCategory('${doc.id}')">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+            <div class="admin-mobile-card-body">
+              <div style="display: flex; justify-content: space-between;">
+                <span>عدد المنتجات:</span>
+                <span>${category.productCount || 0}</span>
+              </div>
+            </div>
+          </div>
         `;
       });
       
-      tableHTML += `
-            </tbody>
-          </table>
+      html += `
+          </div>
         </div>
       `;
       
-      container.innerHTML = tableHTML;
+      container.innerHTML = html;
       
     } catch (error) {
       console.error('Error loading admin categories:', error);
@@ -5434,49 +5721,49 @@
     }
   }
 
-  function openAddCategoryModal() {
+  function openAddCategoryModalMobile() {
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()">
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: 100%; margin: 0; border-radius: 0; width: 100vw; height: 100vh;">
+          <button class="modal-close" onclick="closeModal()" style="position: fixed; top: 15px; left: 15px; z-index: 100; background: white;">
             <i class="fas fa-times"></i>
           </button>
-          <div class="modal-header">
+          
+          <div class="modal-header" style="padding-top: 60px;">
             <h2 class="modal-title">
               <i class="fas fa-plus"></i>
               إضافة تصنيف جديد
             </h2>
           </div>
-          <div class="modal-body">
-            <div class="admin-form">
-              <div class="form-group">
-                <label class="form-label">اسم التصنيف *</label>
-                <input type="text" class="form-control" id="categoryName" required>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">الأيقونة</label>
-                <input type="text" class="form-control" id="categoryIcon" value="fas fa-tag">
-                <small style="color: var(--text-light);">أدخل اسم أيقونة من FontAwesome</small>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">اللون</label>
-                <input type="color" class="form-control" id="categoryColor" value="#6B5BFF">
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">الترتيب</label>
-                <input type="number" class="form-control" id="categoryOrder" value="1">
-              </div>
+          
+          <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+            <div class="form-group">
+              <label class="form-label">اسم التصنيف *</label>
+              <input type="text" class="form-control" id="categoryNameMobile" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">الأيقونة</label>
+              <input type="text" class="form-control" id="categoryIconMobile" value="fas fa-tag">
+              <small style="color: var(--text-light);">أدخل اسم أيقونة من FontAwesome</small>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">اللون</label>
+              <input type="color" class="form-control" id="categoryColorMobile" value="#6B5BFF" style="height: 50px;">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">الترتيب</label>
+              <input type="number" class="form-control" id="categoryOrderMobile" value="1">
             </div>
           </div>
           
-          <div class="modal-footer">
-            <button class="btn btn-outline" onclick="closeModal()">
+          <div class="modal-footer" style="position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; border-top: 1px solid var(--border-color);">
+            <button class="btn btn-outline" onclick="closeModal()" style="flex: 1;">
               <i class="fas fa-times"></i> إلغاء
             </button>
-            <button class="btn btn-primary" onclick="saveCategory()">
+            <button class="btn btn-primary" onclick="saveCategoryMobile()" style="flex: 2; margin-right: 10px;">
               <i class="fas fa-save"></i> حفظ التصنيف
             </button>
           </div>
@@ -5487,7 +5774,7 @@
     document.getElementById('modalsContainer').innerHTML = modalHTML;
   }
 
-  async function editCategory(categoryId) {
+  async function editCategoryMobile(categoryId) {
     try {
       const categoryDoc = await db.collection('categories').doc(categoryId).get();
       
@@ -5500,45 +5787,45 @@
       
       const modalHTML = `
         <div class="modal-overlay" onclick="closeModal()">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width: 100%; margin: 0; border-radius: 0; width: 100vw; height: 100vh;">
+            <button class="modal-close" onclick="closeModal()" style="position: fixed; top: 15px; left: 15px; z-index: 100; background: white;">
               <i class="fas fa-times"></i>
             </button>
-            <div class="modal-header">
+            
+            <div class="modal-header" style="padding-top: 60px;">
               <h2 class="modal-title">
                 <i class="fas fa-edit"></i>
                 تعديل التصنيف
               </h2>
             </div>
-            <div class="modal-body">
-              <div class="admin-form">
-                <div class="form-group">
-                  <label class="form-label">اسم التصنيف *</label>
-                  <input type="text" class="form-control" id="editCategoryName" value="${category.name || ''}" required>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">الأيقونة</label>
-                  <input type="text" class="form-control" id="editCategoryIcon" value="${category.icon || 'fas fa-tag'}">
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">اللون</label>
-                  <input type="color" class="form-control" id="editCategoryColor" value="${category.color || '#6B5BFF'}">
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">الترتيب</label>
-                  <input type="number" class="form-control" id="editCategoryOrder" value="${category.order || 1}">
-                </div>
+            
+            <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+              <div class="form-group">
+                <label class="form-label">اسم التصنيف *</label>
+                <input type="text" class="form-control" id="editCategoryNameMobile" value="${category.name || ''}" required>
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">الأيقونة</label>
+                <input type="text" class="form-control" id="editCategoryIconMobile" value="${category.icon || 'fas fa-tag'}">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">اللون</label>
+                <input type="color" class="form-control" id="editCategoryColorMobile" value="${category.color || '#6B5BFF'}" style="height: 50px;">
+              </div>
+              
+              <div class="form-group">
+                <label class="form-label">الترتيب</label>
+                <input type="number" class="form-control" id="editCategoryOrderMobile" value="${category.order || 1}">
               </div>
             </div>
             
-            <div class="modal-footer">
-              <button class="btn btn-outline" onclick="closeModal()">
+            <div class="modal-footer" style="position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; border-top: 1px solid var(--border-color);">
+              <button class="btn btn-outline" onclick="closeModal()" style="flex: 1;">
                 <i class="fas fa-times"></i> إلغاء
               </button>
-              <button class="btn btn-primary" onclick="updateCategory('${categoryId}')">
+              <button class="btn btn-primary" onclick="updateCategoryMobile('${categoryId}')" style="flex: 2; margin-right: 10px;">
                 <i class="fas fa-save"></i> حفظ التعديلات
               </button>
             </div>
@@ -5575,7 +5862,7 @@
       // تحديث القائمة
       const currentTab = document.querySelector('.admin-tab.active');
       if (currentTab.textContent.includes('التصنيفات')) {
-        showAdminTab('categories', currentTab);
+        showAdminTabMobile('categories', currentTab);
       }
       
     } catch (error) {
@@ -5584,7 +5871,7 @@
     }
   }
 
-  async function loadAdminUsers(container) {
+  async function loadAdminUsersMobile(container) {
     try {
       const snapshot = await db.collection('users')
         .orderBy('createdAt', 'desc')
@@ -5601,56 +5888,44 @@
         return;
       }
       
-      let tableHTML = `
-        <h3 style="margin-bottom: 20px;">إدارة المستخدمين</h3>
-        <div style="overflow-x: auto;">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>الصورة</th>
-                <th>الاسم</th>
-                <th>البريد</th>
-                <th>الدور</th>
-                <th>التاريخ</th>
-                <th>الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
+      let html = `
+        <div style="margin-bottom: 20px;">
+          <h3 style="margin-bottom: 15px;">إدارة المستخدمين</h3>
+          
+          <div class="admin-mobile-list">
       `;
       
       snapshot.docs.forEach(doc => {
         const user = doc.data();
-        tableHTML += `
-          <tr>
-            <td>
-              <img src="${user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6B5BFF&color=fff&size=40`}" 
-                   alt="${user.name}"
-                   style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-            </td>
-            <td>${user.name}</td>
-            <td>${user.email}</td>
-            <td>
+        html += `
+          <div class="admin-mobile-card" onclick="viewUserAdminMobile('${doc.id}')" style="cursor: pointer;">
+            <div class="admin-mobile-card-header">
+              <div class="admin-mobile-card-title" style="display: flex; align-items: center; gap: 10px;">
+                <img src="${user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6B5BFF&color=fff&size=40`}" 
+                     alt="${user.name}"
+                     style="width: 30px; height: 30px; object-fit: cover; border-radius: 50%;">
+                ${user.name}
+              </div>
               <span style="background: ${user.role === 'admin' ? '#6B5BFF' : '#25D366'}; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem;">
                 ${user.role === 'admin' ? 'مدير' : 'عميل'}
               </span>
-            </td>
-            <td>${user.createdAt?.toDate ? user.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" onclick="viewUserAdmin('${doc.id}')">
-                <i class="fas fa-eye"></i>
-              </button>
-            </td>
-          </tr>
+            </div>
+            <div class="admin-mobile-card-body">
+              <div style="display: flex; justify-content: space-between;">
+                <span>البريد:</span>
+                <span>${user.email}</span>
+              </div>
+            </div>
+          </div>
         `;
       });
       
-      tableHTML += `
-            </tbody>
-          </table>
+      html += `
+          </div>
         </div>
       `;
       
-      container.innerHTML = tableHTML;
+      container.innerHTML = html;
       
     } catch (error) {
       console.error('Error loading admin users:', error);
@@ -5663,7 +5938,7 @@
     }
   }
 
-  async function viewUserAdmin(userId) {
+  async function viewUserAdminMobile(userId) {
     try {
       const userDoc = await db.collection('users').doc(userId).get();
       
@@ -5683,40 +5958,37 @@
       
       const modalHTML = `
         <div class="modal-overlay" onclick="closeModal()">
-          <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px;">
-            <button class="modal-close" onclick="closeModal()">
+          <div class="modal" onclick="event.stopPropagation()" style="max-width: 100%; margin: 0; border-radius: 0; width: 100vw; height: 100vh;">
+            <button class="modal-close" onclick="closeModal()" style="position: fixed; top: 15px; left: 15px; z-index: 100; background: white;">
               <i class="fas fa-times"></i>
             </button>
-            <div class="modal-header">
+            
+            <div class="modal-header" style="padding-top: 60px;">
               <h2 class="modal-title">
                 <i class="fas fa-user"></i>
                 تفاصيل المستخدم
               </h2>
             </div>
-            <div class="modal-body">
-              <div style="display: grid; grid-template-columns: auto 1fr; gap: 30px; margin-bottom: 30px;">
-                <div>
-                  <img src="${user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6B5BFF&color=fff&size=128`}" 
-                       alt="${user.name}"
-                       style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary-color);">
-                </div>
-                
-                <div>
-                  <h3>${user.name}</h3>
-                  <p style="color: var(--text-light);">${user.email}</p>
-                  
-                  <div style="margin-top: 15px;">
-                    <p><strong>الدور:</strong> ${user.role === 'admin' ? 'مدير' : 'عميل'}</p>
-                    ${user.phone ? `<p><strong>الهاتف:</strong> ${user.phone}</p>` : ''}
-                    ${user.address ? `<p><strong>العنوان:</strong> ${user.address}</p>` : ''}
-                    <p><strong>تاريخ التسجيل:</strong> ${user.createdAt?.toDate ? user.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</p>
-                  </div>
-                </div>
+            
+            <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+              <div style="text-align: center; margin-bottom: 20px;">
+                <img src="${user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6B5BFF&color=fff&size=128`}" 
+                     alt="${user.name}"
+                     style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary-color); margin-bottom: 10px;">
+                <h3>${user.name}</h3>
+                <p style="color: var(--text-light);">${user.email}</p>
+              </div>
+              
+              <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px; margin-bottom: 15px;">
+                <p><strong>الدور:</strong> ${user.role === 'admin' ? 'مدير' : 'عميل'}</p>
+                ${user.phone ? `<p><strong>الهاتف:</strong> ${user.phone}</p>` : ''}
+                ${user.address ? `<p><strong>العنوان:</strong> ${user.address}</p>` : ''}
+                <p><strong>تاريخ التسجيل:</strong> ${user.createdAt?.toDate ? user.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</p>
               </div>
               
               ${ordersSnapshot.empty ? '' : `
-                <h4 style="margin-bottom: 15px; color: var(--text-primary);">آخر الطلبات:</h4>
-                <div style="background: white; border-radius: var(--border-radius-md); overflow: hidden; border: 1px solid var(--border-color);">
+                <h4 style="margin-bottom: 10px; color: var(--text-primary);">آخر الطلبات:</h4>
+                <div style="background: white; border-radius: var(--border-radius-md); overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 15px;">
                   ${ordersSnapshot.docs.map(doc => {
                     const order = doc.data();
                     const status = order.status || {};
@@ -5725,14 +5997,14 @@
                     else if (status.on_way) statusText = 'في الطريق';
                     
                     return `
-                      <div style="padding: 15px; border-bottom: 1px solid var(--border-color);">
+                      <div style="padding: 10px; border-bottom: 1px solid var(--border-color);">
                         <div style="display: flex; justify-content: space-between;">
-                          <strong>طلب #${doc.id.substring(0, 8)}</strong>
-                          <span style="color: var(--text-light); font-size: 0.9rem;">${statusText}</span>
+                          <strong style="font-size: 0.9rem;">طلب #${doc.id.substring(0, 8)}</strong>
+                          <span style="color: var(--text-light); font-size: 0.8rem;">${statusText}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-top: 5px;">
-                          <span>${order.items?.length || 0} منتج</span>
-                          <span style="font-weight: 600; color: var(--primary-color);">${order.total?.toFixed(2) || '0'} جنيه</span>
+                          <span style="font-size: 0.85rem;">${order.items?.length || 0} منتج</span>
+                          <span style="font-weight: 600; color: var(--primary-color); font-size: 0.85rem;">${order.total?.toFixed(2) || '0'} جنيه</span>
                         </div>
                       </div>
                     `;
@@ -5741,11 +6013,11 @@
               `}
             </div>
             
-            <div class="modal-footer">
-              <button class="btn btn-outline" onclick="closeModal()">
+            <div class="modal-footer" style="position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; border-top: 1px solid var(--border-color);">
+              <button class="btn btn-outline" onclick="closeModal()" style="flex: 1;">
                 <i class="fas fa-times"></i> إغلاق
               </button>
-              <button class="btn btn-primary" onclick="changeUserRole('${userId}', '${user.role}')">
+              <button class="btn btn-primary" onclick="changeUserRole('${userId}', '${user.role}')" style="flex: 2; margin-right: 10px;">
                 <i class="fas fa-user-cog"></i> تغيير الدور
               </button>
             </div>
@@ -5761,7 +6033,7 @@
     }
   }
 
-  async function loadAdminSettings(container) {
+  async function loadAdminSettingsMobile(container) {
     try {
       // جلب إعدادات الشحن
       const settingsDoc = await db.collection('settings').doc('shipping').get();
@@ -5772,30 +6044,33 @@
       };
       
       const html = `
-        <h3 style="margin-bottom: 20px;">إعدادات الشحن</h3>
-        <div style="max-width: 500px;">
-          <div class="form-group">
-            <label class="form-label">سعر الشحن القياسي (جنيه)</label>
-            <input type="number" class="form-control" id="shippingStandard" 
-                   value="${settings.standard || 20}" min="0" step="1">
-          </div>
+        <div style="margin-bottom: 20px;">
+          <h3 style="margin-bottom: 15px;">إعدادات الشحن</h3>
           
-          <div class="form-group">
-            <label class="form-label">الحد الأدنى للشحن المجاني (جنيه)</label>
-            <input type="number" class="form-control" id="shippingFreeThreshold" 
-                   value="${settings.freeThreshold || 300}" min="0" step="1">
+          <div style="background: white; border-radius: var(--border-radius-md); padding: 15px; border: 1px solid var(--border-color);">
+            <div class="form-group">
+              <label class="form-label">سعر الشحن القياسي (جنيه)</label>
+              <input type="number" class="form-control" id="shippingStandardMobile" 
+                     value="${settings.standard || 20}" min="0" step="1">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">الحد الأدنى للشحن المجاني (جنيه)</label>
+              <input type="number" class="form-control" id="shippingFreeThresholdMobile" 
+                     value="${settings.freeThreshold || 300}" min="0" step="1">
+            </div>
+            
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="shippingEnabledMobile" ${settings.enabled !== false ? 'checked' : ''}>
+                <span style="margin-right: 8px;">تفعيل خدمة الشحن</span>
+              </label>
+            </div>
+            
+            <button class="btn btn-primary btn-block" onclick="saveShippingSettingsMobile()" style="margin-top: 15px;">
+              <i class="fas fa-save"></i> حفظ الإعدادات
+            </button>
           </div>
-          
-          <div class="form-group">
-            <label>
-              <input type="checkbox" id="shippingEnabled" ${settings.enabled !== false ? 'checked' : ''}>
-              <span style="margin-right: 8px;">تفعيل خدمة الشحن</span>
-            </label>
-          </div>
-          
-          <button class="btn btn-primary" onclick="saveShippingSettings()">
-            <i class="fas fa-save"></i> حفظ الإعدادات
-          </button>
         </div>
       `;
       
@@ -5807,12 +6082,12 @@
     }
   }
 
-  async function saveShippingSettings() {
+  async function saveShippingSettingsMobile() {
     try {
       const settings = {
-        standard: parseInt(document.getElementById('shippingStandard').value) || 20,
-        freeThreshold: parseInt(document.getElementById('shippingFreeThreshold').value) || 300,
-        enabled: document.getElementById('shippingEnabled').checked,
+        standard: parseInt(document.getElementById('shippingStandardMobile').value) || 20,
+        freeThreshold: parseInt(document.getElementById('shippingFreeThresholdMobile').value) || 300,
+        enabled: document.getElementById('shippingEnabledMobile').checked,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       };
       
@@ -5823,6 +6098,93 @@
     } catch (error) {
       console.error('Error saving settings:', error);
       showNotification('حدث خطأ في حفظ الإعدادات', 'error');
+    }
+  }
+
+  async function saveCategoryMobile() {
+    try {
+      const categoryData = {
+        name: document.getElementById('categoryNameMobile').value.trim(),
+        icon: document.getElementById('categoryIconMobile').value.trim() || 'fas fa-tag',
+        color: document.getElementById('categoryColorMobile').value,
+        order: parseInt(document.getElementById('categoryOrderMobile').value) || 1,
+        productCount: 0
+      };
+      
+      if (!categoryData.name) {
+        showNotification('يرجى إدخال اسم التصنيف', 'warning');
+        return;
+      }
+      
+      await db.collection('categories').add(categoryData);
+      
+      showNotification('تم إضافة التصنيف بنجاح', 'success');
+      closeModal();
+      
+      // تحديث القائمة
+      const currentTab = document.querySelector('.admin-tab.active');
+      if (currentTab.textContent.includes('التصنيفات')) {
+        showAdminTabMobile('categories', currentTab);
+      }
+      
+    } catch (error) {
+      console.error('Error saving category:', error);
+      showNotification('حدث خطأ في حفظ التصنيف', 'error');
+    }
+  }
+
+  async function updateCategoryMobile(categoryId) {
+    try {
+      const categoryData = {
+        name: document.getElementById('editCategoryNameMobile').value.trim(),
+        icon: document.getElementById('editCategoryIconMobile').value.trim() || 'fas fa-tag',
+        color: document.getElementById('editCategoryColorMobile').value,
+        order: parseInt(document.getElementById('editCategoryOrderMobile').value) || 1,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      
+      await db.collection('categories').doc(categoryId).update(categoryData);
+      
+      showNotification('تم تحديث التصنيف بنجاح', 'success');
+      closeModal();
+      
+      // تحديث القائمة
+      const currentTab = document.querySelector('.admin-tab.active');
+      if (currentTab.textContent.includes('التصنيفات')) {
+        showAdminTabMobile('categories', currentTab);
+      }
+      
+    } catch (error) {
+      console.error('Error updating category:', error);
+      showNotification('حدث خطأ في تحديث التصنيف', 'error');
+    }
+  }
+
+  async function changeUserRole(userId, currentRole) {
+    const newRole = currentRole === 'admin' ? 'customer' : 'admin';
+    
+    if (!confirm(`هل تريد تغيير دور المستخدم إلى ${newRole === 'admin' ? 'مدير' : 'عميل'}؟`)) {
+      return;
+    }
+    
+    try {
+      await db.collection('users').doc(userId).update({
+        role: newRole,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      
+      showNotification(`تم تغيير دور المستخدم إلى ${newRole === 'admin' ? 'مدير' : 'عميل'}`, 'success');
+      closeModal();
+      
+      // تحديث القائمة
+      const currentTab = document.querySelector('.admin-tab.active');
+      if (currentTab.textContent.includes('المستخدمين')) {
+        showAdminTabMobile('users', currentTab);
+      }
+      
+    } catch (error) {
+      console.error('Error changing user role:', error);
+      showNotification('حدث خطأ في تغيير دور المستخدم', 'error');
     }
   }
 
@@ -6228,184 +6590,6 @@
   // ---------- تهيئة نهائية ----------
   console.log('🎉 تطبيق سوبر ماركت الأستاذ جاهز!');
   </script>
-
-  <!-- PWA Install Prompt -->
-  <script>
-  // تسجيل Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').then(registration => {
-        console.log('ServiceWorker registered with scope:', registration.scope);
-      }).catch(error => {
-        console.log('ServiceWorker registration failed:', error);
-      });
-    });
-  }
-
-  // Install Prompt
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    
-    // عرض زر التثبيت بعد 5 ثواني
-    setTimeout(() => {
-      if (deferredPrompt) {
-        showInstallPromotion();
-      }
-    }, 5000);
-  });
-
-  function showInstallPromotion() {
-    const installModal = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 400px;">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-body text-center">
-            <i class="fas fa-download fa-3x mb-3" style="color: var(--primary-color);"></i>
-            <h3 class="mb-3">تثبيت التطبيق</h3>
-            <p class="text-muted mb-4">تثبيت تطبيق سوبر ماركت الأستاذ للحصول على تجربة أفضل</p>
-            <button class="btn btn-primary btn-block" onclick="installApp()">
-              <i class="fas fa-download"></i> تثبيت التطبيق
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = installModal;
-  }
-
-  async function installApp() {
-    if (!deferredPrompt) return;
-    
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      console.log('User accepted the install prompt');
-    } else {
-      console.log('User dismissed the install prompt');
-    }
-    
-    deferredPrompt = null;
-    closeModal();
-  }
-
-  // تحديث التطبيق
-  if ('serviceWorker' in navigator) {
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (!refreshing) {
-        refreshing = true;
-        window.location.reload();
-      }
-    });
-  }
-  </script>
-
-  <!-- Banner تطوير -->
-  <footer style="
-    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-    color: white;
-    padding: 30px 20px;
-    text-align: center;
-    margin-top: 50px;
-    border-radius: var(--border-radius-lg);
-    position: relative;
-    overflow: hidden;
-  ">
-    <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--primary-gradient);"></div>
-    
-    <div style="max-width: 1200px; margin: 0 auto;">
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
-        <!-- Logo -->
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-          <div style="width: 40px; height: 40px; background: var(--primary-gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-            <i class="fas fa-store" style="color: white; font-size: 1.2rem;"></i>
-          </div>
-          <h3 style="color: white; margin: 0;">سوبر ماركت الأستاذ</h3>
-        </div>
-        
-        <p style="color: #aaa; margin-bottom: 20px; max-width: 600px; line-height: 1.6;">
-          تطبيق تسوق متكامل مصمم خصيصاً للهواتف الذكية. يوفر تجربة تسوق سلسة وآمنة مع جميع الميزات التي تحتاجها.
-        </p>
-        
-        <!-- Features -->
-        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin: 20px 0;">
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(107, 91, 255, 0.1); padding: 8px 15px; border-radius: 20px;">
-            <i class="fas fa-mobile-alt" style="color: var(--primary-color);"></i>
-            <span style="color: #ddd;">متوافق مع جميع الهواتف</span>
-          </div>
-          
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(107, 91, 255, 0.1); padding: 8px 15px; border-radius: 20px;">
-            <i class="fas fa-bolt" style="color: #FFA500;"></i>
-            <span style="color: #ddd;">سرعة عالية</span>
-          </div>
-          
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(107, 91, 255, 0.1); padding: 8px 15px; border-radius: 20px;">
-            <i class="fas fa-shield-alt" style="color: #25D366;"></i>
-            <span style="color: #ddd;">آمن ومحمي</span>
-          </div>
-          
-          <div style="display: flex; align-items: center; gap: 8px; background: rgba(107, 91, 255, 0.1); padding: 8px 15px; border-radius: 20px;">
-            <i class="fas fa-wifi" style="color: #6B5BFF;"></i>
-            <span style="color: #ddd;">يعمل بدون إنترنت</span>
-          </div>
-        </div>
-        
-        <!-- Developer Banner -->
-        <div style="
-          background: linear-gradient(135deg, rgba(107, 91, 255, 0.15), rgba(124, 100, 255, 0.1));
-          border: 1px solid rgba(107, 91, 255, 0.3);
-          border-radius: var(--border-radius-md);
-          padding: 20px;
-          margin-top: 20px;
-          width: 100%;
-          max-width: 500px;
-        ">
-          <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px;">
-            <div style="width: 50px; height: 50px; background: var(--primary-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-              <i class="fas fa-code" style="color: white; font-size: 1.5rem;"></i>
-            </div>
-            <div style="text-align: right;">
-              <h4 style="color: white; margin: 0 0 5px 0;">تم التطوير بواسطة</h4>
-              <div style="
-                background: linear-gradient(135deg, #FF2D55, #FF6B9D);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                font-size: 1.5rem;
-                font-weight: 800;
-                letter-spacing: 1px;
-              ">
-                AI7
-              </div>
-            </div>
-          </div>
-          
-          <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px;">
-            <span style="color: #aaa;">إصدار 2026.3.1</span>
-            <span style="color: var(--primary-color);">•</span>
-            <span style="color: #aaa;">تطبيق PWA احترافي</span>
-            <span style="color: var(--primary-color);">•</span>
-            <span style="color: #aaa;">100% Mobile First</span>
-          </div>
-        </div>
-        
-        <!-- Copyright -->
-        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); width: 100%;">
-          <p style="color: #888; font-size: 0.9rem;">
-            © 2026 سوبر ماركت الأستاذ. جميع الحقوق محفوظة.
-            <br>
-            <span style="color: var(--primary-light);">مصمم ليكون التطبيق المثالي للتسوق عبر الهاتف</span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </footer>
 
   <!-- PWA Install Script -->
   <script>
