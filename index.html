@@ -963,7 +963,7 @@
       height: 40px;
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-camp: 2;
       -webkit-box-orient: vertical;
     }
     
@@ -2153,6 +2153,9 @@
     <i class="fas fa-phone"></i>
   </button>
 
+  <!-- Environment Variables -->
+  <script src="./env.js"></script>
+
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
@@ -2160,44 +2163,28 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics-compat.js"></script>
 
+  <!-- Firebase Config (Protected) -->
+  <script src="./firebase-config.js"></script>
+
+  <!-- Security Module -->
+  <script src="./security.js"></script>
+
   <!-- JavaScript Application Code -->
   <script>
   /**************************************************************************
-   * تطبيق سوبر ماركت الأستاذ - النسخة المحسنة
-   * إصدار 2026.3 - مع إصلاح جميع المشاكل
+   * تطبيق سوبر ماركت الأستاذ - النسخة المحمية
+   * إصدار 2026.3.1 - مع حماية كاملة للبيانات
    **************************************************************************/
 
   // ---------- إعدادات التطبيق ----------
   const APP_CONFIG = {
     name: 'سوبر ماركت الأستاذ',
-    version: '2026.3',
-    firebase: {
-      apiKey: "AIzaSyAX2wKpYXUYmEA-Yn-W88BoMbzbD24HlEE",
-      authDomain: "supermarket-3aboda.firebaseapp.com",
-      projectId: "supermarket-3aboda",
-      storageBucket: "supermarket-3aboda.firebasestorage.app",
-      messagingSenderId: "451841595000",
-      appId: "1:451841595000:web:69ed544e1692ff09947f8d",
-      measurementId: "G-SEJZSP24P1"
-    },
+    version: '2026.3.1',
+    firebase: {},
     whatsapp: "201550462808",
     phone: "01550462808",
     address: "شارع عبدالحافظ، بنها، القليوبية"
   };
-
-  // ---------- تهيئة Firebase ----------
-  try {
-    firebase.initializeApp(APP_CONFIG.firebase);
-    if (APP_CONFIG.firebase.measurementId) {
-      try { firebase.analytics(); } catch(e) { console.log('Analytics disabled'); }
-    }
-  } catch (error) {
-    console.error('Firebase initialization error:', error);
-  }
-
-  const db = firebase.firestore();
-  const auth = firebase.auth();
-  const storage = firebase.storage();
 
   // ---------- متغيرات التطبيق ----------
   let currentUser = null;
@@ -2212,11 +2199,17 @@
   document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 بدء تشغيل تطبيق سوبر ماركت الأستاذ');
     
+    // التحقق من الأمان
+    if (!Security.check()) {
+      showNotification('تم اكتشاف مشكلة أمنية، يرجى تحديث الصفحة', 'error');
+      return;
+    }
+    
     // تهيئة العناصر
     adminFloatBtn = document.getElementById('adminFloatBtn');
     
-    // إعداد المستخدم
-    setupAuth();
+    // الانتظار حتى يتم تهيئة Firebase
+    await initializeFirebaseServices();
     
     // تحميل البيانات
     await loadInitialData();
@@ -2233,6 +2226,39 @@
     console.log('✅ التطبيق جاهز للاستخدام');
   });
 
+  // ---------- تهيئة خدمات Firebase ----------
+  async function initializeFirebaseServices() {
+    return new Promise((resolve) => {
+      const checkFirebase = () => {
+        if (typeof firebase !== 'undefined' && 
+            firebase.apps && 
+            firebase.apps.length > 0) {
+          
+          // تهيئة الخدمات
+          try {
+            window.db = firebase.firestore();
+            window.auth = firebase.auth();
+            window.storage = firebase.storage();
+            
+            console.log('✅ Firebase services initialized');
+            
+            // إعداد المصادقة
+            setupAuth();
+            
+            resolve(true);
+          } catch (error) {
+            console.error('❌ Error initializing Firebase services:', error);
+            resolve(false);
+          }
+        } else {
+          setTimeout(checkFirebase, 100);
+        }
+      };
+      
+      checkFirebase();
+    });
+  }
+
   // ---------- تحميل البيانات الأولية ----------
   async function loadInitialData() {
     try {
@@ -2242,11 +2268,11 @@
       // تحميل المنتجات
       await loadProducts();
       
-      // تحميل العربة من التخزين المحلي
-      cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      // تحميل العربة من التخزين المحلي الآمن
+      cart = Security.load('cart', []);
       
-      // تحميل المفضلة من التخزين المحلي
-      favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      // تحميل المفضلة من التخزين المحلي الآمن
+      favorites = Security.load('favorites', []);
       
       // تحديث العداد
       updateCartBadge();
@@ -2321,7 +2347,7 @@
     const userAvatarEl = document.getElementById('userAvatar');
     
     if (currentUser && userData) {
-      userNameEl.textContent = userData.name;
+      userNameEl.textContent = Security.sanitizeInput(userData.name);
       userAvatarEl.src = userData.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name)}&background=6B5BFF&color=fff&size=64`;
     } else {
       userNameEl.textContent = 'مستخدم';
@@ -2366,7 +2392,7 @@
         ];
         
         container.innerHTML = defaultCategories.map(cat => `
-          <div class="category-card" onclick="filterByCategory('${cat.name}')">
+          <div class="category-card" onclick="filterByCategory('${Security.sanitizeInput(cat.name)}')">
             <div class="category-icon" style="color: ${cat.color}">
               <i class="${cat.icon}"></i>
             </div>
@@ -2384,7 +2410,7 @@
         container.innerHTML = snapshot.docs.map(doc => {
           const cat = doc.data();
           return `
-            <div class="category-card" onclick="filterByCategory('${cat.name}')">
+            <div class="category-card" onclick="filterByCategory('${Security.sanitizeInput(cat.name)}')">
               <div class="category-icon" style="color: ${cat.color || '#6B5BFF'}">
                 <i class="${cat.icon || 'fas fa-tag'}"></i>
               </div>
@@ -2484,13 +2510,13 @@
           </div>
           
           <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-               alt="${product.name}"
+               alt="${Security.sanitizeInput(product.name)}"
                class="product-image"
                onerror="this.src='https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'">
           
           <div class="product-info">
-            <h3 class="product-name">${product.name}</h3>
-            <div class="product-category">${product.category || 'عام'}</div>
+            <h3 class="product-name">${Security.sanitizeInput(product.name)}</h3>
+            <div class="product-category">${Security.sanitizeInput(product.category || 'عام')}</div>
             
             <div class="product-price">
               <span class="price-current">
@@ -2529,6 +2555,10 @@
 
   // ---------- نظام السلة ----------
   function addToCart(productId, button = null) {
+    if (!Security.validateAction('addToCart', { productId })) {
+      return;
+    }
+    
     const product = globalProducts.find(p => p.id === productId);
     if (!product) {
       showNotification('المنتج غير موجود', 'error');
@@ -2566,14 +2596,14 @@
       button.innerHTML = '<i class="fas fa-check"></i> في العربة';
     }
     
-    // حفظ العربة
-    localStorage.setItem('cart', JSON.stringify(cart));
+    // حفظ العربة بشكل آمن
+    Security.save('cart', cart);
     
     // تحديث العداد
     updateCartBadge();
     
     // إظهار الإشعار
-    showNotification(`تمت إضافة "${product.name}" إلى العربة`, 'success');
+    showNotification(`تمت إضافة "${Security.sanitizeInput(product.name)}" إلى العربة`, 'success');
   }
 
   function updateCartBadge() {
@@ -2586,6 +2616,10 @@
     if (!currentUser) {
       showNotification('سجل دخول لإضافة المنتج للمفضلة', 'warning');
       openLoginModal();
+      return;
+    }
+    
+    if (!Security.validateAction('toggleFavorite', { productId })) {
       return;
     }
     
@@ -2613,8 +2647,8 @@
       }
     }
     
-    // حفظ المفضلة
-    localStorage.setItem('favorites', JSON.stringify(favorites));
+    // حفظ المفضلة بشكل آمن
+    Security.save('favorites', favorites);
     
     // تحديث عداد المفضلة
     updateFavoritesBadge();
@@ -2669,165 +2703,6 @@
     }
   }
 
-  async function markAllNotificationsAsRead() {
-    if (!currentUser) return;
-    
-    try {
-      // تحديث جميع الإشعارات الغير مقروءة
-      const batch = db.batch();
-      const notificationsRef = db.collection('notifications');
-      
-      // جلب جميع الإشعارات الغير مقروءة
-      const unreadQuery = await notificationsRef
-        .where('userId', '==', currentUser.uid)
-        .where('read', '==', false)
-        .get();
-      
-      if (unreadQuery.empty) {
-        showNotification('لا توجد إشعارات غير مقروءة', 'info');
-        return;
-      }
-      
-      unreadQuery.docs.forEach(doc => {
-        const notifRef = notificationsRef.doc(doc.id);
-        batch.update(notifRef, { read: true });
-      });
-      
-      await batch.commit();
-      
-      // تحديث البيانات المحلية
-      notifications.forEach(notif => notif.read = true);
-      updateNotificationsBadge();
-      
-      showNotification(`تم تحديد ${unreadQuery.size} إشعار كمقروء`, 'success');
-      
-      // إعادة تحميل الإشعارات
-      await loadNotifications();
-      openNotifications();
-      
-    } catch (error) {
-      console.error('Error marking notifications as read:', error);
-      showNotification('حدث خطأ في تحديث الإشعارات', 'error');
-    }
-  }
-
-  // ---------- العرض السريع ----------
-  function quickView(productId) {
-    const product = globalProducts.find(p => p.id === productId);
-    if (!product) return;
-    
-    const isFavorite = favorites.some(fav => fav.id === productId);
-    
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px;">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">${product.name}</h2>
-          </div>
-          <div class="modal-body">
-            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: start;">
-              <div>
-                <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x300/6B5BFF/ffffff?text=صورة+المنتج'}" 
-                     alt="${product.name}"
-                     style="width: 100%; border-radius: var(--border-radius-md);"
-                     onerror="this.src='https://via.placeholder.com/300x300/6B5BFF/ffffff?text=صورة+المنتج'">
-                
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                  <button class="btn btn-primary btn-block" onclick="addToCart('${productId}'); closeModal();">
-                    <i class="fas fa-cart-plus"></i> أضف إلى العربة
-                  </button>
-                  <button class="btn btn-outline" onclick="toggleFavorite('${productId}')">
-                    <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
-                  </button>
-                </div>
-              </div>
-              
-              <div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                  <div>
-                    <h3 style="color: var(--primary-color); font-size: 1.8rem;">
-                      ${(product.price * (1 - (product.discount || 0) / 100)).toFixed(2)} جنيه
-                    </h3>
-                    ${product.discount > 0 ? `
-                      <div style="color: var(--text-light); text-decoration: line-through;">
-                        ${product.price.toFixed(2)} جنيه
-                      </div>
-                    ` : ''}
-                  </div>
-                  ${product.discount > 0 ? `
-                    <span style="background: var(--cart-red); color: white; padding: 5px 15px; border-radius: 20px; font-weight: 600;">
-                      خصم ${product.discount}%
-                    </span>
-                  ` : ''}
-                </div>
-                
-                <div style="margin-bottom: 20px;">
-                  <div style="color: var(--text-light); font-size: 0.9rem;">التصنيف:</div>
-                  <div style="font-weight: 600;">${product.category || 'عام'}</div>
-                </div>
-                
-                <div style="margin-bottom: 20px;">
-                  <div style="color: var(--text-light); font-size: 0.9rem;">الوصف:</div>
-                  <div>${product.description || 'لا يوجد وصف للمنتج'}</div>
-                </div>
-                
-                <div style="margin-bottom: 20px;">
-                  <div style="color: var(--text-light); font-size: 0.9rem;">التقييم:</div>
-                  <div class="product-rating" style="font-size: 1.2rem;">
-                    <div class="stars">
-                      ${[1,2,3,4,5].map(star => `
-                        <i class="fas fa-star ${product.rating >= star ? 'text-warning' : 'text-muted'}"></i>
-                      `).join('')}
-                    </div>
-                    <span class="rating-count">(${product.ratingCount || 0} تقييم)</span>
-                  </div>
-                </div>
-                
-                <div style="margin-bottom: 20px;">
-                  <div style="color: var(--text-light); font-size: 0.9rem;">المخزون:</div>
-                  <div class="product-stock ${product.stock > 10 ? 'stock-available' : product.stock > 0 ? 'stock-low' : 'stock-out'}" style="font-weight: 600;">
-                    <i class="fas fa-box"></i>
-                    ${product.stock > 10 ? 'متوفر بكثرة' : product.stock > 0 ? 'آخر الكمية' : 'نفذت الكمية'}
-                  </div>
-                </div>
-                
-                <button class="btn btn-secondary btn-block" onclick="shareProduct('${productId}')">
-                  <i class="fas fa-share-alt"></i> مشاركة المنتج
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  // ---------- المشاركة ----------
-  function shareProduct(productId) {
-    const product = globalProducts.find(p => p.id === productId);
-    if (!product) return;
-    
-    const shareData = {
-      title: product.name,
-      text: `اطلع على ${product.name} بسعر ${(product.price * (1 - (product.discount || 0) / 100)).toFixed(2)} جنيه في سوبر ماركت الأستاذ`,
-      url: window.location.href
-    };
-    
-    if (navigator.share) {
-      navigator.share(shareData).catch(console.error);
-    } else {
-      // نسخ الرابط
-      navigator.clipboard.writeText(shareData.url).then(() => {
-        showNotification('تم نسخ رابط المنتج', 'success');
-      });
-    }
-  }
-
   // ---------- دوال المساعدة ----------
   function showNotification(message, type = 'info') {
     // إنشاء عنصر الإشعار
@@ -2836,7 +2711,7 @@
     notification.innerHTML = `
       <div style="position: fixed; top: 80px; right: 20px; background: ${type === 'success' ? '#25D366' : type === 'error' ? '#FF2D55' : '#6B5BFF'}; color: white; padding: 15px 25px; border-radius: var(--border-radius-md); z-index: 9999; box-shadow: var(--shadow-lg); animation: slideInDown 0.3s ease;">
         <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-        ${message}
+        ${Security.sanitizeInput(message)}
       </div>
     `;
     
@@ -2866,7 +2741,7 @@
     
     if (currentUser && userData) {
       userAvatar.src = userData.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name)}&background=6B5BFF&color=fff&size=64`;
-      userName.textContent = userData.name;
+      userName.textContent = Security.sanitizeInput(userData.name);
     }
   }
 
@@ -2874,1496 +2749,6 @@
   function goHome() {
     // إعادة تحميل الصفحة الرئيسية
     location.reload();
-  }
-
-  function showAllProductsPage() {
-    // إظهار جميع المنتجات
-    const content = `
-      <section class="hero-section" style="margin-bottom: 30px;">
-        <div class="hero-content">
-          <h1 class="hero-title">جميع المنتجات</h1>
-          <p class="hero-subtitle">تصفح جميع منتجاتنا المميزة والعروض الحصرية</p>
-        </div>
-      </section>
-      
-      <section class="section">
-        <div class="section-header">
-          <h2 class="section-title">
-            <i class="fas fa-list"></i>
-            جميع المنتجات
-          </h2>
-          <div style="display: flex; gap: 10px;">
-            <select class="form-control" style="width: auto;" onchange="filterProducts(this.value)" id="filterSelect">
-              <option value="">جميع التصنيفات</option>
-              <option value="discount">العروض</option>
-              <option value="featured">المميزة</option>
-              <option value="new">الأحدث</option>
-            </select>
-            <select class="form-control" style="width: auto;" onchange="sortProducts(this.value)" id="sortSelect">
-              <option value="newest">الأحدث أولاً</option>
-              <option value="price_low">السعر: منخفض إلى مرتفع</option>
-              <option value="price_high">السعر: مرتفع إلى منخفض</option>
-              <option value="discount">أعلى خصم</option>
-            </select>
-          </div>
-        </div>
-        <div class="products-grid" id="allProductsGrid">
-          ${renderAllProducts(globalProducts)}
-        </div>
-      </section>
-    `;
-    
-    document.getElementById('mainContent').innerHTML = content;
-    document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function renderAllProducts(products) {
-    if (products.length === 0) {
-      return `
-        <div class="text-center text-muted" style="grid-column: 1/-1; padding: 60px;">
-          <i class="fas fa-box-open fa-4x mb-3" style="color: #e0e0e0;"></i>
-          <h3 class="mb-3">لا توجد منتجات</h3>
-        </div>
-      `;
-    }
-    
-    return products.map(product => {
-      const isFavorite = favorites.some(fav => fav.id === product.id);
-      const isInCart = cart.some(item => item.id === product.id);
-      
-      return `
-        <div class="product-card" data-id="${product.id}">
-          ${product.discount > 0 ? `
-            <div class="product-badge">
-              ${product.discount}% خصم
-            </div>
-          ` : ''}
-          
-          <div class="product-actions">
-            <button class="action-btn ${isFavorite ? 'active' : ''}" 
-                    onclick="toggleFavorite('${product.id}', this)"
-                    title="المفضلة">
-              <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
-            </button>
-            <button class="action-btn" onclick="shareProduct('${product.id}')" title="مشاركة">
-              <i class="fas fa-share-alt"></i>
-            </button>
-            <button class="action-btn" onclick="quickView('${product.id}')" title="عرض سريع">
-              <i class="fas fa-eye"></i>
-            </button>
-          </div>
-          
-          <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-               alt="${product.name}"
-               class="product-image">
-          
-          <div class="product-info">
-            <h3 class="product-name">${product.name}</h3>
-            <div class="product-category">${product.category || 'عام'}</div>
-            
-            <div class="product-price">
-              <span class="price-current">
-                ${(product.price * (1 - (product.discount || 0) / 100)).toFixed(2)} جنيه
-              </span>
-              ${product.discount > 0 ? `
-                <span class="price-old">${product.price.toFixed(2)} جنيه</span>
-              ` : ''}
-            </div>
-            
-            <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" 
-                    onclick="addToCart('${product.id}', this)"
-                    ${product.stock === 0 ? 'disabled' : ''}>
-              <i class="${isInCart ? 'fas fa-check' : 'fas fa-cart-plus'}"></i>
-              ${isInCart ? 'في العربة' : product.stock === 0 ? 'نفذت الكمية' : 'أضف إلى العربة'}
-            </button>
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  // دالة الفلترة
-  function filterProducts(filterType) {
-    let filteredProducts = [...globalProducts];
-    
-    switch(filterType) {
-      case 'discount':
-        filteredProducts = filteredProducts.filter(p => p.discount > 0);
-        break;
-      case 'featured':
-        filteredProducts = filteredProducts.filter(p => p.featured);
-        break;
-      case 'new':
-        // نستخدم التاريخ للتصفية حسب الجديد
-        filteredProducts.sort((a, b) => {
-          const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date();
-          const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date();
-          return dateB - dateA;
-        });
-        break;
-    }
-    
-    const currentSort = document.getElementById('sortSelect')?.value || 'newest';
-    const sortedProducts = sortProductsByType(filteredProducts, currentSort);
-    
-    document.getElementById('allProductsGrid').innerHTML = renderAllProducts(sortedProducts);
-  }
-
-  // دالة الترتيب
-  function sortProducts(sortType) {
-    const currentFilter = document.getElementById('filterSelect')?.value || '';
-    let filteredProducts = [...globalProducts];
-    
-    // تطبيق الفلتر أولاً
-    switch(currentFilter) {
-      case 'discount':
-        filteredProducts = filteredProducts.filter(p => p.discount > 0);
-        break;
-      case 'featured':
-        filteredProducts = filteredProducts.filter(p => p.featured);
-        break;
-      case 'new':
-        // نستخدم التاريخ للتصفية حسب الجديد
-        filteredProducts.sort((a, b) => {
-          const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date();
-          const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date();
-          return dateB - dateA;
-        });
-        break;
-    }
-    
-    const sortedProducts = sortProductsByType(filteredProducts, sortType);
-    document.getElementById('allProductsGrid').innerHTML = renderAllProducts(sortedProducts);
-  }
-
-  function sortProductsByType(products, sortType) {
-    const sorted = [...products];
-    
-    switch(sortType) {
-      case 'price_low':
-        sorted.sort((a, b) => {
-          const priceA = a.price * (1 - (a.discount || 0) / 100);
-          const priceB = b.price * (1 - (b.discount || 0) / 100);
-          return priceA - priceB;
-        });
-        break;
-        
-      case 'price_high':
-        sorted.sort((a, b) => {
-          const priceA = a.price * (1 - (a.discount || 0) / 100);
-          const priceB = b.price * (1 - (b.discount || 0) / 100);
-          return priceB - priceA;
-        });
-        break;
-        
-      case 'discount':
-        sorted.sort((a, b) => (b.discount || 0) - (a.discount || 0));
-        break;
-        
-      case 'newest':
-      default:
-        sorted.sort((a, b) => {
-          const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date();
-          const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date();
-          return dateB - dateA;
-        });
-        break;
-    }
-    
-    return sorted;
-  }
-
-  function showOffersPage() {
-    // إظهار صفحة العروض
-    const offers = globalProducts.filter(p => p.discount > 0);
-    
-    const content = `
-      <section class="hero-section" style="background: linear-gradient(135deg, rgba(255, 127, 0, 0.9), rgba(255, 107, 0, 0.9)), url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); margin-bottom: 30px;">
-        <div class="hero-content">
-          <h1 class="hero-title">🔥 العروض الحصرية 🔥</h1>
-          <p class="hero-subtitle">خصومات تصل إلى 70% على منتجات مختارة | لفترة محدودة</p>
-        </div>
-      </section>
-      
-      <section class="section">
-        <div class="section-header">
-          <h2 class="section-title">
-            <i class="fas fa-fire"></i>
-            جميع العروض
-          </h2>
-          <div class="view-all" onclick="goHome()">
-            العودة للرئيسية
-            <i class="fas fa-arrow-left"></i>
-          </div>
-        </div>
-        <div class="products-grid" id="allOffersGrid">
-          ${offers.length > 0 ? offers.map(product => {
-            const isFavorite = favorites.some(fav => fav.id === product.id);
-            const isInCart = cart.some(item => item.id === product.id);
-            
-            return `
-              <div class="product-card" data-id="${product.id}">
-                <div class="product-badge">
-                  ${product.discount}% خصم
-                </div>
-                
-                <div class="product-actions">
-                  <button class="action-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${product.id}', this)">
-                    <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
-                  </button>
-                  <button class="action-btn" onclick="shareProduct('${product.id}')">
-                    <i class="fas fa-share-alt"></i>
-                  </button>
-                </div>
-                
-                <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-                     alt="${product.name}"
-                     class="product-image">
-                
-                <div class="product-info">
-                  <h3 class="product-name">${product.name}</h3>
-                  <div class="product-category">${product.category || 'عام'}</div>
-                  
-                  <div class="product-price">
-                    <span class="price-current">
-                      ${(product.price * (1 - product.discount / 100)).toFixed(2)} جنيه
-                    </span>
-                    <span class="price-old">${product.price.toFixed(2)} جنيه</span>
-                  </div>
-                  
-                  <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 15px;">
-                    وفر ${(product.price * product.discount / 100).toFixed(2)} جنيه
-                  </div>
-                  
-                  <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" onclick="addToCart('${product.id}', this)">
-                    <i class="fas fa-cart-plus"></i>
-                    أضف إلى العربة
-                  </button>
-                </div>
-              </div>
-            `;
-          }).join('') : `
-            <div class="text-center text-muted" style="grid-column: 1/-1; padding: 60px;">
-              <i class="fas fa-percentage fa-4x mb-3" style="color: #e0e0e0;"></i>
-              <h3>لا توجد عروض حالياً</h3>
-              <p class="mb-4">يمكنك تصفح جميع منتجاتنا المميزة</p>
-              <button class="btn btn-secondary" onclick="showAllProductsPage()">
-                تصفح المنتجات
-              </button>
-            </div>
-          `}
-        </div>
-      </section>
-    `;
-    
-    document.getElementById('mainContent').innerHTML = content;
-    document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function showCategoriesPage() {
-    // إظهار جميع التصنيفات
-    const content = `
-      <section class="hero-section" style="background: linear-gradient(135deg, rgba(107, 91, 255, 0.9), rgba(124, 100, 255, 0.9)), url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); margin-bottom: 30px;">
-        <div class="hero-content">
-          <h1 class="hero-title">🏷️ جميع التصنيفات</h1>
-          <p class="hero-subtitle">تصفح منتجاتنا من خلال التصنيفات المتنوعة</p>
-        </div>
-      </section>
-      
-      <section class="section">
-        <div class="section-header">
-          <h2 class="section-title">
-            <i class="fas fa-tags"></i>
-            تصفح حسب التصنيف
-          </h2>
-          <div class="view-all" onclick="goHome()">
-            العودة للرئيسية
-            <i class="fas fa-arrow-left"></i>
-          </div>
-        </div>
-        <div class="categories-grid" id="allCategoriesGrid">
-          <!-- سيتم تحميل التصنيفات هنا -->
-          <div class="loading" style="grid-column: 1/-1;">
-            <div class="spinner"></div>
-          </div>
-        </div>
-      </section>
-    `;
-    
-    document.getElementById('mainContent').innerHTML = content;
-    
-    // تحميل جميع التصنيفات
-    loadAllCategories();
-    
-    document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  async function loadAllCategories() {
-    try {
-      const snapshot = await db.collection('categories').orderBy('order', 'asc').get();
-      const container = document.getElementById('allCategoriesGrid');
-      
-      if (snapshot.empty) {
-        container.innerHTML = `
-          <div class="text-center text-muted" style="grid-column: 1/-1; padding: 60px;">
-            <i class="fas fa-tags fa-4x mb-3" style="color: #e0e0e0;"></i>
-            <h3>لا توجد تصنيفات</h3>
-          </div>
-        `;
-        return;
-      }
-      
-      container.innerHTML = snapshot.docs.map(doc => {
-        const cat = doc.data();
-        return `
-          <div class="category-card" onclick="filterByCategory('${cat.name}')">
-            <div class="category-icon" style="color: ${cat.color || '#6B5BFF'}">
-              <i class="${cat.icon || 'fas fa-tag'}"></i>
-            </div>
-            <div class="category-name">${cat.name}</div>
-            <div class="category-count">${cat.productCount || 0} منتج</div>
-          </div>
-        `;
-      }).join('');
-      
-    } catch (error) {
-      console.error('Error loading all categories:', error);
-    }
-  }
-
-  function filterByCategory(categoryName) {
-    const filteredProducts = globalProducts.filter(p => p.category === categoryName);
-    
-    const content = `
-      <section class="hero-section" style="margin-bottom: 30px;">
-        <div class="hero-content">
-          <h1 class="hero-title">${categoryName}</h1>
-          <p class="hero-subtitle">${filteredProducts.length} منتج في هذا التصنيف</p>
-        </div>
-      </section>
-      
-      <section class="section">
-        <div class="section-header">
-          <h2 class="section-title">
-            <i class="fas fa-filter"></i>
-            ${categoryName}
-          </h2>
-          <div class="view-all" onclick="goHome()">
-            العودة للرئيسية
-            <i class="fas fa-arrow-left"></i>
-          </div>
-        </div>
-        <div class="products-grid" id="categoryProductsGrid">
-          ${filteredProducts.length > 0 ? filteredProducts.map(product => {
-            const isFavorite = favorites.some(fav => fav.id === product.id);
-            const isInCart = cart.some(item => item.id === product.id);
-            
-            return `
-              <div class="product-card" data-id="${product.id}">
-                ${product.discount > 0 ? `
-                  <div class="product-badge">
-                    ${product.discount}% خصم
-                  </div>
-                ` : ''}
-                
-                <div class="product-actions">
-                  <button class="action-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${product.id}', this)">
-                    <i class="${isFavorite ? 'fas' : 'far'} fa-heart"></i>
-                  </button>
-                  <button class="action-btn" onclick="shareProduct('${product.id}')">
-                    <i class="fas fa-share-alt"></i>
-                  </button>
-                </div>
-                
-                <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-                     alt="${product.name}"
-                     class="product-image">
-                
-                <div class="product-info">
-                  <h3 class="product-name">${product.name}</h3>
-                  
-                  <div class="product-price">
-                    <span class="price-current">
-                      ${(product.price * (1 - (product.discount || 0) / 100)).toFixed(2)} جنيه
-                    </span>
-                    ${product.discount > 0 ? `
-                      <span class="price-old">${product.price.toFixed(2)} جنيه</span>
-                    ` : ''}
-                  </div>
-                  
-                  <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" onclick="addToCart('${product.id}', this)">
-                    <i class="fas fa-cart-plus"></i>
-                    أضف إلى العربة
-                  </button>
-                </div>
-              </div>
-            `;
-          }).join('') : `
-            <div class="text-center text-muted" style="grid-column: 1/-1; padding: 60px;">
-              <i class="fas fa-box-open fa-4x mb-3" style="color: #e0e0e0;"></i>
-              <h3>لا توجد منتجات في هذا التصنيف</h3>
-              <p class="mb-4">يمكنك تصفح تصنيفات أخرى</p>
-              <button class="btn btn-primary" onclick="showCategoriesPage()">
-                تصفح التصنيفات
-              </button>
-            </div>
-          `}
-        </div>
-      </section>
-    `;
-    
-    document.getElementById('mainContent').innerHTML = content;
-    document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function openCart() {
-    if (cart.length === 0) {
-      const modalHTML = `
-        <div class="modal-overlay" onclick="closeModal()">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()">
-              <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-body">
-              <div class="text-center" style="padding: 40px 20px;">
-                <i class="fas fa-shopping-cart fa-4x mb-3" style="color: #e0e0e0;"></i>
-                <h3 class="mb-3">عربة التسوق فارغة</h3>
-                <p class="text-muted mb-4">لم تقم بإضافة أي منتجات إلى العربة بعد</p>
-                <button class="btn btn-primary" onclick="closeModal(); showAllProductsPage();">
-                  <i class="fas fa-shopping-bag"></i>
-                  تصفح المنتجات
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('modalsContainer').innerHTML = modalHTML;
-      return;
-    }
-    
-    // حساب الإجمالي
-    const subtotal = cart.reduce((sum, item) => {
-      return sum + (item.price * (1 - item.discount / 100) * item.quantity);
-    }, 0);
-    
-    const shipping = subtotal > 300 ? 0 : 20;
-    const total = subtotal + shipping;
-    
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px;">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-shopping-cart"></i>
-              عربة التسوق
-              <span style="font-size: 1rem; color: var(--text-light); margin-right: 10px;">
-                (${cart.reduce((sum, item) => sum + item.quantity, 0)} منتج)
-              </span>
-            </h2>
-          </div>
-          <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
-            ${cart.map((item, index) => `
-              <div class="cart-item">
-                <img src="${item.image || 'https://via.placeholder.com/80/6B5BFF/ffffff?text=صورة'}" 
-                     alt="${item.name}"
-                     class="cart-item-image">
-                
-                <div class="cart-item-content">
-                  <h3 class="cart-item-name">${item.name}</h3>
-                  <div class="cart-item-price">
-                    ${(item.price * (1 - item.discount / 100)).toFixed(2)} جنيه
-                    ${item.discount > 0 ? `
-                      <span style="font-size: 0.9rem; color: var(--text-light); text-decoration: line-through; margin-right: 10px;">
-                        ${item.price.toFixed(2)} جنيه
-                      </span>
-                    ` : ''}
-                  </div>
-                </div>
-                
-                <div class="cart-item-actions">
-                  <div class="quantity-control">
-                    <button class="quantity-btn" onclick="updateCartQuantity(${index}, -1)">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <span class="quantity-value">${item.quantity}</span>
-                    <button class="quantity-btn" onclick="updateCartQuantity(${index}, 1)">
-                      <i class="fas fa-plus"></i>
-                    </button>
-                  </div>
-                  
-                  <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-          
-          <div class="cart-summary">
-            <div class="summary-row">
-              <span>المجموع</span>
-              <span>${subtotal.toFixed(2)} جنيه</span>
-            </div>
-            
-            <div class="summary-row">
-              <span>الشحن</span>
-              <span>${shipping === 0 ? 'مجاني' : shipping.toFixed(2) + ' جنيه'}</span>
-            </div>
-            
-            <div class="summary-row total">
-              <span>الإجمالي النهائي</span>
-              <span>${total.toFixed(2)} جنيه</span>
-            </div>
-            
-            ${subtotal < 300 ? `
-              <div class="text-center text-muted mt-3" style="font-size: 0.9rem;">
-                <i class="fas fa-info-circle"></i>
-                أضف ${(300 - subtotal).toFixed(2)} جنيه أخرى للحصول على شحن مجاني
-              </div>
-            ` : `
-              <div class="text-center text-success mt-3" style="font-size: 0.9rem;">
-                <i class="fas fa-check-circle"></i>
-                مؤهل للشحن المجاني
-              </div>
-            `}
-          </div>
-          
-          <div class="modal-footer">
-            <button class="btn btn-outline" onclick="closeModal()">
-              <i class="fas fa-times"></i>
-              إغلاق
-            </button>
-            <button class="btn btn-primary" onclick="openCheckout()">
-              <i class="fas fa-check-circle"></i>
-              إتمام الطلب
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  function updateCartQuantity(index, change) {
-    const item = cart[index];
-    
-    if (change === -1 && item.quantity === 1) {
-      removeFromCart(index);
-      return;
-    }
-    
-    item.quantity += change;
-    
-    // التحقق من المخزون
-    const product = globalProducts.find(p => p.id === item.id);
-    if (product && product.stock && item.quantity > product.stock) {
-      showNotification(`لا يمكن إضافة أكثر من ${product.stock} قطعة`, 'warning');
-      item.quantity = product.stock;
-    }
-    
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartBadge();
-    openCart(); // إعادة فتح العربة للتحديث
-  }
-
-  function removeFromCart(index) {
-    const item = cart[index];
-    cart.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartBadge();
-    showNotification(`تمت إزالة "${item.name}" من العربة`, 'info');
-    
-    if (cart.length === 0) {
-      closeModal();
-    } else {
-      openCart();
-    }
-  }
-
-  function openCheckout() {
-    if (!currentUser) {
-      showNotification('سجل دخول لإتمام الطلب', 'warning');
-      openLoginModal();
-      closeModal();
-      return;
-    }
-    
-    if (cart.length === 0) {
-      showNotification('العربة فارغة', 'warning');
-      return;
-    }
-    
-    const subtotal = cart.reduce((sum, item) => {
-      return sum + (item.price * (1 - item.discount / 100) * item.quantity);
-    }, 0);
-    
-    const shipping = subtotal > 300 ? 0 : 20;
-    const total = subtotal + shipping;
-    
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 600px;">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-check-circle"></i>
-              إتمام الطلب
-            </h2>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label class="form-label">الاسم الكامل</label>
-              <input type="text" class="form-control" id="checkoutName" 
-                     value="${userData?.name || ''}" required>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">رقم الهاتف</label>
-              <input type="tel" class="form-control" id="checkoutPhone" 
-                     value="${userData?.phone || ''}" required>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">عنوان التوصيل</label>
-              <textarea class="form-control" id="checkoutAddress" rows="3" required>${userData?.address || ''}</textarea>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">طريقة الدفع</label>
-              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <label style="flex: 1; min-width: 150px;">
-                  <input type="radio" name="paymentMethod" value="cash" checked style="margin-left: 8px;">
-                  <i class="fas fa-money-bill-wave"></i>
-                  الدفع عند الاستلام
-                </label>
-                <label style="flex: 1; min-width: 150px;">
-                  <input type="radio" name="paymentMethod" value="card" style="margin-left: 8px;">
-                  <i class="fas fa-credit-card"></i>
-                  بطاقة ائتمان
-                </label>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">ملاحظات إضافية (اختياري)</label>
-              <textarea class="form-control" id="checkoutNotes" rows="2" 
-                        placeholder="ملاحظات خاصة بالطلب..."></textarea>
-            </div>
-            
-            <div class="cart-summary" style="margin-top: 30px;">
-              <div class="summary-row">
-                <span>المجموع</span>
-                <span>${subtotal.toFixed(2)} جنيه</span>
-              </div>
-              
-              <div class="summary-row">
-                <span>الشحن</span>
-                <span>${shipping === 0 ? 'مجاني' : shipping.toFixed(2) + ' جنيه'}</span>
-              </div>
-              
-              <div class="summary-row total">
-                <span>الإجمالي النهائي</span>
-                <span>${total.toFixed(2)} جنيه</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="modal-footer">
-            <button class="btn btn-outline" onclick="closeModal()">
-              <i class="fas fa-times"></i>
-              إلغاء
-            </button>
-            <button class="btn btn-primary" onclick="createOrder()">
-              <i class="fas fa-check"></i>
-              تأكيد الطلب
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  async function createOrder() {
-    try {
-      const name = document.getElementById('checkoutName').value.trim();
-      const phone = document.getElementById('checkoutPhone').value.trim();
-      const address = document.getElementById('checkoutAddress').value.trim();
-      const notes = document.getElementById('checkoutNotes').value.trim();
-      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-      
-      if (!name || !phone || !address) {
-        showNotification('يرجى ملء جميع الحقول المطلوبة', 'warning');
-        return;
-      }
-      
-      const subtotal = cart.reduce((sum, item) => {
-        return sum + (item.price * (1 - item.discount / 100) * item.quantity);
-      }, 0);
-      
-      const shipping = subtotal > 300 ? 0 : 20;
-      const total = subtotal + shipping;
-      
-      const orderData = {
-        userId: currentUser.uid,
-        userName: name,
-        userPhone: phone,
-        userEmail: currentUser.email,
-        userAddress: address,
-        
-        items: cart.map(item => ({
-          productId: item.id,
-          name: item.name,
-          price: item.price,
-          discount: item.discount,
-          quantity: item.quantity,
-          image: item.image
-        })),
-        
-        subtotal: subtotal,
-        shipping: shipping,
-        total: total,
-        
-        paymentMethod: paymentMethod,
-        paymentStatus: paymentMethod === 'cash' ? 'pending' : 'paid',
-        
-        status: {
-          pending: true,
-          confirmed: false,
-          preparing: false,
-          on_way: false,
-          delivered: false
-        },
-        
-        notes: notes,
-        
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      };
-      
-      // إضافة الطلب إلى قاعدة البيانات
-      const docRef = await db.collection('orders').add(orderData);
-      
-      // تحديث مخزون المنتجات
-      for (const item of cart) {
-        const productRef = db.collection('products').doc(item.id);
-        const productDoc = await productRef.get();
-        
-        if (productDoc.exists) {
-          const product = productDoc.data();
-          const newStock = Math.max(0, (product.stock || 0) - item.quantity);
-          await productRef.update({ stock: newStock });
-        }
-      }
-      
-      // إرسال إشعار للمستخدم
-      await db.collection('notifications').add({
-        userId: currentUser.uid,
-        title: 'تم إنشاء طلبك بنجاح',
-        message: `تم إنشاء طلبك برقم #${docRef.id.substring(0, 8)}. يمكنك تتبع حالة الطلب من صفحة طلباتي.`,
-        type: 'order',
-        read: false,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      
-      // إرسال إشعار للمديرين
-      await notifyAdminsNewOrder(docRef.id, name, total);
-      
-      // مسح العربة
-      cart = [];
-      localStorage.removeItem('cart');
-      updateCartBadge();
-      
-      // إغلاق المودال
-      closeModal();
-      
-      // إظهار رسالة النجاح
-      const successHTML = `
-        <div class="modal-overlay" onclick="closeModal()">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()">
-              <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-body">
-              <div class="text-center" style="padding: 40px 20px;">
-                <div style="width: 80px; height: 80px; background: var(--whatsapp-green); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2rem;">
-                  <i class="fas fa-check"></i>
-                </div>
-                <h3 class="mb-3">تم إنشاء الطلب بنجاح!</h3>
-                <p class="text-muted mb-2">رقم الطلب: #${docRef.id.substring(0, 8)}</p>
-                <p class="text-muted mb-4">سيتم التواصل معك خلال 24 ساعة لتأكيد الطلب</p>
-                <button class="btn btn-primary" onclick="closeModal(); openOrders();">
-                  <i class="fas fa-shopping-bag"></i>
-                  عرض طلباتي
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('modalsContainer').innerHTML = successHTML;
-      
-    } catch (error) {
-      console.error('Error creating order:', error);
-      showNotification('حدث خطأ أثناء إنشاء الطلب', 'error');
-    }
-  }
-
-  function openWishlist() {
-    if (!currentUser) {
-      showNotification('سجل دخول لعرض المفضلة', 'warning');
-      openLoginModal();
-      return;
-    }
-    
-    if (favorites.length === 0) {
-      const modalHTML = `
-        <div class="modal-overlay" onclick="closeModal()">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()">
-              <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-body">
-              <div class="text-center" style="padding: 40px 20px;">
-                <i class="fas fa-heart fa-4x mb-3" style="color: #e0e0e0;"></i>
-                <h3 class="mb-3">قائمة المفضلة فارغة</h3>
-                <p class="text-muted mb-4">لم تقم بإضافة أي منتجات إلى المفضلة بعد</p>
-                <button class="btn btn-primary" onclick="closeModal(); showAllProductsPage();">
-                  <i class="fas fa-shopping-bag"></i>
-                  تصفح المنتجات
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('modalsContainer').innerHTML = modalHTML;
-      return;
-    }
-    
-    const content = `
-      <section class="hero-section" style="background: linear-gradient(135deg, rgba(255, 45, 85, 0.9), rgba(255, 71, 87, 0.9)), url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); margin-bottom: 30px;">
-        <div class="hero-content">
-          <h1 class="hero-title">❤️ قائمة المفضلة</h1>
-          <p class="hero-subtitle">${favorites.length} منتج في قائمة المفضلة</p>
-        </div>
-      </section>
-      
-      <section class="section">
-        <div class="section-header">
-          <h2 class="section-title">
-            <i class="fas fa-heart"></i>
-            منتجاتي المفضلة
-          </h2>
-          <div class="view-all" onclick="goHome()">
-            العودة للرئيسية
-            <i class="fas fa-arrow-left"></i>
-          </div>
-        </div>
-        <div class="products-grid">
-          ${favorites.map(product => {
-            const isFavorite = true; // كلها في المفضلة
-            const isInCart = cart.some(item => item.id === product.id);
-            
-            return `
-              <div class="product-card" data-id="${product.id}">
-                <div class="product-actions">
-                  <button class="action-btn active" onclick="toggleFavorite('${product.id}', this)">
-                    <i class="fas fa-heart"></i>
-                  </button>
-                  <button class="action-btn" onclick="shareProduct('${product.id}')">
-                    <i class="fas fa-share-alt"></i>
-                  </button>
-                </div>
-                
-                <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-                     alt="${product.name}"
-                     class="product-image">
-                
-                <div class="product-info">
-                  <h3 class="product-name">${product.name}</h3>
-                  <div class="product-category">${product.category || 'عام'}</div>
-                  
-                  <div class="product-price">
-                    <span class="price-current">
-                      ${(product.price * (1 - (product.discount || 0) / 100)).toFixed(2)} جنيه
-                    </span>
-                    ${product.discount > 0 ? `
-                      <span class="price-old">${product.price.toFixed(2)} جنيه</span>
-                    ` : ''}
-                  </div>
-                  
-                  <button class="add-to-cart-btn ${isInCart ? 'btn-success' : ''}" onclick="addToCart('${product.id}', this)">
-                    <i class="fas fa-cart-plus"></i>
-                    أضف إلى العربة
-                  </button>
-                </div>
-              </div>
-            `;
-          }).join('')}
-        </div>
-      </section>
-    `;
-    
-    document.getElementById('mainContent').innerHTML = content;
-    document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function openNotifications() {
-    if (!currentUser) {
-      showNotification('سجل دخول لعرض الإشعارات', 'warning');
-      openLoginModal();
-      return;
-    }
-    
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 500px;">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-bell"></i>
-              الإشعارات
-            </h2>
-          </div>
-          <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
-            ${notifications.length > 0 ? notifications.map(notif => `
-              <div style="padding: 15px; border-bottom: 1px solid var(--border-color); background: ${notif.read ? 'transparent' : 'rgba(107, 91, 255, 0.05)'};">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                  <strong>${notif.title}</strong>
-                  <small style="color: var(--text-light);">${notif.createdAt?.toDate ? new Date(notif.createdAt.toDate()).toLocaleDateString('ar-EG') : 'تاريخ غير معروف'}</small>
-                </div>
-                <p style="color: var(--text-secondary); margin: 0;">${notif.message}</p>
-                ${!notif.read ? '<small style="color: var(--primary-color);">غير مقروء</small>' : ''}
-              </div>
-            `).join('') : `
-              <div class="text-center" style="padding: 40px 20px;">
-                <i class="fas fa-bell-slash fa-3x mb-3" style="color: #e0e0e0;"></i>
-                <h3 class="mb-3">لا توجد إشعارات</h3>
-                <p class="text-muted">ستظهر الإشعارات هنا عند توفرها</p>
-              </div>
-            `}
-          </div>
-          ${notifications.length > 0 ? `
-            <div class="modal-footer">
-              <button class="btn btn-outline" onclick="markAllNotificationsAsRead()">
-                <i class="fas fa-check-double"></i>
-                تحديد الكل كمقروء
-              </button>
-            </div>
-          ` : ''}
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  function openProfile() {
-    if (!currentUser) {
-      showNotification('سجل دخول لعرض الملف الشخصي', 'warning');
-      openLoginModal();
-      return;
-    }
-    
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 500px;">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-user"></i>
-              الملف الشخصي
-            </h2>
-          </div>
-          <div class="modal-body">
-            <div style="text-align: center; margin-bottom: 30px;">
-              <img src="${userData.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.name)}&background=6B5BFF&color=fff&size=128`}" 
-                   alt="${userData.name}"
-                   style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--primary-color); margin-bottom: 15px;">
-              <h3>${userData.name}</h3>
-              <p class="text-muted">${userData.email}</p>
-            </div>
-            
-            <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 20px; margin-bottom: 20px;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                <span style="color: var(--text-light);">الدور:</span>
-                <span style="font-weight: 600;">${userData.role === 'admin' ? 'مدير' : 'عميل'}</span>
-              </div>
-              
-              ${userData.phone ? `
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                  <span style="color: var(--text-light);">الهاتف:</span>
-                  <span style="font-weight: 600;">${userData.phone}</span>
-                </div>
-              ` : ''}
-              
-              ${userData.address ? `
-                <div style="display: flex; justify-content: space-between;">
-                  <span style="color: var(--text-light);">العنوان:</span>
-                  <span style="font-weight: 600; text-align: left; max-width: 200px;">${userData.address}</span>
-                </div>
-              ` : ''}
-            </div>
-            
-            <button class="btn btn-primary btn-block" onclick="openEditProfile()">
-              <i class="fas fa-edit"></i>
-              تعديل الملف الشخصي
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  function openOrders() {
-    if (!currentUser) {
-      showNotification('سجل دخول لعرض الطلبات', 'warning');
-      openLoginModal();
-      return;
-    }
-    
-    const content = `
-      <section class="hero-section" style="background: linear-gradient(135deg, rgba(107, 91, 255, 0.9), rgba(124, 100, 255, 0.9)), url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); margin-bottom: 30px;">
-        <div class="hero-content">
-          <h1 class="hero-title">📦 طلباتي</h1>
-          <p class="hero-subtitle">تتبع جميع طلباتك السابقة</p>
-        </div>
-      </section>
-      
-      <section class="section">
-        <div class="section-header">
-          <h2 class="section-title">
-            <i class="fas fa-shopping-bag"></i>
-            سجل الطلبات
-          </h2>
-          <div class="view-all" onclick="goHome()">
-            العودة للرئيسية
-            <i class="fas fa-arrow-left"></i>
-          </div>
-        </div>
-        
-        <div id="ordersList" class="loading" style="min-height: 200px;">
-          <div class="spinner"></div>
-        </div>
-      </section>
-    `;
-    
-    document.getElementById('mainContent').innerHTML = content;
-    loadUserOrders();
-    document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  async function loadUserOrders() {
-    try {
-      const snapshot = await db.collection('orders')
-        .where('userId', '==', currentUser.uid)
-        .orderBy('createdAt', 'desc')
-        .limit(20)
-        .get();
-      
-      const container = document.getElementById('ordersList');
-      
-      if (snapshot.empty) {
-        container.innerHTML = `
-          <div class="text-center" style="padding: 40px 20px;">
-            <i class="fas fa-shopping-bag fa-4x mb-3" style="color: #e0e0e0;"></i>
-            <h3 class="mb-3">لا توجد طلبات سابقة</h3>
-            <p class="text-muted mb-4">يمكنك البدء بالتسوق الآن</p>
-            <button class="btn btn-primary" onclick="showAllProductsPage()">
-              <i class="fas fa-shopping-cart"></i>
-              ابدأ التسوق
-            </button>
-          </div>
-        `;
-        return;
-      }
-      
-      container.innerHTML = `
-        <div style="background: white; border-radius: var(--border-radius-md); overflow: hidden;">
-          ${snapshot.docs.map(doc => {
-            const order = doc.data();
-            const status = order.status || {};
-            let statusText = 'قيد الانتظار';
-            let statusColor = '#FF9500';
-            
-            if (status.delivered) {
-              statusText = 'تم التوصيل';
-              statusColor = '#25D366';
-            } else if (status.on_way) {
-              statusText = 'في الطريق';
-              statusColor = '#6B5BFF';
-            } else if (status.preparing) {
-              statusText = 'قيد التحضير';
-              statusColor = '#9c27b0';
-            } else if (status.confirmed) {
-              statusText = 'تم التأكيد';
-              statusColor = '#673ab7';
-            }
-            
-            return `
-              <div style="padding: 20px; border-bottom: 1px solid var(--border-color);">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                  <div>
-                    <strong>رقم الطلب: #${doc.id.substring(0, 8)}</strong>
-                    <div style="color: var(--text-light); font-size: 0.9rem;">
-                      ${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : 'تاريخ غير معروف'}
-                    </div>
-                  </div>
-                  <span style="background: ${statusColor}; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem;">
-                    ${statusText}
-                  </span>
-                </div>
-                
-                <div style="color: var(--text-light); margin-bottom: 10px;">
-                  ${order.items?.length || 0} منتج | ${order.total?.toFixed(2) || '0'} جنيه
-                </div>
-                
-                <button class="btn btn-outline btn-sm" onclick="viewOrderDetails('${doc.id}')">
-                  <i class="fas fa-eye"></i>
-                  عرض التفاصيل
-                </button>
-              </div>
-            `;
-          }).join('')}
-        </div>
-      `;
-      
-    } catch (error) {
-      console.error('Error loading orders:', error);
-      document.getElementById('ordersList').innerHTML = `
-        <div class="text-center text-danger">
-          <i class="fas fa-exclamation-circle fa-2x mb-2"></i>
-          <p>حدث خطأ في تحميل الطلبات</p>
-        </div>
-      `;
-    }
-  }
-
-  async function viewOrderDetails(orderId) {
-    try {
-        const orderDoc = await db.collection('orders').doc(orderId).get();
-        
-        if (!orderDoc.exists) {
-            showNotification('الطلب غير موجود', 'error');
-            return;
-        }
-        
-        const order = orderDoc.data();
-        
-        // تحويل حالة الطلب لنص مفهوم
-        const status = order.status || {};
-        let statusText = 'قيد الانتظار';
-        if (status.delivered) statusText = 'تم التوصيل';
-        else if (status.on_way) statusText = 'في الطريق';
-        else if (status.preparing) statusText = 'قيد التحضير';
-        else if (status.confirmed) statusText = 'تم التأكيد';
-        
-        const modalHTML = `
-            <div class="modal-overlay" onclick="closeModal()">
-                <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px;">
-                    <button class="modal-close" onclick="closeModal()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    <div class="modal-header">
-                        <h2 class="modal-title">
-                            <i class="fas fa-file-invoice"></i>
-                            تفاصيل الطلب #${orderId.substring(0, 8)}
-                        </h2>
-                    </div>
-                    <div class="modal-body">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
-                            <div>
-                                <h4 style="margin-bottom: 15px; color: var(--text-primary);">معلومات العميل:</h4>
-                                <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
-                                    <p><strong>الاسم:</strong> ${order.userName || 'غير معروف'}</p>
-                                    <p><strong>الهاتف:</strong> ${order.userPhone || 'غير معروف'}</p>
-                                    <p><strong>البريد:</strong> ${order.userEmail || 'غير معروف'}</p>
-                                    <p><strong>العنوان:</strong> ${order.userAddress || 'غير معروف'}</p>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <h4 style="margin-bottom: 15px; color: var(--text-primary);">معلومات الطلب:</h4>
-                                <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
-                                    <p><strong>رقم الطلب:</strong> #${orderId.substring(0, 8)}</p>
-                                    <p><strong>تاريخ الطلب:</strong> ${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</p>
-                                    <p><strong>الحالة:</strong> ${statusText}</p>
-                                    <p><strong>طريقة الدفع:</strong> ${order.paymentMethod === 'cash' ? 'الدفع عند الاستلام' : 'بطاقة ائتمان'}</p>
-                                    <p><strong>حالة الدفع:</strong> ${order.paymentStatus === 'paid' ? 'مدفوع' : 'قيد الانتظار'}</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <h4 style="margin-bottom: 15px; color: var(--text-primary);">المنتجات:</h4>
-                        <div style="margin-bottom: 30px;">
-                            ${order.items?.map(item => `
-                                <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color);">
-                                    <img src="${item.image || 'https://via.placeholder.com/50/6B5BFF/ffffff?text=صورة'}" 
-                                         style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 15px;">
-                                    <div style="flex: 1;">
-                                        <p style="margin: 0; font-weight: 600;">${item.name}</p>
-                                        <p style="margin: 5px 0; color: var(--text-light);">الكمية: ${item.quantity}</p>
-                                    </div>
-                                    <div>
-                                        <p style="margin: 0; font-weight: 600; color: var(--primary-color);">
-                                            ${(item.price * (1 - (item.discount || 0) / 100) * item.quantity).toFixed(2)} جنيه
-                                        </p>
-                                        ${item.discount > 0 ? `
-                                            <p style="margin: 5px 0; color: var(--text-light); text-decoration: line-through;">
-                                                ${(item.price * item.quantity).toFixed(2)} جنيه
-                                            </p>
-                                        ` : ''}
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                        
-                        <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 20px;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                                <span>المجموع:</span>
-                                <span>${order.subtotal?.toFixed(2) || '0'} جنيه</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                                <span>الشحن:</span>
-                                <span>${order.shipping === 0 ? 'مجاني' : order.shipping?.toFixed(2) + ' جنيه'}</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; border-top: 2px solid var(--border-color); padding-top: 10px; font-weight: 800; font-size: 1.2rem;">
-                                <span>الإجمالي:</span>
-                                <span>${order.total?.toFixed(2) || '0'} جنيه</span>
-                            </div>
-                        </div>
-                        
-                        ${order.notes ? `
-                            <div style="margin-top: 20px;">
-                                <h4 style="margin-bottom: 10px; color: var(--text-primary);">ملاحظات:</h4>
-                                <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
-                                    ${order.notes}
-                                </div>
-                            </div>
-                        ` : ''}
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button class="btn btn-outline" onclick="closeModal()">
-                            <i class="fas fa-times"></i> إغلاق
-                        </button>
-                        <button class="btn btn-primary" onclick="shareOrder('${orderId}')">
-                            <i class="fas fa-share-alt"></i> مشاركة
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        document.getElementById('modalsContainer').innerHTML = modalHTML;
-        
-    } catch (error) {
-        console.error('Error loading order details:', error);
-        showNotification('حدث خطأ في تحميل تفاصيل الطلب', 'error');
-    }
-  }
-
-  function openAddresses() {
-    if (!currentUser) {
-      showNotification('سجل دخول لإدارة العناوين', 'warning');
-      openLoginModal();
-      return;
-    }
-    
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-map-marker-alt"></i>
-              إدارة العناوين
-            </h2>
-          </div>
-          <div class="modal-body">
-            <div id="addressesList">
-              <div class="text-center" style="padding: 40px 20px;">
-                <i class="fas fa-map-marker-alt fa-3x mb-3" style="color: #e0e0e0;"></i>
-                <h3 class="mb-3">لا توجد عناوين</h3>
-                <p class="text-muted mb-4">يمكنك إضافة عنوان جديد</p>
-              </div>
-            </div>
-            
-            <button class="btn btn-primary btn-block" onclick="openAddAddress()">
-              <i class="fas fa-plus"></i>
-              إضافة عنوان جديد
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  async function openAddAddress() {
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-plus"></i>
-              إضافة عنوان جديد
-            </h2>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label class="form-label">اسم العنوان (مثال: المنزل، العمل)</label>
-              <input type="text" class="form-control" id="addressTitle" placeholder="المنزل">
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">الاسم الكامل</label>
-              <input type="text" class="form-control" id="addressName" value="${userData?.name || ''}">
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">رقم الهاتف</label>
-              <input type="tel" class="form-control" id="addressPhone" value="${userData?.phone || ''}">
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">العنوان التفصيلي</label>
-              <textarea class="form-control" id="addressDetails" rows="3" 
-                        placeholder="الحي، الشارع، المبنى، الشقة..."></textarea>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">المدينة</label>
-              <input type="text" class="form-control" id="addressCity" placeholder="بنها">
-            </div>
-            
-            <button class="btn btn-primary btn-block" onclick="saveAddress()">
-              <i class="fas fa-save"></i>
-              حفظ العنوان
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  async function saveAddress() {
-    try {
-        const addressData = {
-            userId: currentUser.uid,
-            title: document.getElementById('addressTitle').value.trim(),
-            name: document.getElementById('addressName').value.trim(),
-            phone: document.getElementById('addressPhone').value.trim(),
-            details: document.getElementById('addressDetails').value.trim(),
-            city: document.getElementById('addressCity').value.trim(),
-            isDefault: false,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        };
-        
-        // التحقق من البيانات المطلوبة
-        if (!addressData.title || !addressData.name || !addressData.phone || !addressData.details || !addressData.city) {
-            showNotification('يرجى ملء جميع الحقول المطلوبة', 'warning');
-            return;
-        }
-        
-        // حفظ العنوان في قاعدة البيانات
-        await db.collection('addresses').add(addressData);
-        
-        // تحديث بيانات المستخدم
-        await db.collection('users').doc(currentUser.uid).update({
-            address: `${addressData.details}, ${addressData.city}`,
-            phone: addressData.phone
-        });
-        
-        // تحديث البيانات المحلية
-        if (userData) {
-            userData.address = `${addressData.details}, ${addressData.city}`;
-            userData.phone = addressData.phone;
-        }
-        
-        showNotification('تم حفظ العنوان بنجاح', 'success');
-        closeModal();
-        
-        // إعادة فتح نافذة العناوين لتحديث القائمة
-        setTimeout(() => openAddresses(), 500);
-        
-    } catch (error) {
-        console.error('Error saving address:', error);
-        showNotification('حدث خطأ في حفظ العنوان', 'error');
-    }
-  }
-
-  async function loadUserAddresses() {
-    try {
-        const snapshot = await db.collection('addresses')
-            .where('userId', '==', currentUser.uid)
-            .orderBy('createdAt', 'desc')
-            .get();
-        
-        const container = document.getElementById('addressesList');
-        
-        if (snapshot.empty) {
-            container.innerHTML = `
-                <div class="text-center" style="padding: 40px 20px;">
-                    <i class="fas fa-map-marker-alt fa-3x mb-3" style="color: #e0e0e0;"></i>
-                    <h3 class="mb-3">لا توجد عناوين</h3>
-                    <p class="text-muted mb-4">يمكنك إضافة عنوان جديد</p>
-                </div>
-            `;
-            return;
-        }
-        
-        container.innerHTML = snapshot.docs.map(doc => {
-            const address = doc.data();
-            return `
-                <div style="padding: 15px; border-bottom: 1px solid var(--border-color);">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                        <strong>${address.title}</strong>
-                        ${address.isDefault ? '<span style="color: var(--primary-color); font-size: 0.8rem;">افتراضي</span>' : ''}
-                    </div>
-                    <p style="margin: 0; color: var(--text-secondary);">${address.name}</p>
-                    <p style="margin: 5px 0; color: var(--text-secondary);">${address.phone}</p>
-                    <p style="margin: 0; color: var(--text-secondary);">${address.details}, ${address.city}</p>
-                    <div style="margin-top: 10px;">
-                        <button class="btn btn-sm btn-outline" onclick="setDefaultAddress('${doc.id}')">
-                            تعيين كافتراضي
-                        </button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteAddress('${doc.id}')">
-                            حذف
-                        </button>
-                    </div>
-                </div>
-            `;
-        }).join('');
-        
-    } catch (error) {
-        console.error('Error loading addresses:', error);
-    }
   }
 
   // ---------- دوال المصادقة ----------
@@ -4426,101 +2811,6 @@
     document.getElementById('modalsContainer').innerHTML = modalHTML;
   }
 
-  function openForgotPasswordModal() {
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-key"></i>
-              نسيت كلمة المرور
-            </h2>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label class="form-label">أدخل بريدك الإلكتروني</label>
-              <input type="email" class="form-control" id="forgotEmail" placeholder="example@email.com">
-              <small style="color: var(--text-light);">سنرسل رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني</small>
-            </div>
-            
-            <button class="btn btn-primary btn-block" onclick="resetPassword()">
-              <i class="fas fa-paper-plane"></i>
-              إرسال رابط إعادة التعيين
-            </button>
-            
-            <div style="text-align: center; margin-top: 20px;">
-              <a href="#" onclick="openLoginModal()" style="color: var(--primary-color);">العودة لتسجيل الدخول</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  async function resetPassword() {
-    const email = document.getElementById('forgotEmail').value.trim();
-    
-    if (!email) {
-      showNotification('يرجى إدخال البريد الإلكتروني', 'warning');
-      return;
-    }
-    
-    try {
-      await auth.sendPasswordResetEmail(email);
-      showNotification('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني', 'success');
-      closeModal();
-    } catch (error) {
-      console.error('Password reset error:', error);
-      showNotification('حدث خطأ في إرسال رابط إعادة التعيين', 'error');
-    }
-  }
-
-  async function emailLogin() {
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    
-    if (!email || !password) {
-      showNotification('يرجى إدخال البريد وكلمة المرور', 'warning');
-      return;
-    }
-    
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      showNotification('مرحباً بعودتك!', 'success');
-      closeModal();
-    } catch (error) {
-      console.error('Login error:', error);
-      
-      let errorMessage = 'خطأ في تسجيل الدخول';
-      if (error.code === 'auth/user-not-found') {
-        errorMessage = 'المستخدم غير موجود';
-      } else if (error.code === 'auth/wrong-password') {
-        errorMessage = 'كلمة المرور غير صحيحة';
-      } else if (error.code === 'auth/too-many-requests') {
-        errorMessage = 'تم محاولة تسجيل الدخول مرات كثيرة، حاول لاحقاً';
-      }
-      
-      showNotification(errorMessage, 'error');
-    }
-  }
-
-  async function googleSignIn() {
-    try {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      await auth.signInWithPopup(provider);
-      showNotification('تم تسجيل الدخول بنجاح', 'success');
-      closeModal();
-    } catch (error) {
-      console.error('Google sign in error:', error);
-      showNotification('خطأ في تسجيل الدخول بجوجل', 'error');
-    }
-  }
-
   function openRegisterModal() {
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
@@ -4572,9 +2862,38 @@
     document.getElementById('modalsContainer').innerHTML = modalHTML;
   }
 
+  async function emailLogin() {
+    const email = Security.sanitizeInput(document.getElementById('loginEmail').value);
+    const password = document.getElementById('loginPassword').value;
+    
+    if (!email || !password) {
+      showNotification('يرجى إدخال البريد وكلمة المرور', 'warning');
+      return;
+    }
+    
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      showNotification('مرحباً بعودتك!', 'success');
+      closeModal();
+    } catch (error) {
+      console.error('Login error:', error);
+      
+      let errorMessage = 'خطأ في تسجيل الدخول';
+      if (error.code === 'auth/user-not-found') {
+        errorMessage = 'المستخدم غير موجود';
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'كلمة المرور غير صحيحة';
+      } else if (error.code === 'auth/too-many-requests') {
+        errorMessage = 'تم محاولة تسجيل الدخول مرات كثيرة، حاول لاحقاً';
+      }
+      
+      showNotification(errorMessage, 'error');
+    }
+  }
+
   async function emailRegister() {
-    const name = document.getElementById('registerName').value;
-    const email = document.getElementById('registerEmail').value;
+    const name = Security.sanitizeInput(document.getElementById('registerName').value);
+    const email = Security.sanitizeInput(document.getElementById('registerEmail').value);
     const password = document.getElementById('registerPassword').value;
     const confirmPassword = document.getElementById('registerConfirmPassword').value;
     
@@ -4640,1344 +2959,13 @@
     }
   }
 
-  // =============== لوحة التحكم الاحترافية للمدير ===============
-
-  // إظهار زر لوحة التحكم الثابت (فقط للمديرين)
-  function setupAdminFloatingButton() {
-    const adminFloatBtn = document.getElementById('adminFloatBtn');
-    if (currentUser && userData && userData.role === 'admin') {
-      adminFloatBtn.style.display = 'flex';
-    } else {
-      adminFloatBtn.style.display = 'none';
-    }
-  }
-
-  // فتح لوحة التحكم الرئيسية
-  function openAdminPanel() {
-    if (!currentUser || userData?.role !== 'admin') {
-      showNotification('ليس لديك صلاحية الوصول إلى لوحة التحكم', 'error');
-      return;
-    }
-    
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="admin-panel" onclick="event.stopPropagation()" style="max-width: 1200px; margin: 20px; width: calc(100% - 40px);">
-          <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 20px; left: 20px;">
-            <i class="fas fa-times"></i>
-          </button>
-          
-          <div class="admin-header">
-            <h2 class="admin-title">
-              <i class="fas fa-tools"></i>
-              لوحة تحكم المدير
-            </h2>
-            <p class="admin-subtitle">إدارة المتجر بالكامل من مكان واحد</p>
-          </div>
-          
-          <div class="admin-stats" id="adminStats">
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-shopping-cart"></i>
-              </div>
-              <div class="stat-value" id="statOrders">0</div>
-              <div class="stat-label">الطلبات</div>
-            </div>
-            
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-box"></i>
-              </div>
-              <div class="stat-value" id="statProducts">0</div>
-              <div class="stat-label">المنتجات</div>
-            </div>
-            
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-users"></i>
-              </div>
-              <div class="stat-value" id="statUsers">0</div>
-              <div class="stat-label">المستخدمين</div>
-            </div>
-            
-            <div class="stat-card">
-              <div class="stat-icon">
-                <i class="fas fa-money-bill-wave"></i>
-              </div>
-              <div class="stat-value" id="statRevenue">0</div>
-              <div class="stat-label">المبيعات</div>
-            </div>
-          </div>
-          
-          <div class="admin-tabs">
-            <button class="admin-tab active" onclick="showAdminTab('products', this)">
-              <i class="fas fa-box"></i> المنتجات
-            </button>
-            <button class="admin-tab" onclick="showAdminTab('orders', this)">
-              <i class="fas fa-shopping-cart"></i> الطلبات
-            </button>
-            <button class="admin-tab" onclick="showAdminTab('categories', this)">
-              <i class="fas fa-tags"></i> التصنيفات
-            </button>
-            <button class="admin-tab" onclick="showAdminTab('users', this)">
-              <i class="fas fa-users"></i> المستخدمين
-            </button>
-            <button class="admin-tab" onclick="showAdminTab('settings', this)">
-              <i class="fas fa-cog"></i> الإعدادات
-            </button>
-          </div>
-          
-          <div class="admin-content" id="adminContent">
-            <div class="loading">
-              <div class="spinner"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-    
-    // تحميل الإحصائيات
-    loadAdminStats();
-    
-    // تحميل أول تبويب
-    showAdminTab('products', document.querySelector('.admin-tab.active'));
-  }
-
-  async function loadAdminStats() {
-    try {
-      const [ordersSnapshot, productsSnapshot, usersSnapshot] = await Promise.all([
-        db.collection('orders').get(),
-        db.collection('products').get(),
-        db.collection('users').get()
-      ]);
-      
-      const totalRevenue = ordersSnapshot.docs.reduce((sum, doc) => {
-        const order = doc.data();
-        return sum + (order.total || 0);
-      }, 0);
-      
-      document.getElementById('statOrders').textContent = ordersSnapshot.size;
-      document.getElementById('statProducts').textContent = productsSnapshot.size;
-      document.getElementById('statUsers').textContent = usersSnapshot.size;
-      document.getElementById('statRevenue').textContent = totalRevenue.toFixed(2);
-      
-    } catch (error) {
-      console.error('Error loading admin stats:', error);
-    }
-  }
-
-  async function showAdminTab(tabName, button) {
-    // تحديث التبويبات النشطة
-    document.querySelectorAll('.admin-tab').forEach(tab => {
-      tab.classList.remove('active');
-    });
-    button.classList.add('active');
-    
-    const contentEl = document.getElementById('adminContent');
-    
-    switch (tabName) {
-      case 'products':
-        await loadAdminProducts(contentEl);
-        break;
-      case 'orders':
-        await loadAdminOrders(contentEl);
-        break;
-      case 'categories':
-        await loadAdminCategories(contentEl);
-        break;
-      case 'users':
-        await loadAdminUsers(contentEl);
-        break;
-      case 'settings':
-        await loadAdminSettings(contentEl);
-        break;
-    }
-  }
-
-  async function loadAdminProducts(container) {
-    try {
-      const snapshot = await db.collection('products')
-        .orderBy('createdAt', 'desc')
-        .limit(20)
-        .get();
-      
-      if (snapshot.empty) {
-        container.innerHTML = `
-          <div class="text-center text-muted" style="padding: 40px;">
-            <i class="fas fa-box-open fa-3x mb-3"></i>
-            <p>لا توجد منتجات</p>
-          </div>
-        `;
-        return;
-      }
-      
-      let tableHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-          <h3>إدارة المنتجات</h3>
-          <button class="btn btn-primary" onclick="openAddProductModal()">
-            <i class="fas fa-plus"></i> إضافة منتج
-          </button>
-        </div>
-        <div style="overflow-x: auto;">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>الصورة</th>
-                <th>الاسم</th>
-                <th>السعر</th>
-                <th>الخصم</th>
-                <th>المخزون</th>
-                <th>التصنيف</th>
-                <th>الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
-      `;
-      
-      snapshot.docs.forEach(doc => {
-        const product = doc.data();
-        tableHTML += `
-          <tr>
-            <td>
-              <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/50/6B5BFF/ffffff?text=صورة'}" 
-                   alt="${product.name}"
-                   style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
-            </td>
-            <td>${product.name}</td>
-            <td>${product.price?.toFixed(2) || '0'} جنيه</td>
-            <td>${product.discount || 0}%</td>
-            <td>${product.stock || 0}</td>
-            <td>${product.category || 'عام'}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" onclick="editProduct('${doc.id}')">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button class="btn btn-sm btn-danger" onclick="deleteProduct('${doc.id}')">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          </tr>
-        `;
-      });
-      
-      tableHTML += `
-            </tbody>
-          </table>
-        </div>
-      `;
-      
-      container.innerHTML = tableHTML;
-      
-    } catch (error) {
-      console.error('Error loading admin products:', error);
-      container.innerHTML = `
-        <div class="text-center text-danger">
-          <i class="fas fa-exclamation-circle fa-2x mb-2"></i>
-          <p>حدث خطأ في تحميل المنتجات</p>
-        </div>
-      `;
-    }
-  }
-
-  function openAddProductModal() {
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 700px;">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-plus"></i>
-              إضافة منتج جديد
-            </h2>
-          </div>
-          <div class="modal-body">
-            <div class="admin-form">
-              <div class="form-group">
-                <label class="form-label">اسم المنتج *</label>
-                <input type="text" class="form-control" id="productName" required>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">وصف المنتج</label>
-                <textarea class="form-control" id="productDescription" rows="3"></textarea>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">السعر (جنيه) *</label>
-                <input type="number" class="form-control" id="productPrice" step="0.01" min="0" required>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">الخصم (%)</label>
-                <input type="number" class="form-control" id="productDiscount" min="0" max="100" value="0">
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">المخزون *</label>
-                <input type="number" class="form-control" id="productStock" min="0" required>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">التصنيف</label>
-                <select class="form-control" id="productCategory">
-                  <option value="">اختر التصنيف</option>
-                  <option value="معلبات">معلبات</option>
-                  <option value="ألبان وأجبان">ألبان وأجبان</option>
-                  <option value="مشروبات">مشروبات</option>
-                  <option value="حلويات">حلويات</option>
-                  <option value="مخبوزات">مخبوزات</option>
-                  <option value="أرز ومكرونة">أرز ومكرونة</option>
-                  <option value="لحوم ودواجن">لحوم ودواجن</option>
-                  <option value="خضروات وفواكه">خضروات وفواكه</option>
-                </select>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">صورة المنتج (رابط URL) *</label>
-                <input type="url" class="form-control" id="productImage" required>
-              </div>
-              
-              <div class="form-group" style="grid-column: 1/-1;">
-                <label>
-                  <input type="checkbox" id="productFeatured">
-                  <span style="margin-right: 8px;">منتج مميز</span>
-                </label>
-              </div>
-            </div>
-          </div>
-          
-          <div class="modal-footer">
-            <button class="btn btn-outline" onclick="closeModal()">
-              <i class="fas fa-times"></i> إلغاء
-            </button>
-            <button class="btn btn-primary" onclick="saveNewProduct()">
-              <i class="fas fa-save"></i> حفظ المنتج
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  async function saveNewProduct() {
-    try {
-      const productData = {
-        name: document.getElementById('productName').value.trim(),
-        description: document.getElementById('productDescription').value.trim(),
-        price: parseFloat(document.getElementById('productPrice').value),
-        discount: parseInt(document.getElementById('productDiscount').value) || 0,
-        stock: parseInt(document.getElementById('productStock').value),
-        category: document.getElementById('productCategory').value || 'عام',
-        image: document.getElementById('productImage').value.trim(),
-        featured: document.getElementById('productFeatured').checked,
-        rating: 0,
-        ratingCount: 0,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      };
-      
-      // التحقق من البيانات
-      if (!productData.name || productData.price <= 0 || productData.stock < 0 || !productData.image) {
-        showNotification('يرجى ملء جميع الحقول المطلوبة بشكل صحيح', 'warning');
-        return;
-      }
-      
-      await db.collection('products').add(productData);
-      
-      showNotification('تم إضافة المنتج بنجاح', 'success');
-      closeModal();
-      
-      // تحديث قائمة المنتجات
-      const currentTab = document.querySelector('.admin-tab.active');
-      if (currentTab.textContent.includes('المنتجات')) {
-        showAdminTab('products', currentTab);
-      }
-      
-    } catch (error) {
-      console.error('Error saving product:', error);
-      showNotification('حدث خطأ في حفظ المنتج', 'error');
-    }
-  }
-
-  async function editProduct(productId) {
-    try {
-      const productDoc = await db.collection('products').doc(productId).get();
-      
-      if (!productDoc.exists) {
-        showNotification('المنتج غير موجود', 'error');
-        return;
-      }
-      
-      const product = productDoc.data();
-      
-      const modalHTML = `
-        <div class="modal-overlay" onclick="closeModal()">
-          <div class="modal" onclick="event.stopPropagation()" style="max-width: 700px;">
-            <button class="modal-close" onclick="closeModal()">
-              <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-header">
-              <h2 class="modal-title">
-                <i class="fas fa-edit"></i>
-                تعديل المنتج
-              </h2>
-            </div>
-            <div class="modal-body">
-              <div class="admin-form">
-                <div class="form-group">
-                  <label class="form-label">اسم المنتج *</label>
-                  <input type="text" class="form-control" id="editProductName" value="${product.name || ''}" required>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">وصف المنتج</label>
-                  <textarea class="form-control" id="editProductDescription" rows="3">${product.description || ''}</textarea>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">السعر (جنيه) *</label>
-                  <input type="number" class="form-control" id="editProductPrice" step="0.01" min="0" value="${product.price || 0}" required>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">الخصم (%)</label>
-                  <input type="number" class="form-control" id="editProductDiscount" min="0" max="100" value="${product.discount || 0}">
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">المخزون *</label>
-                  <input type="number" class="form-control" id="editProductStock" min="0" value="${product.stock || 0}" required>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">التصنيف</label>
-                  <select class="form-control" id="editProductCategory">
-                    <option value="">اختر التصنيف</option>
-                    <option value="معلبات" ${product.category === 'معلبات' ? 'selected' : ''}>معلبات</option>
-                    <option value="ألبان وأجبان" ${product.category === 'ألبان وأجبان' ? 'selected' : ''}>ألبان وأجبان</option>
-                    <option value="مشروبات" ${product.category === 'مشروبات' ? 'selected' : ''}>مشروبات</option>
-                    <option value="حلويات" ${product.category === 'حلويات' ? 'selected' : ''}>حلويات</option>
-                    <option value="مخبوزات" ${product.category === 'مخبوزات' ? 'selected' : ''}>مخبوزات</option>
-                    <option value="أرز ومكرونة" ${product.category === 'أرز ومكرونة' ? 'selected' : ''}>أرز ومكرونة</option>
-                    <option value="لحوم ودواجن" ${product.category === 'لحوم ودواجن' ? 'selected' : ''}>لحوم ودواجن</option>
-                    <option value="خضروات وفواكه" ${product.category === 'خضروات وفواكه' ? 'selected' : ''}>خضروات وفواكه</option>
-                  </select>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">صورة المنتج (رابط URL) *</label>
-                  <input type="url" class="form-control" id="editProductImage" value="${product.image || ''}" required>
-                </div>
-                
-                <div class="form-group" style="grid-column: 1/-1;">
-                  <label>
-                    <input type="checkbox" id="editProductFeatured" ${product.featured ? 'checked' : ''}>
-                    <span style="margin-right: 8px;">منتج مميز</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-            
-            <div class="modal-footer">
-              <button class="btn btn-outline" onclick="closeModal()">
-                <i class="fas fa-times"></i> إلغاء
-              </button>
-              <button class="btn btn-primary" onclick="updateProduct('${productId}')">
-                <i class="fas fa-save"></i> حفظ التعديلات
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('modalsContainer').innerHTML = modalHTML;
-      
-    } catch (error) {
-      console.error('Error loading product for edit:', error);
-      showNotification('حدث خطأ في تحميل بيانات المنتج', 'error');
-    }
-  }
-
-  async function updateProduct(productId) {
-    try {
-      const productData = {
-        name: document.getElementById('editProductName').value.trim(),
-        description: document.getElementById('editProductDescription').value.trim(),
-        price: parseFloat(document.getElementById('editProductPrice').value),
-        discount: parseInt(document.getElementById('editProductDiscount').value) || 0,
-        stock: parseInt(document.getElementById('editProductStock').value),
-        category: document.getElementById('editProductCategory').value || 'عام',
-        image: document.getElementById('editProductImage').value.trim(),
-        featured: document.getElementById('editProductFeatured').checked,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      };
-      
-      await db.collection('products').doc(productId).update(productData);
-      
-      showNotification('تم تحديث المنتج بنجاح', 'success');
-      closeModal();
-      
-      // تحديث القائمة
-      const currentTab = document.querySelector('.admin-tab.active');
-      if (currentTab.textContent.includes('المنتجات')) {
-        showAdminTab('products', currentTab);
-      }
-      
-    } catch (error) {
-      console.error('Error updating product:', error);
-      showNotification('حدث خطأ في تحديث المنتج', 'error');
-    }
-  }
-
-  async function deleteProduct(productId) {
-    if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
-    
-    try {
-      await db.collection('products').doc(productId).delete();
-      showNotification('تم حذف المنتج بنجاح', 'success');
-      
-      // تحديث القائمة
-      const currentTab = document.querySelector('.admin-tab.active');
-      if (currentTab.textContent.includes('المنتجات')) {
-        showAdminTab('products', currentTab);
-      }
-      
-    } catch (error) {
-      console.error('Error deleting product:', error);
-      showNotification('حدث خطأ في حذف المنتج', 'error');
-    }
-  }
-
-  async function loadAdminOrders(container) {
-    try {
-      const snapshot = await db.collection('orders')
-        .orderBy('createdAt', 'desc')
-        .limit(20)
-        .get();
-      
-      if (snapshot.empty) {
-        container.innerHTML = `
-          <div class="text-center text-muted" style="padding: 40px;">
-            <i class="fas fa-shopping-bag fa-3x mb-3"></i>
-            <p>لا توجد طلبات</p>
-          </div>
-        `;
-        return;
-      }
-      
-      let tableHTML = `
-        <h3 style="margin-bottom: 20px;">إدارة الطلبات</h3>
-        <div style="overflow-x: auto;">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>رقم الطلب</th>
-                <th>العميل</th>
-                <th>القيمة</th>
-                <th>الحالة</th>
-                <th>التاريخ</th>
-                <th>الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
-      `;
-      
-      snapshot.docs.forEach(doc => {
-        const order = doc.data();
-        const status = order.status || {};
-        let statusText = 'قيد الانتظار';
-        
-        if (status.delivered) statusText = 'تم التوصيل';
-        else if (status.on_way) statusText = 'في الطريق';
-        else if (status.preparing) statusText = 'قيد التحضير';
-        else if (status.confirmed) statusText = 'تم التأكيد';
-        
-        tableHTML += `
-          <tr>
-            <td>#${doc.id.substring(0, 8)}</td>
-            <td>${order.userName || 'غير معروف'}</td>
-            <td>${order.total?.toFixed(2) || '0'} جنيه</td>
-            <td>${statusText}</td>
-            <td>${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" onclick="viewOrderAdmin('${doc.id}')">
-                <i class="fas fa-eye"></i>
-              </button>
-            </td>
-          </tr>
-        `;
-      });
-      
-      tableHTML += `
-            </tbody>
-          </table>
-        </div>
-      `;
-      
-      container.innerHTML = tableHTML;
-      
-    } catch (error) {
-      console.error('Error loading admin orders:', error);
-      container.innerHTML = `
-        <div class="text-center text-danger">
-          <i class="fas fa-exclamation-circle fa-2x mb-2"></i>
-          <p>حدث خطأ في تحميل الطلبات</p>
-        </div>
-      `;
-    }
-  }
-
-  async function viewOrderAdmin(orderId) {
-    try {
-      const orderDoc = await db.collection('orders').doc(orderId).get();
-      
-      if (!orderDoc.exists) {
-        showNotification('الطلب غير موجود', 'error');
-        return;
-      }
-      
-      const order = orderDoc.data();
-      
-      const modalHTML = `
-        <div class="modal-overlay" onclick="closeModal()">
-          <div class="modal" onclick="event.stopPropagation()" style="max-width: 900px;">
-            <button class="modal-close" onclick="closeModal()">
-              <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-header">
-              <h2 class="modal-title">
-                <i class="fas fa-shopping-bag"></i>
-                تفاصيل الطلب #${orderId.substring(0, 8)}
-                <button class="btn btn-orange btn-sm" style="margin-right: 15px;" onclick="changeOrderStatus('${orderId}')">
-                  <i class="fas fa-edit"></i> تغيير الحالة
-                </button>
-                <button class="btn btn-primary btn-sm" onclick="shareOrder('${orderId}')">
-                  <i class="fas fa-share-alt"></i> مشاركة
-                </button>
-              </h2>
-            </div>
-            <div class="modal-body">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
-                <div>
-                  <h4 style="margin-bottom: 15px; color: var(--text-primary);">معلومات العميل:</h4>
-                  <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
-                    <p><strong>الاسم:</strong> ${order.userName || 'غير معروف'}</p>
-                    <p><strong>الهاتف:</strong> ${order.userPhone || 'غير معروف'}</p>
-                    <p><strong>البريد:</strong> ${order.userEmail || 'غير معروف'}</p>
-                    <p><strong>العنوان:</strong> ${order.userAddress || 'غير معروف'}</p>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 style="margin-bottom: 15px; color: var(--text-primary);">معلومات الطلب:</h4>
-                  <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
-                    <p><strong>رقم الطلب:</strong> #${orderId.substring(0, 8)}</p>
-                    <p><strong>تاريخ الطلب:</strong> ${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</p>
-                    <p><strong>طريقة الدفع:</strong> ${order.paymentMethod === 'cash' ? 'الدفع عند الاستلام' : 'بطاقة ائتمان'}</p>
-                    <p><strong>حالة الدفع:</strong> ${order.paymentStatus === 'paid' ? 'مدفوع' : 'قيد الانتظار'}</p>
-                  </div>
-                </div>
-              </div>
-              
-              <h4 style="margin-bottom: 15px; color: var(--text-primary);">المنتجات:</h4>
-              <div style="margin-bottom: 30px;">
-                ${order.items?.map(item => `
-                  <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color);">
-                    <img src="${item.image || 'https://via.placeholder.com/50/6B5BFF/ffffff?text=صورة'}" 
-                         style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 15px;">
-                    <div style="flex: 1;">
-                      <p style="margin: 0; font-weight: 600;">${item.name}</p>
-                      <p style="margin: 5px 0; color: var(--text-light);">الكمية: ${item.quantity}</p>
-                    </div>
-                    <div>
-                      <p style="margin: 0; font-weight: 600; color: var(--primary-color);">
-                        ${(item.price * (1 - (item.discount || 0) / 100) * item.quantity).toFixed(2)} جنيه
-                      </p>
-                      ${item.discount > 0 ? `
-                        <p style="margin: 5px 0; color: var(--text-light); text-decoration: line-through;">
-                          ${(item.price * item.quantity).toFixed(2)} جنيه
-                        </p>
-                      ` : ''}
-                    </div>
-                  </div>
-                `).join('')}
-              </div>
-              
-              <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 20px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                  <span>المجموع:</span>
-                  <span>${order.subtotal?.toFixed(2) || '0'} جنيه</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                  <span>الشحن:</span>
-                  <span>${order.shipping === 0 ? 'مجاني' : order.shipping?.toFixed(2) + ' جنيه'}</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; border-top: 2px solid var(--border-color); padding-top: 10px; font-weight: 800; font-size: 1.2rem;">
-                  <span>الإجمالي:</span>
-                  <span>${order.total?.toFixed(2) || '0'} جنيه</span>
-                </div>
-              </div>
-              
-              ${order.notes ? `
-                <div style="margin-top: 20px;">
-                  <h4 style="margin-bottom: 10px; color: var(--text-primary);">ملاحظات:</h4>
-                  <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
-                    ${order.notes}
-                  </div>
-                </div>
-              ` : ''}
-            </div>
-            
-            <div class="modal-footer">
-              <button class="btn btn-outline" onclick="closeModal()">
-                <i class="fas fa-times"></i> إغلاق
-              </button>
-              <button class="btn btn-primary" onclick="shareOrder('${orderId}')">
-                <i class="fas fa-share-alt"></i> مشاركة
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('modalsContainer').innerHTML = modalHTML;
-      
-    } catch (error) {
-      console.error('Error viewing admin order:', error);
-      showNotification('حدث خطأ في تحميل تفاصيل الطلب', 'error');
-    }
-  }
-
-  async function loadAdminCategories(container) {
-    try {
-      const snapshot = await db.collection('categories')
-        .orderBy('order', 'asc')
-        .get();
-      
-      if (snapshot.empty) {
-        container.innerHTML = `
-          <div class="text-center text-muted" style="padding: 40px;">
-            <i class="fas fa-tags fa-3x mb-3"></i>
-            <p>لا توجد تصنيفات</p>
-          </div>
-        `;
-        return;
-      }
-      
-      let tableHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-          <h3>إدارة التصنيفات</h3>
-          <button class="btn btn-primary" onclick="openAddCategoryModal()">
-            <i class="fas fa-plus"></i> إضافة تصنيف
-          </button>
-        </div>
-        <div style="overflow-x: auto;">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>الأيقونة</th>
-                <th>الاسم</th>
-                <th>اللون</th>
-                <th>عدد المنتجات</th>
-                <th>الترتيب</th>
-                <th>الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
-      `;
-      
-      snapshot.docs.forEach(doc => {
-        const category = doc.data();
-        tableHTML += `
-          <tr>
-            <td>
-              <i class="${category.icon || 'fas fa-tag'}" style="color: ${category.color || '#6B5BFF'}; font-size: 1.5rem;"></i>
-            </td>
-            <td>${category.name}</td>
-            <td>
-              <div style="width: 20px; height: 20px; background: ${category.color || '#6B5BFF'}; border-radius: 3px;"></div>
-            </td>
-            <td>${category.productCount || 0}</td>
-            <td>${category.order || 0}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" onclick="editCategory('${doc.id}')">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button class="btn btn-sm btn-danger" onclick="deleteCategory('${doc.id}')">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          </tr>
-        `;
-      });
-      
-      tableHTML += `
-            </tbody>
-          </table>
-        </div>
-      `;
-      
-      container.innerHTML = tableHTML;
-      
-    } catch (error) {
-      console.error('Error loading admin categories:', error);
-      container.innerHTML = `
-        <div class="text-center text-danger">
-          <i class="fas fa-exclamation-circle fa-2x mb-2"></i>
-          <p>حدث خطأ في تحميل التصنيفات</p>
-        </div>
-      `;
-    }
-  }
-
-  function openAddCategoryModal() {
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-plus"></i>
-              إضافة تصنيف جديد
-            </h2>
-          </div>
-          <div class="modal-body">
-            <div class="admin-form">
-              <div class="form-group">
-                <label class="form-label">اسم التصنيف *</label>
-                <input type="text" class="form-control" id="categoryName" required>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">الأيقونة</label>
-                <input type="text" class="form-control" id="categoryIcon" value="fas fa-tag">
-                <small style="color: var(--text-light);">أدخل اسم أيقونة من FontAwesome</small>
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">اللون</label>
-                <input type="color" class="form-control" id="categoryColor" value="#6B5BFF">
-              </div>
-              
-              <div class="form-group">
-                <label class="form-label">الترتيب</label>
-                <input type="number" class="form-control" id="categoryOrder" value="1">
-              </div>
-            </div>
-          </div>
-          
-          <div class="modal-footer">
-            <button class="btn btn-outline" onclick="closeModal()">
-              <i class="fas fa-times"></i> إلغاء
-            </button>
-            <button class="btn btn-primary" onclick="saveCategory()">
-              <i class="fas fa-save"></i> حفظ التصنيف
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  async function editCategory(categoryId) {
-    try {
-      const categoryDoc = await db.collection('categories').doc(categoryId).get();
-      
-      if (!categoryDoc.exists) {
-        showNotification('التصنيف غير موجود', 'error');
-        return;
-      }
-      
-      const category = categoryDoc.data();
-      
-      const modalHTML = `
-        <div class="modal-overlay" onclick="closeModal()">
-          <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()">
-              <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-header">
-              <h2 class="modal-title">
-                <i class="fas fa-edit"></i>
-                تعديل التصنيف
-              </h2>
-            </div>
-            <div class="modal-body">
-              <div class="admin-form">
-                <div class="form-group">
-                  <label class="form-label">اسم التصنيف *</label>
-                  <input type="text" class="form-control" id="editCategoryName" value="${category.name || ''}" required>
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">الأيقونة</label>
-                  <input type="text" class="form-control" id="editCategoryIcon" value="${category.icon || 'fas fa-tag'}">
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">اللون</label>
-                  <input type="color" class="form-control" id="editCategoryColor" value="${category.color || '#6B5BFF'}">
-                </div>
-                
-                <div class="form-group">
-                  <label class="form-label">الترتيب</label>
-                  <input type="number" class="form-control" id="editCategoryOrder" value="${category.order || 1}">
-                </div>
-              </div>
-            </div>
-            
-            <div class="modal-footer">
-              <button class="btn btn-outline" onclick="closeModal()">
-                <i class="fas fa-times"></i> إلغاء
-              </button>
-              <button class="btn btn-primary" onclick="updateCategory('${categoryId}')">
-                <i class="fas fa-save"></i> حفظ التعديلات
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('modalsContainer').innerHTML = modalHTML;
-      
-    } catch (error) {
-      console.error('Error loading category:', error);
-      showNotification('حدث خطأ في تحميل التصنيف', 'error');
-    }
-  }
-
-  async function deleteCategory(categoryId) {
-    if (!confirm('هل أنت متأكد من حذف هذا التصنيف؟')) return;
-    
-    try {
-      // التحقق من وجود منتجات في هذا التصنيف
-      const productsSnapshot = await db.collection('products')
-        .where('category', '==', (await db.collection('categories').doc(categoryId).get()).data().name)
-        .limit(1)
-        .get();
-      
-      if (!productsSnapshot.empty) {
-        showNotification('لا يمكن حذف التصنيف لأنه يحتوي على منتجات', 'error');
-        return;
-      }
-      
-      await db.collection('categories').doc(categoryId).delete();
-      showNotification('تم حذف التصنيف بنجاح', 'success');
-      
-      // تحديث القائمة
-      const currentTab = document.querySelector('.admin-tab.active');
-      if (currentTab.textContent.includes('التصنيفات')) {
-        showAdminTab('categories', currentTab);
-      }
-      
-    } catch (error) {
-      console.error('Error deleting category:', error);
-      showNotification('حدث خطأ في حذف التصنيف', 'error');
-    }
-  }
-
-  async function loadAdminUsers(container) {
-    try {
-      const snapshot = await db.collection('users')
-        .orderBy('createdAt', 'desc')
-        .limit(20)
-        .get();
-      
-      if (snapshot.empty) {
-        container.innerHTML = `
-          <div class="text-center text-muted" style="padding: 40px;">
-            <i class="fas fa-users fa-3x mb-3"></i>
-            <p>لا يوجد مستخدمين</p>
-          </div>
-        `;
-        return;
-      }
-      
-      let tableHTML = `
-        <h3 style="margin-bottom: 20px;">إدارة المستخدمين</h3>
-        <div style="overflow-x: auto;">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>الصورة</th>
-                <th>الاسم</th>
-                <th>البريد</th>
-                <th>الدور</th>
-                <th>التاريخ</th>
-                <th>الإجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
-      `;
-      
-      snapshot.docs.forEach(doc => {
-        const user = doc.data();
-        tableHTML += `
-          <tr>
-            <td>
-              <img src="${user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6B5BFF&color=fff&size=40`}" 
-                   alt="${user.name}"
-                   style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-            </td>
-            <td>${user.name}</td>
-            <td>${user.email}</td>
-            <td>
-              <span style="background: ${user.role === 'admin' ? '#6B5BFF' : '#25D366'}; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem;">
-                ${user.role === 'admin' ? 'مدير' : 'عميل'}
-              </span>
-            </td>
-            <td>${user.createdAt?.toDate ? user.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</td>
-            <td>
-              <button class="btn btn-sm btn-primary" onclick="viewUserAdmin('${doc.id}')">
-                <i class="fas fa-eye"></i>
-              </button>
-            </td>
-          </tr>
-        `;
-      });
-      
-      tableHTML += `
-            </tbody>
-          </table>
-        </div>
-      `;
-      
-      container.innerHTML = tableHTML;
-      
-    } catch (error) {
-      console.error('Error loading admin users:', error);
-      container.innerHTML = `
-        <div class="text-center text-danger">
-          <i class="fas fa-exclamation-circle fa-2x mb-2"></i>
-          <p>حدث خطأ في تحميل المستخدمين</p>
-        </div>
-      `;
-    }
-  }
-
-  async function viewUserAdmin(userId) {
-    try {
-      const userDoc = await db.collection('users').doc(userId).get();
-      
-      if (!userDoc.exists) {
-        showNotification('المستخدم غير موجود', 'error');
-        return;
-      }
-      
-      const user = userDoc.data();
-      
-      // جلب طلبات المستخدم
-      const ordersSnapshot = await db.collection('orders')
-        .where('userId', '==', userId)
-        .orderBy('createdAt', 'desc')
-        .limit(5)
-        .get();
-      
-      const modalHTML = `
-        <div class="modal-overlay" onclick="closeModal()">
-          <div class="modal" onclick="event.stopPropagation()" style="max-width: 800px;">
-            <button class="modal-close" onclick="closeModal()">
-              <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-header">
-              <h2 class="modal-title">
-                <i class="fas fa-user"></i>
-                تفاصيل المستخدم
-              </h2>
-            </div>
-            <div class="modal-body">
-              <div style="display: grid; grid-template-columns: auto 1fr; gap: 30px; margin-bottom: 30px;">
-                <div>
-                  <img src="${user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6B5BFF&color=fff&size=128`}" 
-                       alt="${user.name}"
-                       style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary-color);">
-                </div>
-                
-                <div>
-                  <h3>${user.name}</h3>
-                  <p style="color: var(--text-light);">${user.email}</p>
-                  
-                  <div style="margin-top: 15px;">
-                    <p><strong>الدور:</strong> ${user.role === 'admin' ? 'مدير' : 'عميل'}</p>
-                    ${user.phone ? `<p><strong>الهاتف:</strong> ${user.phone}</p>` : ''}
-                    ${user.address ? `<p><strong>العنوان:</strong> ${user.address}</p>` : ''}
-                    <p><strong>تاريخ التسجيل:</strong> ${user.createdAt?.toDate ? user.createdAt.toDate().toLocaleDateString('ar-EG') : 'غير معروف'}</p>
-                  </div>
-                </div>
-              </div>
-              
-              ${ordersSnapshot.empty ? '' : `
-                <h4 style="margin-bottom: 15px; color: var(--text-primary);">آخر الطلبات:</h4>
-                <div style="background: white; border-radius: var(--border-radius-md); overflow: hidden; border: 1px solid var(--border-color);">
-                  ${ordersSnapshot.docs.map(doc => {
-                    const order = doc.data();
-                    const status = order.status || {};
-                    let statusText = 'قيد الانتظار';
-                    if (status.delivered) statusText = 'تم التوصيل';
-                    else if (status.on_way) statusText = 'في الطريق';
-                    
-                    return `
-                      <div style="padding: 15px; border-bottom: 1px solid var(--border-color);">
-                        <div style="display: flex; justify-content: space-between;">
-                          <strong>طلب #${doc.id.substring(0, 8)}</strong>
-                          <span style="color: var(--text-light); font-size: 0.9rem;">${statusText}</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-top: 5px;">
-                          <span>${order.items?.length || 0} منتج</span>
-                          <span style="font-weight: 600; color: var(--primary-color);">${order.total?.toFixed(2) || '0'} جنيه</span>
-                        </div>
-                      </div>
-                    `;
-                  }).join('')}
-                </div>
-              `}
-            </div>
-            
-            <div class="modal-footer">
-              <button class="btn btn-outline" onclick="closeModal()">
-                <i class="fas fa-times"></i> إغلاق
-              </button>
-              <button class="btn btn-primary" onclick="changeUserRole('${userId}', '${user.role}')">
-                <i class="fas fa-user-cog"></i> تغيير الدور
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('modalsContainer').innerHTML = modalHTML;
-      
-    } catch (error) {
-      console.error('Error loading user details:', error);
-      showNotification('حدث خطأ في تحميل بيانات المستخدم', 'error');
-    }
-  }
-
-  async function loadAdminSettings(container) {
-    try {
-      // جلب إعدادات الشحن
-      const settingsDoc = await db.collection('settings').doc('shipping').get();
-      const settings = settingsDoc.exists ? settingsDoc.data() : {
-        standard: 20,
-        freeThreshold: 300,
-        enabled: true
-      };
-      
-      const html = `
-        <h3 style="margin-bottom: 20px;">إعدادات الشحن</h3>
-        <div style="max-width: 500px;">
-          <div class="form-group">
-            <label class="form-label">سعر الشحن القياسي (جنيه)</label>
-            <input type="number" class="form-control" id="shippingStandard" 
-                   value="${settings.standard || 20}" min="0" step="1">
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label">الحد الأدنى للشحن المجاني (جنيه)</label>
-            <input type="number" class="form-control" id="shippingFreeThreshold" 
-                   value="${settings.freeThreshold || 300}" min="0" step="1">
-          </div>
-          
-          <div class="form-group">
-            <label>
-              <input type="checkbox" id="shippingEnabled" ${settings.enabled !== false ? 'checked' : ''}>
-              <span style="margin-right: 8px;">تفعيل خدمة الشحن</span>
-            </label>
-          </div>
-          
-          <button class="btn btn-primary" onclick="saveShippingSettings()">
-            <i class="fas fa-save"></i> حفظ الإعدادات
-          </button>
-        </div>
-      `;
-      
-      container.innerHTML = html;
-      
-    } catch (error) {
-      console.error('Error loading settings:', error);
-      container.innerHTML = '<p class="text-danger">حدث خطأ في تحميل الإعدادات</p>';
-    }
-  }
-
-  async function saveShippingSettings() {
-    try {
-      const settings = {
-        standard: parseInt(document.getElementById('shippingStandard').value) || 20,
-        freeThreshold: parseInt(document.getElementById('shippingFreeThreshold').value) || 300,
-        enabled: document.getElementById('shippingEnabled').checked,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      };
-      
-      await db.collection('settings').doc('shipping').set(settings, { merge: true });
-      
-      showNotification('تم حفظ إعدادات الشحن بنجاح', 'success');
-      
-    } catch (error) {
-      console.error('Error saving settings:', error);
-      showNotification('حدث خطأ في حفظ الإعدادات', 'error');
-    }
-  }
-
-  // ---------- دوال المساعدة ----------
+  // ---------- دوال المساعدة الأخرى ----------
   function openWhatsapp() {
     window.open(`https://wa.me/${APP_CONFIG.whatsapp}`, '_blank');
   }
 
   function openPhone() {
     window.open(`tel:${APP_CONFIG.phone}`, '_self');
-  }
-
-  function openCouponModal() {
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-tag"></i>
-              كوبونات الخصم
-            </h2>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label class="form-label">أدخل كود الخصم</label>
-              <input type="text" class="form-control" id="couponCode" placeholder="مثال: SUPER50">
-            </div>
-            
-            <button class="btn btn-coupon btn-block" onclick="applyCoupon()">
-              <i class="fas fa-check"></i>
-              تطبيق الكوبون
-            </button>
-            
-            <div style="margin-top: 30px;">
-              <h4 style="margin-bottom: 15px; color: var(--text-primary);">الكوبونات المتاحة:</h4>
-              <div style="background: rgba(107, 91, 255, 0.05); border-radius: var(--border-radius-md); padding: 15px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                  <span>elostaz</span>
-                  <span style="color: var(--whatsapp-green); font-weight: 600;">خصم 10%</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                  <span>SUPER20</span>
-                  <span style="color: var(--whatsapp-green); font-weight: 600;">خصم 20%</span>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                  <span>SAVE30</span>
-                  <span style="color: var(--whatsapp-green); font-weight: 600;">خصم 30%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  function applyCoupon() {
-    const code = document.getElementById('couponCode').value.toUpperCase();
-    const validCoupons = ['WELCOME10', 'SUPER20', 'SAVE30'];
-    
-    if (validCoupons.includes(code)) {
-      const discount = code === 'WELCOME10' ? 10 : code === 'SUPER20' ? 20 : 30;
-      showNotification(`تم تطبيق كوبون "${code}" - خصم ${discount}%`, 'success');
-      closeModal();
-    } else {
-      showNotification('كود الخصم غير صالح', 'error');
-    }
-  }
-
-  function openEditProfile() {
-    const modalHTML = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-header">
-            <h2 class="modal-title">
-              <i class="fas fa-edit"></i>
-              تعديل الملف الشخصي
-            </h2>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label class="form-label">الاسم الكامل</label>
-              <input type="text" class="form-control" id="editProfileName" value="${userData?.name || ''}">
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">رقم الهاتف</label>
-              <input type="tel" class="form-control" id="editProfilePhone" value="${userData?.phone || ''}">
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">العنوان</label>
-              <textarea class="form-control" id="editProfileAddress" rows="3">${userData?.address || ''}</textarea>
-            </div>
-            
-            <div class="form-group">
-              <label class="form-label">صورة الملف الشخصي (رابط URL)</label>
-              <input type="url" class="form-control" id="editProfilePhoto" 
-                     value="${userData?.photoURL || ''}"
-                     placeholder="https://example.com/photo.jpg">
-            </div>
-            
-            <button class="btn btn-primary btn-block" onclick="updateProfile()">
-              <i class="fas fa-save"></i>
-              حفظ التغييرات
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
-  }
-
-  async function updateProfile() {
-    try {
-      const updates = {
-        name: document.getElementById('editProfileName').value,
-        phone: document.getElementById('editProfilePhone').value,
-        address: document.getElementById('editProfileAddress').value,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      };
-      
-      const photoURL = document.getElementById('editProfilePhoto').value;
-      if (photoURL) {
-        updates.photoURL = photoURL;
-      }
-      
-      await db.collection('users').doc(currentUser.uid).update(updates);
-      
-      // تحديث الاسم المعروض
-      await currentUser.updateProfile({
-        displayName: updates.name,
-        photoURL: photoURL || currentUser.photoURL
-      });
-      
-      // تحديث البيانات المحلية
-      Object.assign(userData, updates);
-      
-      showNotification('تم تحديث الملف الشخصي بنجاح', 'success');
-      closeModal();
-      updateUserProfile();
-      
-    } catch (error) {
-      console.error('Update profile error:', error);
-      showNotification('حدث خطأ في تحديث الملف الشخصي', 'error');
-    }
   }
 
   // ---------- إعداد الأحداث ----------
@@ -5989,22 +2977,6 @@
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
-      }
-    });
-    
-    // تحديث حالة الاتصال
-    window.addEventListener('online', () => {
-      showNotification('تم استعادة الاتصال بالإنترنت', 'success');
-    });
-    
-    window.addEventListener('offline', () => {
-      showNotification('أنت غير متصل بالإنترنت', 'warning');
-    });
-    
-    // إغلاق المودالات عند الضغط على زر الهروب
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeModal();
       }
     });
     
@@ -6033,7 +3005,7 @@
   }
 
   function searchProducts() {
-    const searchTerm = document.querySelector('.search-input').value.trim();
+    const searchTerm = Security.sanitizeInput(document.querySelector('.search-input').value.trim());
     if (!searchTerm) return;
     
     const results = globalProducts.filter(product => 
@@ -6084,12 +3056,12 @@
                 </div>
                 
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
-                     alt="${product.name}"
+                     alt="${Security.sanitizeInput(product.name)}"
                      class="product-image">
                 
                 <div class="product-info">
-                  <h3 class="product-name">${product.name}</h3>
-                  <div class="product-category">${product.category || 'عام'}</div>
+                  <h3 class="product-name">${Security.sanitizeInput(product.name)}</h3>
+                  <div class="product-category">${Security.sanitizeInput(product.category || 'عام')}</div>
                   
                   <div class="product-price">
                     <span class="price-current">
@@ -6136,57 +3108,14 @@
   }
 
   function searchFromMobile() {
-    const searchTerm = document.getElementById('mobileSearchInput').value.trim();
+    const searchTerm = Security.sanitizeInput(document.getElementById('mobileSearchInput').value.trim());
     if (searchTerm) {
       searchProducts();
       toggleMobileSearch();
     }
   }
 
-  // ---------- مشاركة الطلب ----------
-  async function shareOrder(orderId) {
-    try {
-      const orderDoc = await db.collection('orders').doc(orderId).get();
-      
-      if (!orderDoc.exists) {
-        showNotification('الطلب غير موجود', 'error');
-        return;
-      }
-      
-      const order = orderDoc.data();
-      
-      const shareData = {
-        title: `طلب #${orderId.substring(0, 8)} - ${order.userName}`,
-        text: `تفاصيل الطلب:\nالعميل: ${order.userName}\nالمجموع: ${order.total?.toFixed(2)} جنيه\nالحالة: ${getOrderStatusText(order.status)}`,
-        url: window.location.href
-      };
-      
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        // نسخ النص
-        const textToCopy = `طلب #${orderId.substring(0, 8)}\nالعميل: ${order.userName}\nالهاتف: ${order.userPhone}\nالعنوان: ${order.userAddress}\nالمجموع: ${order.total?.toFixed(2)} جنيه\nالحالة: ${getOrderStatusText(order.status)}`;
-        
-        await navigator.clipboard.writeText(textToCopy);
-        showNotification('تم نسخ تفاصيل الطلب', 'success');
-      }
-      
-    } catch (error) {
-      console.error('Error sharing order:', error);
-      showNotification('حدث خطأ في مشاركة الطلب', 'error');
-    }
-  }
-
-  function getOrderStatusText(status) {
-    if (!status) return 'قيد الانتظار';
-    if (status.delivered) return 'تم التوصيل';
-    if (status.on_way) return 'في الطريق';
-    if (status.preparing) return 'قيد التحضير';
-    if (status.confirmed) return 'تم التأكيد';
-    return 'قيد الانتظار';
-  }
-
-  // ---------- التعديلات الخاصة بالموقع ----------
+  // ---------- إشعارات للمديرين ----------
   function notifyAdminsNewUser(userId, userName, userEmail) {
     // هذه الدالة لإشعار المديرين بمستخدم جديد
     db.collection('users')
@@ -6206,78 +3135,46 @@
       });
   }
 
-  function notifyAdminsNewOrder(orderId, userName, total) {
-    // هذه الدالة لإشعار المديرين بطلب جديد
-    db.collection('users')
-      .where('role', '==', 'admin')
-      .get()
-      .then(snapshot => {
-        snapshot.docs.forEach(doc => {
-          db.collection('notifications').add({
-            userId: doc.id,
-            title: 'طلب جديد',
-            message: `طلب جديد من ${userName} بقيمة ${total.toFixed(2)} جنيه (رقم الطلب: #${orderId.substring(0, 8)})`,
-            type: 'new_order',
-            read: false,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-        });
-      });
-  }
-
   // ---------- تهيئة نهائية ----------
   console.log('🎉 تطبيق سوبر ماركت الأستاذ جاهز!');
   </script>
 
-  <!-- PWA Install Prompt -->
+  <!-- PWA Install Script -->
   <script>
-  // تسجيل Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').then(registration => {
-        console.log('ServiceWorker registered with scope:', registration.scope);
-      }).catch(error => {
-        console.log('ServiceWorker registration failed:', error);
-      });
-    });
-  }
-
   // Install Prompt
   let deferredPrompt;
+  const installButton = document.createElement('button');
+
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     
-    // عرض زر التثبيت بعد 5 ثواني
-    setTimeout(() => {
-      if (deferredPrompt) {
-        showInstallPromotion();
-      }
-    }, 5000);
+    // إنشاء زر التثبيت إذا لم يكن موجود
+    if (!document.getElementById('installButton')) {
+      installButton.id = 'installButton';
+      installButton.innerHTML = `
+        <i class="fas fa-download"></i>
+        <span>تثبيت التطبيق</span>
+      `;
+      installButton.className = 'btn btn-primary';
+      installButton.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: var(--shadow-lg);
+        animation: pulse 2s infinite;
+      `;
+      installButton.onclick = installApp;
+      
+      document.body.appendChild(installButton);
+    }
   });
 
-  function showInstallPromotion() {
-    const installModal = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 400px;">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-body text-center">
-            <i class="fas fa-download fa-3x mb-3" style="color: var(--primary-color);"></i>
-            <h3 class="mb-3">تثبيت التطبيق</h3>
-            <p class="text-muted mb-4">تثبيت تطبيق سوبر ماركت الأستاذ للحصول على تجربة أفضل</p>
-            <button class="btn btn-primary btn-block" onclick="installApp()">
-              <i class="fas fa-download"></i> تثبيت التطبيق
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = installModal;
-  }
-
+  // Install App Function
   async function installApp() {
     if (!deferredPrompt) return;
     
@@ -6285,17 +3182,67 @@
     const { outcome } = await deferredPrompt.userChoice;
     
     if (outcome === 'accepted') {
-      console.log('User accepted the install prompt');
+      console.log('✅ User accepted the install prompt');
+      if (installButton.parentNode) {
+        installButton.style.display = 'none';
+      }
     } else {
-      console.log('User dismissed the install prompt');
+      console.log('❌ User dismissed the install prompt');
     }
     
     deferredPrompt = null;
-    closeModal();
   }
 
-  // تحديث التطبيق
+  // Detect if app is installed
+  window.addEventListener('appinstalled', () => {
+    console.log('🎉 PWA installed successfully');
+    if (installButton.parentNode) {
+      installButton.style.display = 'none';
+    }
+    
+    // إظهار رسالة نجاح التثبيت
+    showNotification('تم تثبيت التطبيق بنجاح!', 'success');
+  });
+
+  // تحسينات Mobile UX
+  function enhanceMobileUX() {
+    // منع zoom غير مقصود
+    document.addEventListener('touchstart', function(e) {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+    
+    // Safe Areas Support
+    if (CSS.supports('padding-top: env(safe-area-inset-top)')) {
+      document.documentElement.style.setProperty('--safe-area-top', 'env(safe-area-inset-top)');
+      document.documentElement.style.setProperty('--safe-area-bottom', 'env(safe-area-inset-bottom)');
+      document.documentElement.style.setProperty('--safe-area-left', 'env(safe-area-inset-left)');
+      document.documentElement.style.setProperty('--safe-area-right', 'env(safe-area-inset-right)');
+    }
+  }
+
+  // تشغيل تحسينات Mobile UX عند تحميل الصفحة
+  document.addEventListener('DOMContentLoaded', enhanceMobileUX);
+
+  // تسجيل Service Worker مع تحسينات
   if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(registration => {
+          console.log('✅ ServiceWorker registered with scope:', registration.scope);
+          
+          // التحقق من التحديثات كل ساعة
+          setInterval(() => {
+            registration.update();
+          }, 60 * 60 * 1000);
+        })
+        .catch(error => {
+          console.log('❌ ServiceWorker registration failed:', error);
+        });
+    });
+    
+    // اكتشاف التحديثات
     let refreshing = false;
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (!refreshing) {
@@ -6304,6 +3251,21 @@
       }
     });
   }
+
+  // إشعارات PWA
+  function showPWAInstallHint() {
+    // إظهار تلميح التثبيت بعد 30 ثانية إذا لم يكن مثبتاً
+    setTimeout(() => {
+      if (!window.matchMedia('(display-mode: standalone)').matches && 
+          !localStorage.getItem('pwa_install_hint_shown')) {
+        showNotification('💡 تثبيت التطبيق يمنحك تجربة أسرع ويمكنك استخدامه بدون إنترنت!', 'info');
+        localStorage.setItem('pwa_install_hint_shown', 'true');
+      }
+    }, 30000);
+  }
+
+  // تشغيل تلميح التثبيت
+  showPWAInstallHint();
   </script>
 
   <!-- Banner تطوير -->
@@ -6406,190 +3368,5 @@
       </div>
     </div>
   </footer>
-
-  <!-- PWA Install Script -->
-  <script>
-  // Install Prompt
-  let deferredPrompt;
-  const installButton = document.createElement('button');
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    
-    // إنشاء زر التثبيت إذا لم يكن موجود
-    if (!document.getElementById('installButton')) {
-      installButton.id = 'installButton';
-      installButton.innerHTML = `
-        <i class="fas fa-download"></i>
-        <span>تثبيت التطبيق</span>
-      `;
-      installButton.className = 'btn btn-primary';
-      installButton.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: var(--shadow-lg);
-        animation: pulse 2s infinite;
-      `;
-      installButton.onclick = installApp;
-      
-      document.body.appendChild(installButton);
-    }
-  });
-
-  // Install App Function
-  async function installApp() {
-    if (!deferredPrompt) return;
-    
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      console.log('✅ User accepted the install prompt');
-      if (installButton.parentNode) {
-        installButton.style.display = 'none';
-      }
-    } else {
-      console.log('❌ User dismissed the install prompt');
-    }
-    
-    deferredPrompt = null;
-  }
-
-  // Detect if app is installed
-  window.addEventListener('appinstalled', () => {
-    console.log('🎉 PWA installed successfully');
-    if (installButton.parentNode) {
-      installButton.style.display = 'none';
-    }
-    
-    // إظهار رسالة نجاح التثبيت
-    showNotification('تم تثبيت التطبيق بنجاح!', 'success');
-  });
-
-  // تحسينات Mobile UX
-  function enhanceMobileUX() {
-    // منع zoom غير مقصود
-    document.addEventListener('touchstart', function(e) {
-      if (e.touches.length > 1) {
-        e.preventDefault();
-      }
-    }, { passive: false });
-    
-    // تحسين keyboard behavior
-    const inputs = document.querySelectorAll('input, textarea, select');
-    inputs.forEach(input => {
-      input.addEventListener('focus', () => {
-        setTimeout(() => {
-          input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 300);
-      });
-    });
-    
-    // Safe Areas Support
-    if (CSS.supports('padding-top: env(safe-area-inset-top)')) {
-      document.documentElement.style.setProperty('--safe-area-top', 'env(safe-area-inset-top)');
-      document.documentElement.style.setProperty('--safe-area-bottom', 'env(safe-area-inset-bottom)');
-      document.documentElement.style.setProperty('--safe-area-left', 'env(safe-area-inset-left)');
-      document.documentElement.style.setProperty('--safe-area-right', 'env(safe-area-inset-right)');
-    }
-  }
-
-  // تشغيل تحسينات Mobile UX عند تحميل الصفحة
-  document.addEventListener('DOMContentLoaded', enhanceMobileUX);
-
-  // تسجيل Service Worker مع تحسينات
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(registration => {
-          console.log('✅ ServiceWorker registered with scope:', registration.scope);
-          
-          // التحقق من التحديثات كل ساعة
-          setInterval(() => {
-            registration.update();
-          }, 60 * 60 * 1000);
-        })
-        .catch(error => {
-          console.log('❌ ServiceWorker registration failed:', error);
-        });
-    });
-    
-    // اكتشاف التحديثات
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (!refreshing) {
-        refreshing = true;
-        window.location.reload();
-      }
-    });
-  }
-
-  // تحسين Firebase Performance
-  function optimizeFirebase() {
-    if (typeof firebase !== 'undefined') {
-      // تخزين محلي للبيانات المتكررة
-      const cacheData = (key, data, ttl = 3600000) => {
-        const item = {
-          data: data,
-          expiry: Date.now() + ttl
-        };
-        localStorage.setItem(key, JSON.stringify(item));
-      };
-      
-      const getCachedData = (key) => {
-        const itemStr = localStorage.getItem(key);
-        if (!itemStr) return null;
-        
-        const item = JSON.parse(itemStr);
-        if (Date.now() > item.expiry) {
-          localStorage.removeItem(key);
-          return null;
-        }
-        
-        return item.data;
-      };
-      
-      // تطبيق التخزين المؤقت على المنتجات
-      const originalLoadProducts = window.loadProducts;
-      if (originalLoadProducts) {
-        window.loadProducts = async function() {
-          const cached = getCachedData('products_cache');
-          if (cached) {
-            console.log('📦 Using cached products');
-            return Promise.resolve(cached);
-          }
-          
-          const result = await originalLoadProducts();
-          cacheData('products_cache', result);
-          return result;
-        };
-      }
-    }
-  }
-
-  // تشغيل تحسينات Firebase
-  setTimeout(optimizeFirebase, 2000);
-
-  // إشعارات PWA
-  function showPWAInstallHint() {
-    // إظهار تلميح التثبيت بعد 30 ثانية إذا لم يكن مثبتاً
-    setTimeout(() => {
-      if (!window.matchMedia('(display-mode: standalone)').matches && 
-          !localStorage.getItem('pwa_install_hint_shown')) {
-        showNotification('💡 تثبيت التطبيق يمنحك تجربة أسرع ويمكنك استخدامه بدون إنترنت!', 'info');
-        localStorage.setItem('pwa_install_hint_shown', 'true');
-      }
-    }, 30000);
-  }
-
-  // تشغيل تلميح التثبيت
-  showPWAInstallHint();
-  </script>
 </body>
 </html>
