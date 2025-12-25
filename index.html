@@ -653,6 +653,27 @@
       margin: 0 auto;
       width: 100%;
     }
+
+    /* Force full width and remove stray gutters on small screens */
+    html, body, #mainContent, .main-content {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      padding-left: 12px !important;
+      padding-right: 12px !important;
+    }
+
+    .products-grid {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+
+    /* Protect against accidental horizontal scrolling */
+    html, body {
+      overflow-x: hidden !important;
+    }
     
     .hero-section {
       background: var(--primary-gradient), 
@@ -6851,7 +6872,9 @@
   <script src="./admin-responsive.js"></script>
   <script>
     // EOF marker to help detect truncated responses or caching issues
+    window.__indexEOF = true;
     console.log('EOF_MARKER: index.html fully parsed');
+
     // Quick runtime check you can run in console to inspect the raw served HTML
     window.__fetchIndexDiagnostics = async function() {
       try {
@@ -6865,6 +6888,42 @@
         throw e;
       }
     };
+
+    // Debug banner: shown when EOF marker didn't run (likely truncated/cached file)
+    (function showReloadBannerWhenTruncated() {
+      const existing = document.getElementById('debugReloadBanner');
+      if (existing) return;
+
+      setTimeout(async () => {
+        if (window.__indexEOF) return; // page fully parsed
+
+        // create banner
+        const banner = document.createElement('div');
+        banner.id = 'debugReloadBanner';
+        banner.style.cssText = 'position:fixed;left:12px;right:12px;bottom:80px;z-index:2147483647;padding:12px;border-radius:10px;background:#ffefef;border:1px solid #ffb3b3;color:#700;box-shadow:0 8px 24px rgba(0,0,0,0.2);font-weight:700;text-align:center;';
+        banner.innerHTML = `نسخة الموقع قد تكون مقطوعة أو مخزّنة. اضغط لإعادة التحميل من الشبكة <button id="debugReloadBtn" style="margin-left:10px;padding:8px 10px;border-radius:8px;border:none;background:#6B5BFF;color:white;cursor:pointer;font-weight:700">Reload (Network)</button>`;
+
+        document.body.appendChild(banner);
+
+        document.getElementById('debugReloadBtn').addEventListener('click', async () => {
+          try {
+            // Try to bypass SW by clearing caches and unregistering then reload with ?no_cache=1
+            if ('serviceWorker' in navigator) {
+              const regs = await navigator.serviceWorker.getRegistrations();
+              for (const r of regs) await r.unregister();
+            }
+            const keys = await caches.keys();
+            for (const k of keys) await caches.delete(k);
+            console.log('Debug: SW unregistered and caches deleted. Reloading with no_cache.');
+            // Force fresh fetch
+            location.href = location.pathname + '?no_cache=1';
+          } catch (e) {
+            console.error('Reload from network failed:', e);
+            alert('خطأ في إعادة التحميل من الشبكة، راجع الكونسول.');
+          }
+        });
+      }, 900);
+    })();
   </script>
 </body>
 </html>
