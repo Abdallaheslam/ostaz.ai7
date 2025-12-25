@@ -1317,6 +1317,33 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    /* Admin cards (hidden by default, shown on small screens) */
+    .admin-cards {
+      display: none;
+    }
+
+    .admin-card img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-left: 8px;
+    }
+
+    .admin-card .actions button {
+      display: inline-block;
+      width: 48%;
+      box-sizing: border-box;
+      padding: 8px 10px;
+      font-size: 0.9rem;
+    }
+
+    /* improve touch targets for tabs */
+    .admin-tab {
+      padding: 12px 16px;
+      min-width: 90px;
+    }
+
     /* ====== Responsive fixes for Admin Panel & Tables (Mobile) ====== */
     @media (max-width: 700px) {
       .admin-panel {
@@ -4876,7 +4903,7 @@
             </button>
           </div>
           
-          <div class="admin-content" id="adminContent">
+          <div class="admin-content" id="adminContent" tabindex="-1">
             <div class="loading">
               <div class="spinner"></div>
             </div>
@@ -4926,23 +4953,34 @@
     button.classList.add('active');
     
     const contentEl = document.getElementById('adminContent');
-    
-    switch (tabName) {
-      case 'products':
-        await loadAdminProducts(contentEl);
-        break;
-      case 'orders':
-        await loadAdminOrders(contentEl);
-        break;
-      case 'categories':
-        await loadAdminCategories(contentEl);
-        break;
-      case 'users':
-        await loadAdminUsers(contentEl);
-        break;
-      case 'settings':
-        await loadAdminSettings(contentEl);
-        break;
+    // Ensure content is focusable for accessibility and to receive focus after loading
+    contentEl.setAttribute('tabindex', '-1');
+
+    try {
+      switch (tabName) {
+        case 'products':
+          await loadAdminProducts(contentEl);
+          break;
+        case 'orders':
+          await loadAdminOrders(contentEl);
+          break;
+        case 'categories':
+          await loadAdminCategories(contentEl);
+          break;
+        case 'users':
+          await loadAdminUsers(contentEl);
+          break;
+        case 'settings':
+          await loadAdminSettings(contentEl);
+          break;
+      }
+    } catch (error) {
+      console.error('Error switching admin tab:', error);
+      contentEl.innerHTML = `\n        <div class="text-center text-danger" style="padding:20px;">\n          <i class="fas fa-exclamation-circle fa-2x mb-2"></i>\n          <p>حدث خطأ أثناء فتح التبويب. حاول مرة أخرى.</p>\n        </div>\n      `;
+    } finally {
+      // Reset scroll and focus so the user sees top of content on mobile
+      try { contentEl.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e){}
+      try { contentEl.focus(); } catch(e){}
     }
   }
 
@@ -5020,7 +5058,11 @@
       
       container.innerHTML = tableHTML;
       // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
-      if (typeof makeAdminTablesResponsive === 'function') makeAdminTablesResponsive(container);
+      if (typeof makeAdminTablesResponsive === 'function') {
+        requestAnimationFrame(() => {
+          try { makeAdminTablesResponsive(container); } catch (e) { console.error('makeAdminTablesResponsive failed:', e); }
+        });
+      }
     } catch (error) {
       console.error('Error loading admin products:', error);
       container.innerHTML = `
@@ -5372,7 +5414,11 @@
       
       container.innerHTML = tableHTML;
       // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
-      if (typeof makeAdminTablesResponsive === 'function') makeAdminTablesResponsive(container);
+      if (typeof makeAdminTablesResponsive === 'function') {
+        requestAnimationFrame(() => {
+          try { makeAdminTablesResponsive(container); } catch (e) { console.error('makeAdminTablesResponsive failed:', e); }
+        });
+      }
     } catch (error) {
       console.error('Error loading admin orders:', error);
       container.innerHTML = `
@@ -5576,7 +5622,11 @@
       
       container.innerHTML = tableHTML;
       // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
-      if (typeof makeAdminTablesResponsive === 'function') makeAdminTablesResponsive(container);
+      if (typeof makeAdminTablesResponsive === 'function') {
+        requestAnimationFrame(() => {
+          try { makeAdminTablesResponsive(container); } catch (e) { console.error('makeAdminTablesResponsive failed:', e); }
+        });
+      }
     } catch (error) {
       console.error('Error loading admin categories:', error);
       container.innerHTML = `
@@ -5806,7 +5856,11 @@
       
       container.innerHTML = tableHTML;
       // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
-      if (typeof makeAdminTablesResponsive === 'function') makeAdminTablesResponsive(container);
+      if (typeof makeAdminTablesResponsive === 'function') {
+        requestAnimationFrame(() => {
+          try { makeAdminTablesResponsive(container); } catch (e) { console.error('makeAdminTablesResponsive failed:', e); }
+        });
+      }
     } catch (error) {
       console.error('Error loading admin users:', error);
       container.innerHTML = `
