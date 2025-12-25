@@ -1932,12 +1932,28 @@
       
       .products-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin: 0;
+        width: 100%;
       }
       
       .admin-stats {
         grid-template-columns: 1fr;
       }
-      
+
+      /* Force main content to full width and remove stray left gutters */
+      .main-content {
+        padding: calc(var(--navbar-height) + 10px) 12px 120px !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+      }
+
+      .section { padding: 12px !important; }
+
+      /* Ensure filters move to a top toolbar and wrap nicely */
+      .section-header { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+      .section-header .form-control { width: auto !important; }
+    }      
       .admin-tabs {
         padding: 0 15px;
       }
