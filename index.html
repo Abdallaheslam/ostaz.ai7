@@ -1289,6 +1289,8 @@
       left: 0;
       right: 0;
       bottom: 0;
+      width: 100vw;
+      height: 100vh;
       background: rgba(0, 0, 0, 0.7);
       display: flex;
       align-items: center;
@@ -1297,6 +1299,7 @@
       padding: 20px;
       animation: fadeIn 0.3s ease;
       backdrop-filter: blur(5px);
+      overflow: hidden;
     }
     
     .modal {
@@ -1363,6 +1366,7 @@
         box-sizing: border-box;
         overflow: auto;
         background: white;
+        padding-bottom: 80px; /* keep space for floating bottom nav */
       }
 
       /* Make overlay remove padding and align to top so panel fills screen */
@@ -1371,17 +1375,47 @@
         padding: 0 !important;
         justify-content: flex-start !important;
         background: rgba(0,0,0,0.65);
+        width: 100vw !important;
+        height: 100vh !important;
       }
 
       .admin-header {
-        padding: 16px;
+        padding: 12px 16px;
       }
 
       .admin-stats {
-        padding: 16px;
+        padding: 12px;
         gap: 12px;
         grid-template-columns: 1fr;
       }
+
+      /* Make sure the content area scrolls inside the panel and not the body */
+      .admin-content {
+        padding: 12px;
+        min-height: auto;
+        overflow: auto;
+        flex: 1;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Compact stat cards */
+      .stat-card { padding: 14px; }
+
+      /* Ensure product grid uses full width inside main content */
+      .products-grid {
+        width: 100% !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px;
+      }
+
+      /* Reduce section padding so content fits on small screens */
+      .section { padding: 16px; }
+
+      /* Allow header controls to wrap instead of pushing content */
+      .section-header { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+      .section-header .form-control { width: auto !important; }
+    }
 
       .admin-tabs {
         padding: 0 12px;
