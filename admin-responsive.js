@@ -1,4 +1,4 @@
-// Helper to convert admin tables into cards on small screens
+// Helper to convert admin tables into collapsible cards on small screens
 function makeAdminTablesResponsive(container) {
   try {
     const tables = (container || document).querySelectorAll('.table-responsive .admin-table');
@@ -13,7 +13,38 @@ function makeAdminTablesResponsive(container) {
         const card = document.createElement('div');
         card.className = 'admin-card';
 
+        // Header row: image/name/price & toggle
+        const headerRow = document.createElement('div');
+        headerRow.className = 'admin-card-header';
+
+        // Create compact columns: first 2 cells as header preview
+        const cells = Array.from(tr.children);
+        const previewLeft = document.createElement('div');
+        previewLeft.className = 'preview-left';
+        previewLeft.innerHTML = (cells[0] ? cells[0].innerHTML : '') + (cells[1] ? `<div class="name">${cells[1].innerText}</div>` : '');
+
+        const previewRight = document.createElement('div');
+        previewRight.className = 'preview-right';
+        previewRight.innerHTML = (cells[2] ? cells[2].innerHTML : '');
+
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = 'card-toggle';
+        toggleBtn.innerHTML = 'تفاصيل ▾';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+
+        headerRow.appendChild(previewLeft);
+        headerRow.appendChild(previewRight);
+        headerRow.appendChild(toggleBtn);
+        card.appendChild(headerRow);
+
+        // Details (other columns)
+        const details = document.createElement('div');
+        details.className = 'admin-card-details';
+        details.style.display = 'none';
+
         Array.from(tr.children).forEach((td, idx) => {
+          // skip first two cells (preview) and last actions (added separately)
+          if (idx < 2) return;
           const labelText = headers[idx] || '';
           const row = document.createElement('div');
           row.className = 'admin-card-row';
@@ -28,7 +59,7 @@ function makeAdminTablesResponsive(container) {
 
           row.appendChild(label);
           row.appendChild(value);
-          card.appendChild(row);
+          details.appendChild(row);
         });
 
         // Actions (last cell)
@@ -37,8 +68,24 @@ function makeAdminTablesResponsive(container) {
           const actionsDiv = document.createElement('div');
           actionsDiv.className = 'actions';
           actionsDiv.innerHTML = actionsCell.innerHTML;
-          card.appendChild(actionsDiv);
+          // make buttons touch-friendly
+          Array.from(actionsDiv.querySelectorAll('button')).forEach(btn => {
+            btn.style.padding = '10px 12px';
+            btn.style.minWidth = '44%';
+            btn.style.marginRight = '6px';
+          });
+          details.appendChild(actionsDiv);
         }
+
+        card.appendChild(details);
+
+        // Toggle behavior
+        toggleBtn.addEventListener('click', () => {
+          const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
+          toggleBtn.setAttribute('aria-expanded', String(!isOpen));
+          toggleBtn.innerHTML = isOpen ? 'تفاصيل ▾' : 'خفّي ▴';
+          details.style.display = isOpen ? 'none' : 'block';
+        });
 
         cardsWrapper.appendChild(card);
       });
