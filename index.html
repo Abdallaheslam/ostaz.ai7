@@ -6521,70 +6521,7 @@
     </div>
   </footer>
 
-  <!-- PWA Install Script -->
-  <script>
-  // Install Prompt
-  let deferredPrompt;
-  const installButton = document.createElement('button');
 
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    
-    // إنشاء زر التثبيت إذا لم يكن موجود
-    if (!document.getElementById('installButton')) {
-      installButton.id = 'installButton';
-      installButton.innerHTML = `
-        <i class="fas fa-download"></i>
-        <span>تثبيت التطبيق</span>
-      `;
-      installButton.className = 'btn btn-primary';
-      installButton.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: var(--shadow-lg);
-        animation: pulse 2s infinite;
-      `;
-      installButton.onclick = installApp;
-      
-      document.body.appendChild(installButton);
-    }
-  });
-
-  // Install App Function
-  async function installApp() {
-    if (!deferredPrompt) return;
-    
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      console.log('✅ User accepted the install prompt');
-      if (installButton.parentNode) {
-        installButton.style.display = 'none';
-      }
-    } else {
-      console.log('❌ User dismissed the install prompt');
-    }
-    
-    deferredPrompt = null;
-  }
-
-  // Detect if app is installed
-  window.addEventListener('appinstalled', () => {
-    console.log('🎉 PWA installed successfully');
-    if (installButton.parentNode) {
-      installButton.style.display = 'none';
-    }
-    
-    // إظهار رسالة نجاح التثبيت
-    showNotification('تم تثبيت التطبيق بنجاح!', 'success');
-  });
 
   // تحسينات Mobile UX
   function enhanceMobileUX() {
