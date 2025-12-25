@@ -65,7 +65,17 @@ self.addEventListener('activate', event => {
 // معالجة الطلبات
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
-  
+
+  // Developer bypass: allow forcing network (no-cache) by adding ?no_cache=1 to the URL
+  if (url.searchParams && url.searchParams.get && url.searchParams.get('no_cache') === '1') {
+    // Direct network fetch and return (do not cache)
+    event.respondWith(fetch(event.request).catch(err => {
+      console.warn('[Service Worker] no_cache fetch failed, falling back to cache:', err);
+      return caches.match(event.request);
+    }));
+    return;
+  }
+
   // استراتيجيات التخزين المؤقت
   if (event.request.method === 'GET') {
     // للملفات الثابتة
