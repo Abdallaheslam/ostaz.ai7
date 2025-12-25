@@ -2495,6 +2495,11 @@
 
   async function loadProducts() {
     console.log('🔍 loadProducts: starting');
+    if (!db || typeof db.collection !== 'function') {
+      console.error('Firestore DB not available');
+      if (typeof showNotification === 'function') showNotification('خطأ في الاتصال بقاعدة البيانات', 'error');
+      return { featured: [], offers: [], newProducts: [], all: [] };
+    }
     try {
       // تحميل المنتجات المميزة
       const featuredSnapshot = await db.collection('products')
