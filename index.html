@@ -1367,24 +1367,51 @@
         margin: 0;
       }
 
+      /* Tables -> Cards on small screens */
       .admin-table {
+        display: none;
+      }
+
+      .admin-cards {
         display: block;
-        width: 100%;
-        overflow: visible;
-        white-space: nowrap;
       }
 
-      .admin-table thead,
-      .admin-table tbody,
-      .admin-table tr,
-      .admin-table th,
-      .admin-table td {
-        display: table;
-      }
-
-      .admin-table th,
-      .admin-table td {
+      .admin-card {
+        background: white;
+        border-radius: var(--border-radius-md);
         padding: 12px;
+        margin-bottom: 12px;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .admin-card-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 6px 0;
+        border-bottom: 1px dashed var(--border-color);
+      }
+
+      .admin-card-row:last-child {
+        border-bottom: none;
+      }
+
+      .admin-card .label {
+        color: var(--text-light);
+        font-size: 0.9rem;
+      }
+
+      .admin-card .value {
+        color: var(--text-primary);
+        font-weight: 700;
+        text-align: left;
+      }
+
+      .admin-card .actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+        justify-content: flex-start;
       }
 
       .stat-icon {
@@ -4992,7 +5019,8 @@
       `;
       
       container.innerHTML = tableHTML;
-      
+      // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
+      if (typeof makeAdminTablesResponsive === 'function') makeAdminTablesResponsive(container);
     } catch (error) {
       console.error('Error loading admin products:', error);
       container.innerHTML = `
@@ -5343,7 +5371,8 @@
       `;
       
       container.innerHTML = tableHTML;
-      
+      // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
+      if (typeof makeAdminTablesResponsive === 'function') makeAdminTablesResponsive(container);
     } catch (error) {
       console.error('Error loading admin orders:', error);
       container.innerHTML = `
@@ -5546,7 +5575,8 @@
       `;
       
       container.innerHTML = tableHTML;
-      
+      // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
+      if (typeof makeAdminTablesResponsive === 'function') makeAdminTablesResponsive(container);
     } catch (error) {
       console.error('Error loading admin categories:', error);
       container.innerHTML = `
@@ -5775,7 +5805,8 @@
       `;
       
       container.innerHTML = tableHTML;
-      
+      // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
+      if (typeof makeAdminTablesResponsive === 'function') makeAdminTablesResponsive(container);
     } catch (error) {
       console.error('Error loading admin users:', error);
       container.innerHTML = `
@@ -6671,6 +6702,19 @@
 
   // تشغيل تلميح التثبيت
   showPWAInstallHint();
+
+  // Global error handler to report runtime errors and show notification if available
+  window.onerror = function(message, source, lineno, colno, error) {
+    console.error('Global error caught:', message, source, lineno, colno, error);
+    try {
+      if (typeof showNotification === 'function') {
+        showNotification('حدث خطأ في التطبيق: ' + (message || ''), 'error');
+      }
+    } catch (e) {
+      // ignore
+    }
+  };
   </script>
+  <script src="./admin-responsive.js"></script>
 </body>
 </html>
