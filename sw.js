@@ -108,10 +108,12 @@ async function cacheStaticFiles(event) {
     // إذا لم يكن موجود في الذاكرة، جلب من الشبكة
     const networkResponse = await fetch(event.request);
     
-    // تخزين في الذاكرة المؤقتة للمستقبل
-    if (networkResponse.ok) {
+    // تخزين في الذاكرة المؤقتة للمستقبل (فقط للردود السليمة 200)
+    if (networkResponse && networkResponse.ok && networkResponse.status === 200) {
       const cache = await caches.open(CACHE_NAME);
       cache.put(event.request, networkResponse.clone());
+    } else if (networkResponse && networkResponse.status && networkResponse.status !== 200) {
+      console.warn('[Service Worker] Skipping cache for non-200 response:', event.request.url, networkResponse.status);
     }
     
     return networkResponse;
@@ -147,19 +149,21 @@ async function cacheImages(event) {
   
   // جلب من الشبكة
   try {
-    const networkResponse = await fetch(event.request);
-    if (networkResponse.ok) {
-      cache.put(event.request, networkResponse.clone());
+      const networkResponse = await fetch(event.request);
+      if (networkResponse && networkResponse.ok && networkResponse.status === 200) {
+        cache.put(event.request, networkResponse.clone());
+      } else if (networkResponse && networkResponse.status && networkResponse.status !== 200) {
+        console.warn('[Service Worker] Skipping image cache for non-200 response:', event.request.url, networkResponse.status);
+      }
+      return networkResponse;
+    } catch (error) {
+      console.error('[Service Worker] خطأ في جلب الصورة:', error);
+      // إرجاع صورة بديلة إذا فشل
+      return new Response(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="#6B5BFF"/><text x="100" y="100" font-family="Arial" font-size="14" fill="white" text-anchor="middle" dominant-baseline="middle">صورة غير متوفرة</text></svg>',
+        { headers: { 'Content-Type': 'image/svg+xml' } }
+      );
     }
-    return networkResponse;
-  } catch (error) {
-    console.error('[Service Worker] خطأ في جلب الصورة:', error);
-    // إرجاع صورة بديلة إذا فشل
-    return new Response(
-      '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="#6B5BFF"/><text x="100" y="100" font-family="Arial" font-size="14" fill="white" text-anchor="middle" dominant-baseline="middle">صورة غير متوفرة</text></svg>',
-      { headers: { 'Content-Type': 'image/svg+xml' } }
-    );
-  }
 }
 
 // استراتيجية API (Network First with cache fallback)
@@ -203,10 +207,12 @@ async function networkFirst(event) {
     // محاولة الشبكة أولاً
     const networkResponse = await fetch(event.request);
     
-    // تخزين في الذاكرة المؤقتة
-    if (networkResponse.ok) {
+    // تخزين في الذاكرة المؤقتة فقط للردود 200
+    if (networkResponse && networkResponse.ok && networkResponse.status === 200) {
       const cache = await caches.open(CACHE_NAME);
       cache.put(event.request, networkResponse.clone());
+    } else if (networkResponse && networkResponse.status && networkResponse.status !== 200) {
+      console.warn('[Service Worker] Skipping cache for non-200 networkFirst response:', event.request.url, networkResponse.status);
     }
     
     return networkResponse;
