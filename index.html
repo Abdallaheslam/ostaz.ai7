@@ -6770,5 +6770,22 @@
   };
   </script>
   <script src="./admin-responsive.js"></script>
+  <script>
+    // EOF marker to help detect truncated responses or caching issues
+    console.log('EOF_MARKER: index.html fully parsed');
+    // Quick runtime check you can run in console to inspect the raw served HTML
+    window.__fetchIndexDiagnostics = async function() {
+      try {
+        const res = await fetch('/index.html', { cache: 'no-store' });
+        console.log('index.html status:', res.status, 'content-length:', res.headers.get('content-length'));
+        const text = await res.text();
+        console.log('index.html last 300 chars:\n', text.slice(-300));
+        return { status: res.status, tail: text.slice(-300) };
+      } catch (e) {
+        console.error('fetch index diagnostics failed:', e);
+        throw e;
+      }
+    };
+  </script>
 </body>
 </html>
