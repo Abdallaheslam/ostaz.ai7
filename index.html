@@ -2523,6 +2523,13 @@
       const allSnapshot = await db.collection('products').limit(50).get();
       globalProducts = allSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       
+      // إرجاع بيانات التحميل لاستخدامها في التخزين المؤقت
+      return {
+        featured: featuredSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
+        offers: offersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
+        newProducts: newSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
+        all: globalProducts
+      };
     } catch (error) {
       console.error('Error loading products:', error);
     }
@@ -2531,8 +2538,9 @@
   function renderProducts(containerId, products) {
     const container = document.getElementById(containerId);
     if (!container) return;
-    
-    if (products.length === 0) {
+
+    // دعم كلاً من مستندات Firestore وبيانات مخبأة (Plain objects)
+    if (!products || products.length === 0) {
       container.innerHTML = `
         <div class="text-center text-muted" style="grid-column: 1/-1; padding: 40px;">
           <i class="fas fa-box-open fa-3x mb-3" style="color: #e0e0e0;"></i>
@@ -2541,8 +2549,14 @@
       `;
       return;
     }
-    
-    container.innerHTML = products.map(doc => {
+
+    const normalized = products.map(item => {
+      if (typeof item.data === 'function') return item; // Firestore doc
+      const { id, ...rest } = item;
+      return { id, data: () => rest };
+    });
+
+    container.innerHTML = normalized.map(doc => {
       const product = doc.data();
       const isFavorite = favorites.some(fav => fav.id === doc.id);
       const isInCart = cart.some(item => item.id === doc.id);
@@ -4517,7 +4531,12 @@
       </div>
     `;
     
-    document.getElementById('modalsContainer').innerHTML = modalHTML;
+    try {
+      document.getElementById('modalsContainer').innerHTML = modalHTML;
+    } catch (error) {
+      console.error('openLoginModal error:', error);
+      if (typeof showNotification === 'function') showNotification('حدث خطأ أثناء فتح نافذة تسجيل الدخول', 'error');
+    }
   }
 
   function openForgotPasswordModal() {
@@ -6656,10 +6675,15 @@
         window.loadProducts = async function() {
           const cached = getCachedData('products_cache');
           if (cached) {
-            console.log('📦 Using cached products');
+            console.log('📦 Using cached products (rendering from cache)');
+            // عرض البيانات المخزنة في الكاش بدلاً من إرجاع undefined
+            if (cached.featured) renderProducts('featuredContainer', cached.featured);
+            if (cached.offers) renderProducts('offersContainer', cached.offers);
+            if (cached.newProducts) renderProducts('newProductsContainer', cached.newProducts);
+            if (cached.all) globalProducts = cached.all;
             return Promise.resolve(cached);
           }
-          
+
           const result = await originalLoadProducts();
           cacheData('products_cache', result);
           return result;
