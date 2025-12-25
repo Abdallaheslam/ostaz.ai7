@@ -1347,13 +1347,30 @@
     /* ====== Responsive fixes for Admin Panel & Tables (Mobile) ====== */
     @media (max-width: 700px) {
       .admin-panel {
-        width: 100% !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
         max-width: none !important;
         margin: 0 !important;
         border-radius: 0 !important;
-        height: 100vh !important;
         display: flex;
         flex-direction: column;
+        z-index: 9999 !important;
+        box-sizing: border-box;
+        overflow: auto;
+        background: white;
+      }
+
+      /* Make overlay remove padding and align to top so panel fills screen */
+      .modal-overlay {
+        align-items: flex-start !important;
+        padding: 0 !important;
+        justify-content: flex-start !important;
+        background: rgba(0,0,0,0.65);
       }
 
       .admin-header {
@@ -1380,11 +1397,23 @@
         min-height: auto;
         overflow: auto;
         flex: 1;
+        -webkit-overflow-scrolling: touch;
       }
 
       .admin-form {
         max-width: 100%;
         gap: 12px;
+      }
+
+      /* Ensure product grid uses full width inside main content */
+      .products-grid {
+        width: 100% !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px;
+      }
+
+      .product-card {
+        box-sizing: border-box;
       }
 
       .modal {
