@@ -2494,12 +2494,14 @@
   }
 
   async function loadProducts() {
+    console.log('🔍 loadProducts: starting');
     try {
       // تحميل المنتجات المميزة
       const featuredSnapshot = await db.collection('products')
         .where('featured', '==', true)
         .limit(6)
         .get();
+      console.log('🔍 loadProducts: featuredSnapshot size =', featuredSnapshot.size);
       
       renderProducts('featuredContainer', featuredSnapshot.docs);
       
@@ -2518,6 +2520,7 @@
         .get();
       
       renderProducts('newProductsContainer', newSnapshot.docs);
+      console.log('🔍 loadProducts: newSnapshot size =', newSnapshot.size);
       
       // حفظ جميع المنتجات للمستقبل
       const allSnapshot = await db.collection('products').limit(50).get();
@@ -2532,6 +2535,8 @@
       };
     } catch (error) {
       console.error('Error loading products:', error);
+      showNotification('حدث خطأ في تحميل المنتجات', 'error');
+      return { featured: [], offers: [], newProducts: [], all: [] };
     }
   }
 
@@ -6521,8 +6526,7 @@
     </div>
   </footer>
 
-
-
+  <script>
   // تحسينات Mobile UX
   function enhanceMobileUX() {
     // منع zoom غير مقصود
