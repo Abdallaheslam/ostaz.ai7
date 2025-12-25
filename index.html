@@ -1192,7 +1192,14 @@
       padding: 0 25px;
       border-bottom: 1px solid var(--border-color);
       overflow-x: auto;
+      position: sticky; /* stay visible when scrolling */
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(4px);
     }
+
+    /* Ensure panel has top padding so sticky tabs don't sit on top of content */
+    .admin-panel { padding-top: 12px; }
     
     .admin-tab {
       padding: 15px 25px;
@@ -1490,21 +1497,68 @@
       .admin-card {
         background: white;
         border-radius: var(--border-radius-md);
-        padding: 12px;
+        padding: 8px 12px;
         margin-bottom: 12px;
         box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(16, 16, 16, 0.02);
+        overflow: hidden;
+      }
+
+      .admin-card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .admin-card .preview-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+      }
+
+      .admin-card .preview-left img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; }
+      .admin-card .preview-left .name { font-weight: 700; color: var(--text-primary); font-size: 0.98rem; }
+
+      .admin-card .preview-right { margin-left: auto; color: var(--text-secondary); font-weight: 700; }
+
+      .card-toggle {
+        background: transparent;
+        border: none;
+        color: var(--primary-color);
+        font-weight: 700;
+        cursor: pointer;
+        margin-left: 12px;
+      }
+
+      .admin-card-details {
+        padding-top: 10px;
+        border-top: 1px dashed var(--border-color);
       }
 
       .admin-card-row {
         display: flex;
         justify-content: space-between;
         gap: 8px;
-        padding: 6px 0;
-        border-bottom: 1px dashed var(--border-color);
+        padding: 8px 0;
       }
 
       .admin-card-row:last-child {
-        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      .admin-card .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+      .admin-card .actions button { padding: 10px 12px; min-width: 44%; }
+      .admin-card .actions .btn-danger { background: var(--cart-red); color: white; }
+
+      .admin-card .label { color: var(--text-light); font-size: 0.9rem; }
+      .admin-card .value { color: var(--text-primary); font-weight: 700; }
+
+      /* Hide table on small screens (cards handle display) */
+      @media (max-width: 900px) {
+        .admin-table { display: none; }
+        .admin-cards { display: block; }
       }
 
       .admin-card .label {
