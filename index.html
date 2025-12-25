@@ -4782,7 +4782,7 @@
         <div class="admin-panel" onclick="event.stopPropagation()" style="max-width: 1200px; margin: 20px; width: calc(100% - 40px);">
           <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 20px; left: 20px;">
             <i class="fas fa-times"></i>
-          </button>`
+          </button>
           
           <div class="admin-header">
             <h2 class="admin-title">
@@ -6583,8 +6583,24 @@
         window.location.reload();
       }
     });
-  }
 
+    // Helper to clear caches programmatically (useful for debugging deploys)
+    window.clearSiteCache = function() {
+      if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        const mc = new MessageChannel();
+        mc.port1.onmessage = (e) => {
+          console.log('clearSiteCache response:', e.data);
+          if (e.data && e.data.success) {
+            console.log('✅ Site caches cleared via Service Worker. Reloading...');
+            window.location.reload(true);
+          }
+        };
+        navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE' }, [mc.port2]);
+      } else {
+        console.log('No active service worker to clear cache.');
+      }
+    };
+  
   // تحسين Firebase Performance
   function optimizeFirebase() {
     if (typeof firebase !== 'undefined') {
