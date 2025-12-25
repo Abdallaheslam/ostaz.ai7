@@ -165,6 +165,7 @@
       min-width: 44px;
       position: relative;
       overflow: hidden;
+      user-select: none;
     }
     
     .btn::after {
@@ -364,6 +365,7 @@
       flex-shrink: 0;
       min-width: 0;
       overflow: hidden;
+      user-select: none;
     }
     
     .logo-icon {
@@ -477,6 +479,19 @@
       transform: translateY(0);
     }
     
+    @media (hover: none) {
+      .user-dropdown {
+        display: none;
+      }
+      
+      .user-profile.active .user-dropdown {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+    }
+    
     .dropdown-item {
       display: flex;
       align-items: center;
@@ -484,6 +499,7 @@
       padding: 12px 20px;
       color: var(--text-primary);
       transition: all var(--transition-fast);
+      cursor: pointer;
     }
     
     .dropdown-item:hover {
@@ -529,6 +545,7 @@
       font-size: 0.95rem;
       color: var(--text-primary);
       min-width: 0;
+      background: transparent;
     }
     
     .search-input:focus {
@@ -582,6 +599,8 @@
       position: relative;
       flex: 1;
       max-width: 80px;
+      cursor: pointer;
+      user-select: none;
     }
     
     .nav-item.active {
@@ -745,6 +764,7 @@
       align-items: center;
       gap: 6px;
       transition: all var(--transition-fast);
+      cursor: pointer;
     }
     
     .view-all:hover {
@@ -776,6 +796,7 @@
       overflow: hidden;
       border: 1px solid var(--border-color);
       animation: fadeIn 0.6s ease;
+      cursor: pointer;
     }
     
     .category-card:hover {
@@ -1063,6 +1084,7 @@
     .add-to-cart-btn:disabled {
       background: var(--text-light);
       cursor: not-allowed;
+      opacity: 0.6;
     }
     
     /* ====== ADMIN PANEL ====== */
@@ -1171,6 +1193,7 @@
       padding: 0 25px;
       border-bottom: 1px solid var(--border-color);
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     
     .admin-tab {
@@ -1184,6 +1207,7 @@
       transition: all var(--transition-fast);
       position: relative;
       white-space: nowrap;
+      flex-shrink: 0;
     }
     
     .admin-tab.active {
@@ -1309,6 +1333,7 @@
       animation: slideInUp 0.4s ease;
       box-shadow: var(--shadow-lg);
       position: relative;
+      -webkit-overflow-scrolling: touch;
     }
     
     .modal-header {
@@ -1336,6 +1361,7 @@
       cursor: pointer;
       transition: all var(--transition-fast);
       color: var(--text-secondary);
+      z-index: 1;
     }
     
     .modal-close:hover {
@@ -1852,6 +1878,22 @@
         width: 36px;
         height: 36px;
       }
+      
+      .category-card:hover {
+        transform: translateY(0);
+      }
+      
+      .product-card:hover {
+        transform: translateY(0);
+      }
+      
+      .stat-card:hover {
+        transform: translateY(0);
+      }
+      
+      .btn:hover {
+        transform: none;
+      }
     }
   </style>
   
@@ -1881,7 +1923,7 @@
       <div class="search-container">
         <div class="search-box">
           <input type="text" class="search-input" placeholder="ابحث عن منتج...">
-          <button class="search-button">
+          <button class="search-button" onclick="searchProducts()">
             <i class="fas fa-search"></i>
           </button>
         </div>
@@ -1900,7 +1942,7 @@
       </div>
       
       <!-- User Profile (Visible when logged in) -->
-      <div class="user-profile" id="userProfile" style="display: none;">
+      <div class="user-profile" id="userProfile" style="display: none;" onclick="toggleUserDropdown(event)">
         <div class="user-info">
           <div class="user-name" id="userName">مستخدم</div>
         </div>
@@ -1909,31 +1951,31 @@
              class="user-avatar"
              id="userAvatar">
         <div class="user-dropdown">
-          <a href="#" class="dropdown-item" onclick="openProfile()">
+          <a href="#" class="dropdown-item" onclick="openProfile(); event.stopPropagation()">
             <i class="fas fa-user"></i>
             <span>حسابي</span>
           </a>
-          <a href="#" class="dropdown-item" onclick="openOrders()">
+          <a href="#" class="dropdown-item" onclick="openOrders(); event.stopPropagation()">
             <i class="fas fa-shopping-bag"></i>
             <span>طلباتي</span>
           </a>
-          <a href="#" class="dropdown-item" onclick="openWishlist()">
+          <a href="#" class="dropdown-item" onclick="openWishlist(); event.stopPropagation()">
             <i class="fas fa-heart"></i>
             <span>المفضلة</span>
             <span class="nav-badge" id="favoritesBadge" style="position: static; margin-right: auto; display: none;">0</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item" onclick="openAddresses()">
+          <a href="#" class="dropdown-item" onclick="openAddresses(); event.stopPropagation()">
             <i class="fas fa-map-marker-alt"></i>
             <span>العناوين</span>
           </a>
-          <a href="#" class="dropdown-item" onclick="openNotifications()">
+          <a href="#" class="dropdown-item" onclick="openNotifications(); event.stopPropagation()">
             <i class="fas fa-bell"></i>
             <span>الإشعارات</span>
             <span class="nav-badge" id="notificationBadge" style="position: static; margin-right: auto; display: none;">0</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item" onclick="logoutUser()" style="color: var(--cart-red);">
+          <a href="#" class="dropdown-item" onclick="logoutUser(); event.stopPropagation()" style="color: var(--cart-red);">
             <i class="fas fa-sign-out-alt"></i>
             <span>تسجيل الخروج</span>
           </a>
@@ -1945,7 +1987,7 @@
   <!-- بحث الهواتف -->
   <div class="mobile-search-container" id="mobileSearch">
     <div class="search-box">
-      <input type="text" class="search-input" id="mobileSearchInput" placeholder="ابحث عن منتج...">
+      <input type="text" class="search-input" id="mobileSearchInput" placeholder="ابحث عن منتج..." onkeypress="if(event.key === 'Enter') searchFromMobile()">
       <button class="search-button" onclick="searchFromMobile()">
         <i class="fas fa-search"></i>
       </button>
@@ -2243,10 +2285,12 @@
       await loadProducts();
       
       // تحميل العربة من التخزين المحلي
-      cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const cartData = localStorage.getItem('cart');
+      cart = cartData ? JSON.parse(cartData) : [];
       
       // تحميل المفضلة من التخزين المحلي
-      favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      const favoritesData = localStorage.getItem('favorites');
+      favorites = favoritesData ? JSON.parse(favoritesData) : [];
       
       // تحديث العداد
       updateCartBadge();
@@ -2264,43 +2308,48 @@
       currentUser = user;
       
       if (user) {
-        // تحميل بيانات المستخدم
-        const userDoc = await db.collection('users').doc(user.uid).get();
-        userData = userDoc.exists ? userDoc.data() : null;
-        
-        if (!userData) {
-          // إنشاء مستخدم جديد
-          userData = {
-            name: user.displayName || user.email?.split('@')[0] || 'مستخدم',
-            email: user.email,
-            phone: '',
-            address: '',
-            role: 'customer',
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            photoURL: user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}&background=6B5BFF&color=fff&size=64`
-          };
+        try {
+          // تحميل بيانات المستخدم
+          const userDoc = await db.collection('users').doc(user.uid).get();
+          userData = userDoc.exists ? userDoc.data() : null;
           
-          await db.collection('users').doc(user.uid).set(userData);
+          if (!userData) {
+            // إنشاء مستخدم جديد
+            userData = {
+              name: user.displayName || user.email?.split('@')[0] || 'مستخدم',
+              email: user.email,
+              phone: '',
+              address: '',
+              role: 'customer',
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              photoURL: user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}&background=6B5BFF&color=fff&size=64`
+            };
+            
+            await db.collection('users').doc(user.uid).set(userData);
+            
+            // إشعار المديرين بمستخدم جديد
+            notifyAdminsNewUser(user.uid, userData.name, user.email);
+          }
           
-          // إشعار المديرين بمستخدم جديد
-          notifyAdminsNewUser(user.uid, userData.name, user.email);
+          // تحديث الصورة الشخصية
+          updateUserProfile();
+          
+          // إظهار زر الإدارة إذا كان المدير
+          if (userData.role === 'admin') {
+            adminFloatBtn.style.display = 'flex';
+          }
+          
+          // تحميل الإشعارات
+          await loadNotifications();
+          
+          // إخفاء أزرار تسجيل الدخول واظهار صورة المستخدم
+          document.getElementById('authButtons').style.display = 'none';
+          document.getElementById('userProfile').style.display = 'flex';
+          
+        } catch (error) {
+          console.error('Error loading user data:', error);
+          showNotification('حدث خطأ في تحميل بيانات المستخدم', 'error');
         }
-        
-        // تحديث الصورة الشخصية
-        updateUserProfile();
-        
-        // إظهار زر الإدارة إذا كان المدير
-        if (userData.role === 'admin') {
-          adminFloatBtn.style.display = 'flex';
-        }
-        
-        // تحميل الإشعارات
-        await loadNotifications();
-        
-        // إخفاء أزرار تسجيل الدخول واظهار صورة المستخدم
-        document.getElementById('authButtons').style.display = 'none';
-        document.getElementById('userProfile').style.display = 'flex';
-        
       } else {
         userData = null;
         adminFloatBtn.style.display = 'none';
@@ -2376,9 +2425,13 @@
         `).join('');
         
         // حفظ التصنيفات في قاعدة البيانات
-        defaultCategories.forEach(async cat => {
-          await db.collection('categories').add(cat);
-        });
+        for (const cat of defaultCategories) {
+          try {
+            await db.collection('categories').add(cat);
+          } catch (e) {
+            console.error('Error saving category:', e);
+          }
+        }
         
       } else {
         container.innerHTML = snapshot.docs.map(doc => {
@@ -2486,6 +2539,7 @@
           <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                alt="${product.name}"
                class="product-image"
+               loading="lazy"
                onerror="this.src='https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'">
           
           <div class="product-info">
@@ -2733,6 +2787,7 @@
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x300/6B5BFF/ffffff?text=صورة+المنتج'}" 
                      alt="${product.name}"
                      style="width: 100%; border-radius: var(--border-radius-md);"
+                     loading="lazy"
                      onerror="this.src='https://via.placeholder.com/300x300/6B5BFF/ffffff?text=صورة+المنتج'">
                 
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
@@ -2824,6 +2879,8 @@
       // نسخ الرابط
       navigator.clipboard.writeText(shareData.url).then(() => {
         showNotification('تم نسخ رابط المنتج', 'success');
+      }).catch(() => {
+        showNotification('حدث خطأ في نسخ الرابط', 'error');
       });
     }
   }
@@ -2955,7 +3012,8 @@
           
           <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                alt="${product.name}"
-               class="product-image">
+               class="product-image"
+               loading="lazy">
           
           <div class="product-info">
             <h3 class="product-name">${product.name}</h3>
@@ -3118,7 +3176,8 @@
                 
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                      alt="${product.name}"
-                     class="product-image">
+                     class="product-image"
+                     loading="lazy">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
@@ -3277,7 +3336,8 @@
                 
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                      alt="${product.name}"
-                     class="product-image">
+                     class="product-image"
+                     loading="lazy">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
@@ -3371,7 +3431,8 @@
               <div class="cart-item">
                 <img src="${item.image || 'https://via.placeholder.com/80/6B5BFF/ffffff?text=صورة'}" 
                      alt="${item.name}"
-                     class="cart-item-image">
+                     class="cart-item-image"
+                     loading="lazy">
                 
                 <div class="cart-item-content">
                   <h3 class="cart-item-name">${item.name}</h3>
@@ -3654,13 +3715,17 @@
       
       // تحديث مخزون المنتجات
       for (const item of cart) {
-        const productRef = db.collection('products').doc(item.id);
-        const productDoc = await productRef.get();
-        
-        if (productDoc.exists) {
-          const product = productDoc.data();
-          const newStock = Math.max(0, (product.stock || 0) - item.quantity);
-          await productRef.update({ stock: newStock });
+        try {
+          const productRef = db.collection('products').doc(item.id);
+          const productDoc = await productRef.get();
+          
+          if (productDoc.exists) {
+            const product = productDoc.data();
+            const newStock = Math.max(0, (product.stock || 0) - item.quantity);
+            await productRef.update({ stock: newStock });
+          }
+        } catch (error) {
+          console.error('Error updating product stock:', error);
         }
       }
       
@@ -3788,7 +3853,8 @@
                 
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                      alt="${product.name}"
-                     class="product-image">
+                     class="product-image"
+                     loading="lazy">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
@@ -4116,7 +4182,8 @@
                             ${order.items?.map(item => `
                                 <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color);">
                                     <img src="${item.image || 'https://via.placeholder.com/50/6B5BFF/ffffff?text=صورة'}" 
-                                         style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 15px;">
+                                         style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 15px;"
+                                         loading="lazy">
                                     <div style="flex: 1;">
                                         <p style="margin: 0; font-weight: 600;">${item.name}</p>
                                         <p style="margin: 5px 0; color: var(--text-light);">الكمية: ${item.quantity}</p>
@@ -4842,7 +4909,8 @@
             <td>
               <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/50/6B5BFF/ffffff?text=صورة'}" 
                    alt="${product.name}"
-                   style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                   style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;"
+                   loading="lazy">
             </td>
             <td>${product.name}</td>
             <td>${product.price?.toFixed(2) || '0'} جنيه</td>
@@ -5288,7 +5356,8 @@
                 ${order.items?.map(item => `
                   <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color);">
                     <img src="${item.image || 'https://via.placeholder.com/50/6B5BFF/ffffff?text=صورة'}" 
-                         style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 15px;">
+                         style="width: 50px; height: 50px; object-fit: cover; border-radius: var(--border-radius-sm); margin-left: 15px;"
+                         loading="lazy">
                     <div style="flex: 1;">
                       <p style="margin: 0; font-weight: 600;">${item.name}</p>
                       <p style="margin: 5px 0; color: var(--text-light);">الكمية: ${item.quantity}</p>
@@ -5559,8 +5628,15 @@
     
     try {
       // التحقق من وجود منتجات في هذا التصنيف
+      const categoryDoc = await db.collection('categories').doc(categoryId).get();
+      if (!categoryDoc.exists) {
+        showNotification('التصنيف غير موجود', 'error');
+        return;
+      }
+      
+      const categoryName = categoryDoc.data().name;
       const productsSnapshot = await db.collection('products')
-        .where('category', '==', (await db.collection('categories').doc(categoryId).get()).data().name)
+        .where('category', '==', categoryName)
         .limit(1)
         .get();
       
@@ -5625,7 +5701,8 @@
             <td>
               <img src="${user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6B5BFF&color=fff&size=40`}" 
                    alt="${user.name}"
-                   style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
+                   style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;"
+                   loading="lazy">
             </td>
             <td>${user.name}</td>
             <td>${user.email}</td>
@@ -5698,7 +5775,8 @@
                 <div>
                   <img src="${user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6B5BFF&color=fff&size=128`}" 
                        alt="${user.name}"
-                       style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary-color);">
+                       style="width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--primary-color);"
+                       loading="lazy">
                 </div>
                 
                 <div>
@@ -6009,14 +6087,20 @@
     });
     
     // البحث عند الضغط على Enter
-    document.querySelector('.search-input')?.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        searchProducts();
-      }
-    });
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          searchProducts();
+        }
+      });
+    }
     
     // النقر على زر البحث
-    document.querySelector('.search-button')?.addEventListener('click', searchProducts);
+    const searchButton = document.querySelector('.search-button');
+    if (searchButton) {
+      searchButton.addEventListener('click', searchProducts);
+    }
     
     // إغلاق بحث الهواتف عند النقر خارجها
     document.addEventListener('click', (e) => {
@@ -6030,10 +6114,24 @@
         mobileSearch.style.display = 'none';
       }
     });
+    
+    // إغلاق dropdown عند النقر خارجها
+    document.addEventListener('click', (e) => {
+      const userProfile = document.getElementById('userProfile');
+      if (userProfile && !userProfile.contains(e.target)) {
+        userProfile.classList.remove('active');
+      }
+    });
+  }
+
+  function toggleUserDropdown(event) {
+    event.stopPropagation();
+    const userProfile = document.getElementById('userProfile');
+    userProfile.classList.toggle('active');
   }
 
   function searchProducts() {
-    const searchTerm = document.querySelector('.search-input').value.trim();
+    const searchTerm = document.querySelector('.search-input')?.value.trim();
     if (!searchTerm) return;
     
     const results = globalProducts.filter(product => 
@@ -6085,7 +6183,8 @@
                 
                 <img src="${product.imageUrl || product.image || 'https://via.placeholder.com/300x200/6B5BFF/ffffff?text=صورة+المنتج'}" 
                      alt="${product.name}"
-                     class="product-image">
+                     class="product-image"
+                     loading="lazy">
                 
                 <div class="product-info">
                   <h3 class="product-name">${product.name}</h3>
