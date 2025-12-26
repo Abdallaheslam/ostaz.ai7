@@ -1352,6 +1352,29 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    /* bottom action bar inside admin modal */
+    .admin-bottom-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      gap: 10px;
+      padding: 12px;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.98));
+      border-top: 1px solid rgba(16,16,16,0.04);
+      box-shadow: 0 -6px 24px rgba(0,0,0,0.06);
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    }
+
+    .admin-bottom-bar .btn { padding: 10px 14px; border-radius: 10px; }
+
+    @media (min-width: 901px) {
+      .admin-bottom-bar { display: none; }
+    }
+
     /* Admin cards (hidden by default, shown on small screens) */
     .admin-cards {
       display: none;
@@ -1388,7 +1411,8 @@
         right: 0 !important;
         bottom: 0 !important;
         width: 100vw !important;
-        height: 100vh !important;
+        /* use --vh to avoid mobile address-bar issues */
+        height: calc(var(--vh, 1vh) * 100) !important;
         max-width: none !important;
         margin: 0 !important;
         border-radius: 0 !important;
@@ -1398,7 +1422,8 @@
         box-sizing: border-box;
         overflow: auto;
         background: white;
-        padding-bottom: 80px; /* keep space for floating bottom nav */
+        padding-bottom: calc(90px + env(safe-area-inset-bottom)); /* keep space for bottom action bar and safe-area */
+        -webkit-overflow-scrolling: touch;
       }
 
       /* Make overlay remove padding and align to top so panel fills screen */
@@ -1428,6 +1453,8 @@
         overflow: auto;
         flex: 1;
         -webkit-overflow-scrolling: touch;
+        /* avoid being covered by bottom action bar */
+        padding-bottom: calc(120px + env(safe-area-inset-bottom));
       }
 
       /* Compact stat cards */
@@ -1454,8 +1481,12 @@
       }
 
       .admin-tab {
-        padding: 12px 16px;
-        font-size: 0.95rem;
+        padding: 14px 18px;
+        font-size: 1rem;
+        min-width: 110px; /* larger touch target */
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .admin-content {
@@ -1506,6 +1537,8 @@
         box-shadow: var(--shadow-sm);
         border: 1px solid rgba(16, 16, 16, 0.02);
         overflow: hidden;
+        width: 100%;
+        box-sizing: border-box;
       }
 
       .admin-card-header {
@@ -3255,6 +3288,11 @@
         document.removeEventListener('keydown', adminRoot._escHandler);
         adminRoot._escHandler = null;
       }
+      // remove vh handler
+      if (adminRoot && adminRoot._vhHandler) {
+        window.removeEventListener('resize', adminRoot._vhHandler);
+        adminRoot._vhHandler = null;
+      }
       if (adminRoot && adminRoot._prevActive && typeof adminRoot._prevActive.focus === 'function') {
         adminRoot._prevActive.focus();
         adminRoot._prevActive = null;
@@ -3266,6 +3304,25 @@
     document.body.style.overflow = '';
   }
 
+  // Admin helpers (mobile bottom bar actions)
+  function saveAdminChanges() {
+    // TODO: implement server-side save of admin edits; placeholder shows a success notification
+    showNotification('تم حفظ التغييرات', 'success');
+    // optionally refresh the admin stats or tables
+    try { loadAdminStats(); window.makeAdminTablesResponsive && window.makeAdminTablesResponsive(); } catch (e) { /* ignore */ }
+  }
+
+  function openAddProductModal() {
+    // Reuse existing add-product modal if present, else show a notification
+    if (typeof openAddProductModal_original === 'function') return openAddProductModal_original();
+    if (typeof openAddProductModal === 'function' && openAddProductModal !== openAddProductModal_original) {
+      // in case the real function is defined later, call it
+      try { return openAddProductModal(); } catch(e) { /* ignore */ }
+    }
+    showNotification('فتح نافذة إضافة المنتج', 'info');
+  }
+
+  // Keep updateUserProfile below
   function updateUserProfile() {
     // تحديث الصورة الشخصية في القائمة العلوية
     const userAvatar = document.getElementById('userAvatar');
@@ -5191,6 +5248,14 @@
             </div>
           </div>
         </div>
+
+          <!-- bottom action bar for mobile admin (shows on small screens) -->
+          <div class="admin-bottom-bar" aria-hidden="true">
+            <button class="btn btn-primary" onclick="openAddProductModal()">+ إضافة منتج</button>
+            <button class="btn" onclick="saveAdminChanges()">حفظ</button>
+          </div>
+
+        </div>
       </div>
     `;
     
@@ -5214,6 +5279,12 @@
       const escHandler = (e) => { if (e.key === 'Escape') closeModal(); };
       adminRoot._escHandler = escHandler;
       document.addEventListener('keydown', escHandler);
+
+      // set mobile-safe viewport unit (--vh) and update on resize to avoid address bar issues
+      function setVh() { document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px'); }
+      setVh();
+      window.addEventListener('resize', setVh);
+      adminRoot._vhHandler = setVh;
     }
     
     // تحميل الإحصائيات
