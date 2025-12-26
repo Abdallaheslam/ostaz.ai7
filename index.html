@@ -1497,6 +1497,9 @@
         gap: 10px;
         scroll-padding-inline: 40px; /* allow centering near edges */
         scroll-behavior: smooth;
+        position: sticky;
+        top: calc(var(--admin-header-height, 64px)); /* pushed below header */
+        z-index: 80;
       }
 
       .admin-tab {
@@ -1523,6 +1526,8 @@
         overflow: auto;
         flex: 1;
         -webkit-overflow-scrolling: touch;
+        /* ensure we start below header+tabs when modal is full-screen */
+        padding-top: calc(var(--admin-header-height,64px) + 56px);
       }
 
       .admin-form {
@@ -1548,6 +1553,20 @@
         margin: 0;
         height: 100vh; /* ensure full height so bottom bar sits on top */
       }
+
+      /* Make admin panel full-width on small screens so it uses all horizontal space */
+      .admin-panel { margin: 0 !important; width: 100% !important; max-width: 100% !important; border-radius: 0 !important; }
+      .admin-header { padding: 10px 14px; --admin-header-height: 56px; }
+      .admin-title { font-size: 1.25rem; }
+      .admin-subtitle { display:none; }
+
+      /* Keep admin bottom bar fixed at viewport bottom for small screens */
+      .admin-bottom-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 120; border-radius: 0; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+      .admin-bottom-bar.compact { transform: translateY(56%); opacity: 0.95; }
+
+      /* reduce margins to avoid content being hidden */
+      .admin-stats { padding: 10px; gap: 10px; }
+      .stat-card { padding: 12px; }
 
       /* Tables -> Cards on small screens */
       .admin-table {
@@ -3364,6 +3383,7 @@
           if (contentEl) {
             contentEl.removeEventListener('scroll', adminRoot._contentScrollHandler);
             contentEl.style.paddingBottom = '';
+            contentEl.style.paddingTop = '';
           }
           adminRoot._contentScrollHandler = null;
         }
@@ -3375,8 +3395,16 @@
           document.removeEventListener('keydown', adminRoot._trapHandler);
           adminRoot._trapHandler = null;
         }
+        if (adminRoot && adminRoot._tabsTopHandler) {
+          window.removeEventListener('resize', adminRoot._tabsTopHandler);
+          adminRoot._tabsTopHandler = null;
+        }
+        if (adminRoot && adminRoot._tabsKeyHandler) {
+          try { const tabsEl = adminRoot.querySelector('.admin-tabs'); if (tabsEl) tabsEl.removeEventListener('keydown', adminRoot._tabsKeyHandler); } catch(e) {/* ignore */}
+          adminRoot._tabsKeyHandler = null;
+        }
         const bottomBar = document.querySelector('.admin-bottom-bar');
-        if (bottomBar) bottomBar.classList.remove('compact');
+        if (bottomBar) { bottomBar.classList.remove('compact'); bottomBar.style.position = ''; }
       } catch(e) { /* ignore */ }
 
       if (adminRoot && adminRoot._prevActive && typeof adminRoot._prevActive.focus === 'function') {
@@ -3404,13 +3432,35 @@
     const active = document.querySelector('.admin-tab.active');
     const bottomBar = document.querySelector('.admin-bottom-bar');
     const content = document.getElementById('adminContent');
-    return {
+    const header = document.querySelector('.admin-header');
+    const result = {
       tabsRect: tabs && tabs.getBoundingClientRect(),
       activeRect: active && active.getBoundingClientRect(),
       bottomBarRect: bottomBar && bottomBar.getBoundingClientRect(),
       contentRect: content && content.getBoundingClientRect(),
-      overlaps: !!(bottomBar && content && (bottomBar.getBoundingClientRect().top < content.getBoundingClientRect().bottom))
+      headerRect: header && header.getBoundingClientRect(),
+      overlaps: !!(bottomBar && content && (bottomBar.getBoundingClientRect().top < content.getBoundingClientRect().bottom)),
+      headerTooTall: header && header.getBoundingClientRect().height > 120,
+      contentTooHigh: content && (content.getBoundingClientRect().top < (header ? header.getBoundingClientRect().bottom : 0))
     };
+    return result;
+  };
+
+  // Quick smoke-check for admin modal usability (returns issues array)
+  window.__adminRunChecks = function() {
+    const issues = [];
+    const d = window.__adminLayoutDiagnostics();
+    if (d.headerTooTall) issues.push('Header is very tall and may push content off-screen');
+    if (d.overlaps) issues.push('Bottom action bar overlaps content');
+    if (d.contentTooHigh) issues.push('Content top overlaps with header/tabs area');
+    // check keyboard tab behavior: presence of tabindex/aria
+    const tabs = document.querySelectorAll('.admin-tab');
+    if (!tabs || tabs.length === 0) issues.push('No admin tabs found');
+    else {
+      const hasRoles = Array.from(tabs).every(t => t.getAttribute('role') === 'tab');
+      if (!hasRoles) issues.push('Tabs missing role="tab"');
+    }
+    return { issues, diagnostics: d };
   };
 
   function openAddProductModal() {
@@ -5386,6 +5436,46 @@
       setVh();
       window.addEventListener('resize', setVh);
       adminRoot._vhHandler = setVh;
+
+      // position tabs under header and ensure adminContent padding accounts for header+tabs on small screens
+      try {
+        const tabs = adminRoot.querySelector('.admin-tabs');
+        const header = adminRoot.querySelector('.admin-header');
+        const contentEl = document.getElementById('adminContent');
+        function updateTabsTop() {
+          if (!tabs || !header) return;
+          const h = header.getBoundingClientRect().height || 56;
+          tabs.style.top = h + 'px';
+          // store CSS var for consistent use
+          document.documentElement.style.setProperty('--admin-header-height', h + 'px');
+          // adjust content padding to ensure top content isn't obscured by header+tabs
+          if (contentEl) contentEl.style.paddingTop = (h + (tabs.getBoundingClientRect().height || 56) + 12) + 'px';
+        }
+        updateTabsTop();
+        const tabsTopHandler = () => updateTabsTop();
+        window.addEventListener('resize', tabsTopHandler);
+        adminRoot._tabsTopHandler = tabsTopHandler;
+
+        // keyboard support for tabs (ArrowLeft/ArrowRight) for accessibility
+        try {
+          const tabsEl = adminRoot.querySelector('.admin-tabs');
+          if (tabsEl) {
+            const tabsKeyHandler = (e) => {
+              const current = document.activeElement;
+              if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                const tabs = Array.from(tabsEl.querySelectorAll('.admin-tab'));
+                const idx = tabs.indexOf(current);
+                if (idx === -1) return;
+                const nextIdx = e.key === 'ArrowRight' ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
+                tabs[nextIdx].focus();
+                showAdminTab(tabs[nextIdx].getAttribute('data-tab'), tabs[nextIdx]);
+              }
+            };
+            tabsEl.addEventListener('keydown', tabsKeyHandler);
+            adminRoot._tabsKeyHandler = tabsKeyHandler;
+          }
+        } catch(e) { /* ignore */ }
 
       // collapse/hide bottom action bar while scrolling down to give more space on small screens
       try {
