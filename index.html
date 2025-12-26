@@ -1148,7 +1148,7 @@
     .stat-card {
       background: linear-gradient(180deg, #ffffff, #fbfbff);
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 12px 14px;
       text-align: left;
       transition: transform .18s ease, box-shadow .18s ease;
       border: 1px solid rgba(16,16,16,0.04);
@@ -1157,7 +1157,13 @@
       display:flex;
       gap:12px;
       align-items:center;
+      flex-direction: row-reverse; /* icon on the right for RTL */
     }
+
+    .stat-card .stat-info { display:flex; flex-direction:column; align-items:flex-start; }
+    .stat-card .stat-value { font-size: 1.25rem; font-weight:900; }
+    .stat-card .stat-label { font-size:0.85rem; color:var(--text-light); }
+    .stat-card .stat-icon { width:48px; height:48px; min-width:48px; border-radius:10px; }
 
     .stat-card:hover {
       transform: translateY(-6px);
@@ -1194,15 +1200,26 @@
     .admin-tabs {
       display:flex;
       gap:8px;
-      padding: 12px 14px;
+      padding: 10px 12px;
       border-bottom: 1px solid rgba(16,16,16,0.04);
       overflow-x: auto;
       position: sticky;
       top: 0;
       z-index: 60;
-      background: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.8);
       backdrop-filter: blur(6px);
+      -webkit-overflow-scrolling: touch;
     }
+
+    /* hide ugly scrollbars on mobile */
+    .admin-tabs::-webkit-scrollbar { height: 6px; display: none; }
+    .admin-tabs { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* make sure tabs don't cover content */
+    .admin-content { padding-top: 8px; }
+
+    /* subtle divider so tabs feel separated */
+    .admin-tabs::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: linear-gradient(90deg, rgba(107,91,255,0.06), transparent); pointer-events:none; }
 
     .admin-panel { padding-top: 14px; }
 
@@ -1367,6 +1384,9 @@
 
     .admin-bottom-bar .btn { padding: 10px 14px; border-radius: 10px; }
 
+    .admin-bottom-bar.compact { transform: translateY(48%); opacity: 0.92; transition: transform .24s ease, opacity .24s ease; }
+    .admin-bottom-bar { z-index: 120; }
+
     @media (min-width: 901px) {
       .admin-bottom-bar { display: none; }
     }
@@ -1450,7 +1470,7 @@
         flex: 1;
         -webkit-overflow-scrolling: touch;
         /* avoid being covered by bottom action bar */
-        padding-bottom: calc(120px + env(safe-area-inset-bottom));
+        padding-bottom: calc(140px + env(safe-area-inset-bottom));
       }
 
       /* Compact stat cards */
@@ -1473,16 +1493,28 @@
     }
 
       .admin-tabs {
-        padding: 0 12px;
+        padding: 6px 12px;
+        gap: 10px;
+        scroll-padding-inline: 40px; /* allow centering near edges */
+        scroll-behavior: smooth;
       }
 
       .admin-tab {
-        padding: 14px 18px;
+        padding: 12px 18px;
         font-size: 1rem;
         min-width: 110px; /* larger touch target */
         display: flex;
         align-items: center;
         justify-content: center;
+        border-radius: 999px; /* pill style */
+      }
+
+      /* On small screens keep active tab visually distinct but avoid translate so it doesn't overlap */
+      .admin-tab.active {
+        transform: none;
+        box-shadow: none;
+        background: linear-gradient(90deg, rgba(107,91,255,0.14), rgba(124,100,255,0.08));
+        border-color: rgba(107,91,255,0.12);
       }
 
       .admin-content {
@@ -1514,6 +1546,7 @@
         max-height: 100vh !important;
         border-radius: 0 !important;
         margin: 0;
+        height: 100vh; /* ensure full height so bottom bar sits on top */
       }
 
       /* Tables -> Cards on small screens */
@@ -1528,7 +1561,7 @@
       .admin-card {
         background: white;
         border-radius: var(--border-radius-md);
-        padding: 8px 12px;
+        padding: 10px 14px;
         margin-bottom: 12px;
         box-shadow: var(--shadow-sm);
         border: 1px solid rgba(16, 16, 16, 0.02);
@@ -1562,6 +1595,7 @@
         font-weight: 700;
         cursor: pointer;
         margin-left: 12px;
+        padding: 8px; /* easier to tap */
       }
 
       .admin-card-details {
@@ -1569,8 +1603,11 @@
         border-top: 1px dashed var(--border-color);
         max-height: 0; /* collapsed by default */
         overflow: hidden;
-        transition: max-height 280ms ease;
+        transition: max-height 280ms ease, opacity .18s ease;
+        opacity: 0;
       }
+
+      .admin-card.open .admin-card-details { opacity: 1; }
 
       .admin-card.open .admin-card-details {
         /* generous max-height to allow content to expand smoothly; we set exact height via JS */
@@ -1582,6 +1619,14 @@
         justify-content: space-between;
         gap: 8px;
         padding: 8px 0;
+      }
+
+      .admin-card .label { color: var(--text-light); font-size: 0.82rem; min-width: 30%; text-align: right; }
+      .admin-card .value { font-weight: 700; color: var(--text-primary); text-align: right; }
+      .admin-card .actions { display:flex; gap:8px; margin-top: 10px; }
+      .admin-card .actions button { flex:1; min-width: 0; }
+      .admin-card .preview-left .name { font-size: 1rem; }
+      .admin-card .preview-right { font-size: 0.92rem; }
       }
 
       .admin-card-row:last-child {
@@ -1994,6 +2039,15 @@
       animation: shimmer 1.5s infinite;
       border-radius: var(--border-radius-sm);
     }
+
+    /* Skeleton helpers for admin lists */
+    .skeleton-list { display: grid; gap: 12px; }
+    .skeleton-card { display:flex; gap:12px; align-items:center; padding:12px; border-radius:12px; background: #fff; box-shadow: var(--shadow-sm); }
+    .skeleton-circle { width:56px; height:56px; border-radius:8px; background: linear-gradient(90deg,#f3f3f3,#e9e9e9); }
+    .skeleton-lines { flex:1; }
+    .skeleton-lines > div { height:12px; background: linear-gradient(90deg,#f3f3f3,#e9e9e9); border-radius:6px; margin-bottom:8px; }
+    .skeleton-lines > div:last-child { width: 55%; margin-bottom:0; }
+    .skeleton-circle, .skeleton-lines > div { animation: shimmer 1.2s infinite; }
     
     /* ====== RESPONSIVE DESIGN ====== */
     @media (max-width: 768px) {
@@ -3303,6 +3357,17 @@
         window.removeEventListener('resize', adminRoot._vhHandler);
         adminRoot._vhHandler = null;
       }
+      // remove content scroll handler (if we attached one) and tidy up bottom bar
+      try {
+        if (adminRoot && adminRoot._contentScrollHandler) {
+          const contentEl = document.getElementById('adminContent');
+          if (contentEl) contentEl.removeEventListener('scroll', adminRoot._contentScrollHandler);
+          adminRoot._contentScrollHandler = null;
+        }
+        const bottomBar = document.querySelector('.admin-bottom-bar');
+        if (bottomBar) bottomBar.classList.remove('compact');
+      } catch(e) { /* ignore */ }
+
       if (adminRoot && adminRoot._prevActive && typeof adminRoot._prevActive.focus === 'function') {
         adminRoot._prevActive.focus();
         adminRoot._prevActive = null;
@@ -3321,6 +3386,21 @@
     // optionally refresh the admin stats or tables
     try { loadAdminStats(); window.makeAdminTablesResponsive && window.makeAdminTablesResponsive(); } catch (e) { /* ignore */ }
   }
+
+  // Debug helper: layout diagnostics for admin UI (run in console while admin panel is open)
+  window.__adminLayoutDiagnostics = function() {
+    const tabs = document.querySelector('.admin-tabs');
+    const active = document.querySelector('.admin-tab.active');
+    const bottomBar = document.querySelector('.admin-bottom-bar');
+    const content = document.getElementById('adminContent');
+    return {
+      tabsRect: tabs && tabs.getBoundingClientRect(),
+      activeRect: active && active.getBoundingClientRect(),
+      bottomBarRect: bottomBar && bottomBar.getBoundingClientRect(),
+      contentRect: content && content.getBoundingClientRect(),
+      overlaps: !!(bottomBar && content && (bottomBar.getBoundingClientRect().top < content.getBoundingClientRect().bottom))
+    };
+  };
 
   function openAddProductModal() {
     // Reuse existing add-product modal if present, else show a notification
@@ -5295,6 +5375,23 @@
       setVh();
       window.addEventListener('resize', setVh);
       adminRoot._vhHandler = setVh;
+
+      // collapse/hide bottom action bar while scrolling down to give more space on small screens
+      try {
+        const contentEl = document.getElementById('adminContent');
+        const bottomBar = document.querySelector('.admin-bottom-bar');
+        if (contentEl && bottomBar) {
+          let lastY = 0;
+          const onAdminScroll = () => {
+            const y = contentEl.scrollTop || 0;
+            if (y > lastY && y > 30) bottomBar.classList.add('compact');
+            else bottomBar.classList.remove('compact');
+            lastY = y;
+          };
+          contentEl.addEventListener('scroll', onAdminScroll, { passive: true });
+          adminRoot._contentScrollHandler = onAdminScroll;
+        }
+      } catch(e) { /* ignore */ }
     }
     
     // تحميل الإحصائيات
@@ -5327,12 +5424,27 @@
     }
   }
 
+  function centerActiveTab(button) {
+    if (!button) return;
+    const tabs = button.closest('.admin-tabs');
+    if (!tabs) return;
+    try {
+      const left = button.offsetLeft + (button.offsetWidth / 2) - (tabs.clientWidth / 2);
+      tabs.scrollTo({ left, behavior: 'smooth' });
+    } catch (e) {
+      try { button.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); } catch (e2) { /* ignore */ }
+    }
+  }
+
   async function showAdminTab(tabName, button) {
     // تحديث التبويبات النشطة
     document.querySelectorAll('.admin-tab').forEach(tab => {
       tab.classList.remove('active');
     });
     button.classList.add('active');
+
+    // center active tab in the scroll container (works better across browsers & RTL)
+    try { centerActiveTab(button); } catch(e) { /* ignore */ }
     
     const contentEl = document.getElementById('adminContent');
     // Ensure content is focusable for accessibility and to receive focus after loading
@@ -5368,6 +5480,12 @@
 
   async function loadAdminProducts(container) {
     try {
+      // show lightweight skeleton while loading
+      container.innerHTML = `
+        <div class="skeleton-list">
+          ${Array.from({length:4}).map(()=>`<div class="skeleton-card"><div class="skeleton-circle"></div><div class="skeleton-lines"><div></div><div></div></div></div>`).join('')}
+        </div>
+      `;
       const snapshot = await db.collection('products')
         .orderBy('createdAt', 'desc')
         .limit(20)
