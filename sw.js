@@ -1,12 +1,11 @@
 // إصدار التطبيق
-const CACHE_VERSION = '2026.3.2';
+const CACHE_VERSION = '2026.3.1';
 const CACHE_NAME = `ostaz-market-${CACHE_VERSION}`;
 
 // الملفات التي سيتم تخزينها مؤقتاً عند التثبيت
 const STATIC_CACHE_FILES = [
   '/',
-  // Do NOT pre-cache /index.html — prefer fetching it live to avoid serving a truncated cached HTML
-  '/index-v2.html', // lightweight fallback page served if the main index isn't available
+  '/index.html',
   '/offline.html',
   '/manifest.json',
   '/icons/icon-72x72.png',
@@ -56,15 +55,9 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    }).then(async () => {
+    }).then(() => {
       console.log('[Service Worker] تم التفعيل بنجاح');
-      await self.clients.claim();
-      // إعلام العملاء بوجود إصدار جديد
-      const clientsList = await self.clients.matchAll({ includeUncontrolled: true });
-      for (const client of clientsList) {
-        client.postMessage({ type: 'NEW_VERSION', version: CACHE_VERSION });
-      }
-      return;
+      return self.clients.claim();
     })
   );
 });
@@ -85,21 +78,13 @@ self.addEventListener('fetch', event => {
 
   // استراتيجيات التخزين المؤقت
   if (event.request.method === 'GET') {
-    // للملفات الثابتة (مع استثناء index.html — نستخدم networkFirst للصفحة الرئيسية)
-    if (url.pathname === '/manifest.json' || url.pathname.includes('.css') || url.pathname.includes('.js')) {
+    // للملفات الثابتة
+    if (url.pathname === '/' || 
+        url.pathname === '/index.html' ||
+        url.pathname === '/manifest.json' ||
+        url.pathname.includes('.css') ||
+        url.pathname.includes('.js')) {
       event.respondWith(cacheStaticFiles(event));
-    }
-
-    // Page navigation / index should prefer الشبكة (Network First) to avoid serving truncated cached HTML
-    if (url.pathname === '/' || url.pathname === '/index.html') {
-      event.respondWith(networkFirst(event).catch(async err => {
-        console.warn('[Service Worker] networkFirst failed for index, attempting fallback to index-v2:', err);
-        // حاول إرجاع نسخة احتياطية index-v2.html من الكاش إذا كانت موجودة
-        const cached = await caches.match('/index-v2.html');
-        if (cached) return cached;
-        // أخيراً، جرب إرجاع offline.html
-        return caches.match('/offline.html');
-      }));
     }
     // للصور
     else if (url.pathname.includes('/icons/') || 
