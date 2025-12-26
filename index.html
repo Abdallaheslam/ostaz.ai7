@@ -3357,12 +3357,23 @@
         window.removeEventListener('resize', adminRoot._vhHandler);
         adminRoot._vhHandler = null;
       }
-      // remove content scroll handler (if we attached one) and tidy up bottom bar
+      // remove content scroll handler (if we attached one) and tidy up bottom bar, padding, trap
       try {
         if (adminRoot && adminRoot._contentScrollHandler) {
           const contentEl = document.getElementById('adminContent');
-          if (contentEl) contentEl.removeEventListener('scroll', adminRoot._contentScrollHandler);
+          if (contentEl) {
+            contentEl.removeEventListener('scroll', adminRoot._contentScrollHandler);
+            contentEl.style.paddingBottom = '';
+          }
           adminRoot._contentScrollHandler = null;
+        }
+        if (adminRoot && adminRoot._paddingHandler) {
+          window.removeEventListener('resize', adminRoot._paddingHandler);
+          adminRoot._paddingHandler = null;
+        }
+        if (adminRoot && adminRoot._trapHandler) {
+          document.removeEventListener('keydown', adminRoot._trapHandler);
+          adminRoot._trapHandler = null;
         }
         const bottomBar = document.querySelector('.admin-bottom-bar');
         if (bottomBar) bottomBar.classList.remove('compact');
@@ -5314,20 +5325,20 @@
             </div>
           </div>
           
-          <div class="admin-tabs">
-            <button class="admin-tab active" onclick="showAdminTab('products', this)">
+          <div class="admin-tabs" role="tablist" aria-label="قوائم لوحة التحكم">
+            <button class="admin-tab active" role="tab" aria-selected="true" tabindex="0" data-tab="products" onclick="showAdminTab('products', this)">
               <i class="fas fa-box"></i> المنتجات
             </button>
-            <button class="admin-tab" onclick="showAdminTab('orders', this)">
+            <button class="admin-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="orders" onclick="showAdminTab('orders', this)">
               <i class="fas fa-shopping-cart"></i> الطلبات
             </button>
-            <button class="admin-tab" onclick="showAdminTab('categories', this)">
+            <button class="admin-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="categories" onclick="showAdminTab('categories', this)">
               <i class="fas fa-tags"></i> التصنيفات
             </button>
-            <button class="admin-tab" onclick="showAdminTab('users', this)">
+            <button class="admin-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="users" onclick="showAdminTab('users', this)">
               <i class="fas fa-users"></i> المستخدمين
             </button>
-            <button class="admin-tab" onclick="showAdminTab('settings', this)">
+            <button class="admin-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="settings" onclick="showAdminTab('settings', this)">
               <i class="fas fa-cog"></i> الإعدادات
             </button>
           </div>
@@ -5382,15 +5393,49 @@
         const bottomBar = document.querySelector('.admin-bottom-bar');
         if (contentEl && bottomBar) {
           let lastY = 0;
+
+          const fullPadding = () => bottomBar.offsetHeight + 16 + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--safe-area-inset-bottom')) || 0);
+          const compactPadding = () => Math.round(bottomBar.offsetHeight * 0.4) + 8;
+          const setPadding = (compact) => { if (contentEl) contentEl.style.paddingBottom = (compact ? compactPadding() : fullPadding()) + 'px'; };
+
+          // initialize padding
+          setPadding(false);
+
           const onAdminScroll = () => {
             const y = contentEl.scrollTop || 0;
-            if (y > lastY && y > 30) bottomBar.classList.add('compact');
-            else bottomBar.classList.remove('compact');
+            const compact = (y > lastY && y > 30);
+            if (compact) {
+              bottomBar.classList.add('compact');
+              setPadding(true);
+            } else {
+              bottomBar.classList.remove('compact');
+              setPadding(false);
+            }
             lastY = y;
           };
+
           contentEl.addEventListener('scroll', onAdminScroll, { passive: true });
           adminRoot._contentScrollHandler = onAdminScroll;
+
+          // recompute padding on resize
+          const onResize = () => setPadding(bottomBar.classList.contains('compact'));
+          window.addEventListener('resize', onResize);
+          adminRoot._paddingHandler = onResize;
         }
+
+        // focus trap inside admin modal (Tab cycling)
+        const trapFocus = (e) => {
+          if (e.key !== 'Tab') return;
+          const focusable = adminRoot.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+          if (!focusable || focusable.length === 0) return;
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        };
+        document.addEventListener('keydown', trapFocus);
+        adminRoot._trapHandler = trapFocus;
+
       } catch(e) { /* ignore */ }
     }
     
@@ -5437,11 +5482,15 @@
   }
 
   async function showAdminTab(tabName, button) {
-    // تحديث التبويبات النشطة
+    // تحديث التبويبات النشطة and aria state
     document.querySelectorAll('.admin-tab').forEach(tab => {
       tab.classList.remove('active');
+      tab.setAttribute('aria-selected', 'false');
+      tab.setAttribute('tabindex', '-1');
     });
     button.classList.add('active');
+    button.setAttribute('aria-selected', 'true');
+    button.setAttribute('tabindex', '0');
 
     // center active tab in the scroll container (works better across browsers & RTL)
     try { centerActiveTab(button); } catch(e) { /* ignore */ }
