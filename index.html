@@ -5,6 +5,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#6B5BFF" />
+  <!-- Cache control to discourage intermediate caching of index.html -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="سوبر ماركت الأستاذ" />
@@ -871,7 +875,7 @@
         gap: 15px;
       }
     }
-    
+
     .product-card {
       background: var(--card-bg);
       border-radius: var(--border-radius-md);
@@ -1534,6 +1538,14 @@
       .admin-card-details {
         padding-top: 10px;
         border-top: 1px dashed var(--border-color);
+        max-height: 0; /* collapsed by default */
+        overflow: hidden;
+        transition: max-height 280ms ease;
+      }
+
+      .admin-card.open .admin-card-details {
+        /* generous max-height to allow content to expand smoothly; we set exact height via JS */
+        max-height: 1000px;
       }
 
       .admin-card-row {
@@ -1551,6 +1563,21 @@
 
       .admin-card .actions button { padding: 10px 12px; min-width: 44%; }
       .admin-card .actions .btn-danger { background: var(--cart-red); color: white; }
+
+      /* Accessibility & focus styles */
+      .card-toggle:focus {
+        outline: 3px solid rgba(107,91,255,0.15);
+        outline-offset: 2px;
+        border-radius: 8px;
+      }
+
+      .admin-card:focus-within { box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+
+      /* Small screens: make header touch-friendly */
+      @media (max-width: 700px) {
+        .admin-card { padding: 12px; }
+        .card-toggle { padding: 10px 12px; min-width: 88px; }
+      }
 
       .admin-card .label { color: var(--text-light); font-size: 0.9rem; }
       .admin-card .value { color: var(--text-primary); font-weight: 700; }
@@ -1608,7 +1635,7 @@
     .modal-close {
       position: absolute;
       top: 20px;
-      left: 20px;
+      right: 20px; /* place the close button on the right (RTL friendly) */
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -1620,6 +1647,11 @@
       cursor: pointer;
       transition: all var(--transition-fast);
       color: var(--text-secondary);
+    }
+
+    /* Ensure close button remains visible on mobile overlay */
+    @media (max-width: 700px) {
+      .modal-close { top: 12px; right: 12px; }
     }
     
     .modal-close:hover {
@@ -1929,6 +1961,19 @@
       
       .navbar {
         padding: 0 10px;
+      }
+
+      /* Filters toolbar on small screens */
+      .filters-row { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+      .filters-inner { display: flex; gap: 8px; align-items: center; }
+      .filters-toggle { display: none; }
+
+      @media (max-width: 700px) {
+        .filters-row { flex-direction: row-reverse; }
+        .filters-inner { display: none; width: 100%; }
+        .filters-inner.show { display: flex; flex-direction: column; gap: 8px; }
+        .filters-toggle { display: inline-block; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: 8px; border: none; }
+        .filters-inner .form-control { width: 100%; }
       }
       
       .logo-text {
@@ -2459,6 +2504,29 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics-compat.js"></script>
+
+  <!-- Quick dev helper: if you append ?no_cache=1 we will attempt to unregister SW and clear caches then reload a fresh index -->
+  <script>
+    (function(){
+      if (location.search && location.search.indexOf('no_cache=1') !== -1) {
+        (async function(){
+          try {
+            console.log('Debug: no_cache=1 detected — clearing SW and caches');
+            if ('serviceWorker' in navigator) {
+              const regs = await navigator.serviceWorker.getRegistrations();
+              await Promise.all(regs.map(r => r.unregister()));
+            }
+            const keys = await caches.keys();
+            await Promise.all(keys.map(k => caches.delete(k)));
+            // Reload without the no_cache flag but with a cache-busting query
+            location.replace(location.pathname + '?v=' + Date.now());
+          } catch (e) {
+            console.error('no_cache cleanup failed', e);
+          }
+        })();
+      }
+    })();
+  </script>
 
   <!-- JavaScript Application Code -->
   <script>
@@ -3180,6 +3248,19 @@
   }
 
   function closeModal() {
+    // remove escape handler if present and restore focus
+    try {
+      const adminRoot = document.getElementById('adminPanelRoot');
+      if (adminRoot && adminRoot._escHandler) {
+        document.removeEventListener('keydown', adminRoot._escHandler);
+        adminRoot._escHandler = null;
+      }
+      if (adminRoot && adminRoot._prevActive && typeof adminRoot._prevActive.focus === 'function') {
+        adminRoot._prevActive.focus();
+        adminRoot._prevActive = null;
+      }
+    } catch (e) { console.warn('closeModal cleanup failed', e); }
+
     document.getElementById('modalsContainer').innerHTML = '';
     // إعادة تفعيل التمرير في الخلفية عند إغلاق النافذة
     document.body.style.overflow = '';
@@ -3218,19 +3299,22 @@
             <i class="fas fa-list"></i>
             جميع المنتجات
           </h2>
-          <div style="display: flex; gap: 10px;">
-            <select class="form-control" style="width: auto;" onchange="filterProducts(this.value)" id="filterSelect">
-              <option value="">جميع التصنيفات</option>
-              <option value="discount">العروض</option>
-              <option value="featured">المميزة</option>
-              <option value="new">الأحدث</option>
-            </select>
-            <select class="form-control" style="width: auto;" onchange="sortProducts(this.value)" id="sortSelect">
-              <option value="newest">الأحدث أولاً</option>
-              <option value="price_low">السعر: منخفض إلى مرتفع</option>
-              <option value="price_high">السعر: مرتفع إلى منخفض</option>
-              <option value="discount">أعلى خصم</option>
-            </select>
+                <div class="filters-row">
+            <div class="filters-inner">
+              <select class="form-control" onchange="filterProducts(this.value)" id="filterSelect">
+                <option value="">جميع التصنيفات</option>
+                <option value="discount">العروض</option>
+                <option value="featured">المميزة</option>
+                <option value="new">الأحدث</option>
+              </select>
+              <select class="form-control" onchange="sortProducts(this.value)" id="sortSelect">
+                <option value="newest">الأحدث أولاً</option>
+                <option value="price_low">السعر: منخفض إلى مرتفع</option>
+                <option value="price_high">السعر: مرتفع إلى منخفض</option>
+                <option value="discount">أعلى خصم</option>
+              </select>
+            </div>
+            <button class="btn btn-secondary filters-toggle" onclick="toggleFilters()" aria-expanded="false">فلاتر</button>
           </div>
         </div>
         <div class="products-grid" id="allProductsGrid">
@@ -3241,6 +3325,13 @@
     
     document.getElementById('mainContent').innerHTML = content;
     document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
+
+    // ensure filters toggle is wired
+    const btn = document.querySelector('.filters-toggle');
+    if (btn && !btn._bound) {
+      btn.addEventListener('click', toggleFilters);
+      btn._bound = true;
+    }
   }
 
   function renderAllProducts(products) {
@@ -3311,6 +3402,10 @@
   // دالة الفلترة
   function filterProducts(filterType) {
     let filteredProducts = [...globalProducts];
+
+    // close mobile filters after applying
+    const filtersInner = document.querySelector('.filters-inner');
+    if (filtersInner && filtersInner.classList.contains('show')) filtersInner.classList.remove('show');
     
     switch(filterType) {
       case 'discount':
@@ -3333,12 +3428,45 @@
     const sortedProducts = sortProductsByType(filteredProducts, currentSort);
     
     document.getElementById('allProductsGrid').innerHTML = renderAllProducts(sortedProducts);
+
+    // ensure sticky position doesn't cover content on mobile after applying
+    const el = document.querySelector('.section-header');
+    if (el) el.scrollIntoView({ block: 'start' });
   }
 
   // دالة الترتيب
   function sortProducts(sortType) {
     const currentFilter = document.getElementById('filterSelect')?.value || '';
     let filteredProducts = [...globalProducts];
+
+    // ensure filters toolbar state is consistent on mobile (close when applying)
+    const filtersInner = document.querySelector('.filters-inner');
+    if (filtersInner && filtersInner.classList.contains('show')) filtersInner.classList.remove('show');
+
+    // apply sort
+    switch(sortType) {
+      case 'price_low':
+        filteredProducts.sort((a, b) => (a.price || 0) - (b.price || 0));
+        break;
+      case 'price_high':
+        filteredProducts.sort((a, b) => (b.price || 0) - (a.price || 0));
+        break;
+      case 'discount':
+        filteredProducts.sort((a, b) => (b.discount || 0) - (a.discount || 0));
+        break;
+      default:
+        filteredProducts.sort((a, b) => {
+          const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date();
+          const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date();
+          return dateB - dateA;
+        });
+    }
+
+    document.getElementById('allProductsGrid').innerHTML = renderAllProducts(filteredProducts);
+
+    // ensure sticky position doesn't cover content on mobile after applying
+    const el = document.querySelector('.section-header');
+    if (el) el.scrollIntoView({ block: 'start' });
     
     // تطبيق الفلتر أولاً
     switch(currentFilter) {
@@ -4993,7 +5121,7 @@
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="admin-panel" onclick="event.stopPropagation()" style="max-width: 1200px; margin: 20px; width: calc(100% - 40px);">
-          <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 20px; left: 20px;">
+          <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 20px; right: 20px;">
             <i class="fas fa-times"></i>
           </button>
           
@@ -5068,6 +5196,25 @@
     
     document.getElementById('modalsContainer').innerHTML = modalHTML;
     document.body.style.overflow = 'hidden';
+
+    // accessibility: set dialog attributes and focus
+    const adminRoot = document.querySelector('.admin-panel');
+    if (adminRoot) {
+      adminRoot.setAttribute('role', 'dialog');
+      adminRoot.setAttribute('aria-modal', 'true');
+      adminRoot.setAttribute('aria-label', 'لوحة تحكم المدير');
+      adminRoot.id = 'adminPanelRoot';
+      // store previously focused element to restore later
+      try { adminRoot._prevActive = document.activeElement; } catch(e) { adminRoot._prevActive = null; }
+      // focus the content for keyboard users
+      const contentEl = document.getElementById('adminContent');
+      if (contentEl) contentEl.focus(); else adminRoot.focus();
+
+      // close on Escape
+      const escHandler = (e) => { if (e.key === 'Escape') closeModal(); };
+      adminRoot._escHandler = escHandler;
+      document.addEventListener('keydown', escHandler);
+    }
     
     // تحميل الإحصائيات
     loadAdminStats();
@@ -6922,6 +7069,16 @@
       // ignore
     }
   };
+
+  // Toggle filters panel for mobile
+  function toggleFilters() {
+    const inner = document.querySelector('.filters-inner');
+    const btn = document.querySelector('.filters-toggle');
+    if (!inner || !btn) return;
+    const isShown = inner.classList.toggle('show');
+    btn.setAttribute('aria-expanded', String(isShown));
+    if (isShown) inner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
   </script>
   <script src="./admin-responsive.js"></script>
   <script>
@@ -6978,6 +7135,40 @@
         });
       }, 900);
     })();
+
+    // Listen for SW messages about new version
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', (e) => {
+        try {
+          if (e.data && e.data.type === 'NEW_VERSION') {
+            console.log('New SW version available:', e.data.version);
+            // show an inline reload banner
+            const msg = document.createElement('div');
+            msg.id = 'swUpdateBanner';
+            msg.style.cssText = 'position:fixed;left:12px;right:12px;bottom:20px;z-index:2147483646;padding:12px;border-radius:10px;background:#f0f7ff;border:1px solid #b3d4ff;color:#072b5b;box-shadow:0 8px 24px rgba(0,0,0,0.12);font-weight:700;text-align:center;';
+            msg.innerHTML = 'يتوفر تحديث للموقع. اضغط <button id="swReloadBtn" style="margin-left:10px;padding:8px 10px;border-radius:8px;border:none;background:#6B5BFF;color:white;cursor:pointer;font-weight:700">إعادة التحميل</button>';
+            document.body.appendChild(msg);
+            document.getElementById('swReloadBtn').addEventListener('click', () => {
+              // try to clear caches and reload to force fresh content
+              (async function(){
+                try {
+                  if ('serviceWorker' in navigator) {
+                    const regs = await navigator.serviceWorker.getRegistrations();
+                    for (const r of regs) await r.unregister();
+                  }
+                  const keys = await caches.keys();
+                  for (const k of keys) await caches.delete(k);
+                  location.href = location.pathname + '?v=' + Date.now();
+                } catch (err) {
+                  console.error('Reload after SW update failed', err);
+                  location.reload();
+                }
+              })();
+            });
+          }
+        } catch (err) { console.error(err); }
+      });
+    }
   </script>
 </body>
 </html>
