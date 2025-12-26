@@ -5,10 +5,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#6B5BFF" />
-  <!-- Cache control to discourage intermediate caching of index.html -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="سوبر ماركت الأستاذ" />
@@ -1100,16 +1096,13 @@
     }
     
     .admin-header {
-      background: linear-gradient(90deg, rgba(107,91,255,0.98), rgba(124,100,255,0.95));
+      background: var(--primary-gradient);
       color: white;
-      padding: 18px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 25px;
+      position: relative;
+      overflow: hidden;
     }
-
+    
     .admin-header::before {
       content: '';
       position: absolute;
@@ -1117,12 +1110,8 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.02), transparent);
-      pointer-events: none;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
-
-    .admin-title { display:flex; align-items:center; gap:12px; font-size:1.15rem; font-weight:800; letter-spacing:0.4px; }
-    .admin-subtitle { opacity:0.92; font-size:0.92rem; color:rgba(255,255,255,0.92); }
     
     .admin-title {
       font-size: 1.8rem;
@@ -1139,110 +1128,105 @@
     
     .admin-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 18px;
-      padding: 16px 18px;
-      background: transparent;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 25px;
+      background: rgba(107, 91, 255, 0.05);
     }
-
+    
     .stat-card {
-      background: linear-gradient(180deg, #ffffff, #fbfbff);
-      border-radius: 12px;
-      padding: 12px 14px;
-      text-align: left;
-      transition: transform .18s ease, box-shadow .18s ease;
-      border: 1px solid rgba(16,16,16,0.04);
+      background: white;
+      border-radius: var(--border-radius-md);
+      padding: 20px;
+      text-align: center;
+      transition: all var(--transition-normal);
+      border: 1px solid var(--border-color);
       position: relative;
       overflow: hidden;
-      display:flex;
-      gap:12px;
-      align-items:center;
-      flex-direction: row-reverse; /* icon on the right for RTL */
     }
-
-    .stat-card .stat-info { display:flex; flex-direction:column; align-items:flex-start; }
-    .stat-card .stat-value { font-size: 1.25rem; font-weight:900; }
-    .stat-card .stat-label { font-size:0.85rem; color:var(--text-light); }
-    .stat-card .stat-icon { width:48px; height:48px; min-width:48px; border-radius:10px; }
-
+    
     .stat-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 32px rgba(16,16,48,0.06);
-      border-color: rgba(107,91,255,0.14);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-color);
     }
-
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary-gradient);
+    }
+    
     .stat-icon {
-      width: 54px;
-      height: 54px;
-      min-width:54px;
-      background: linear-gradient(135deg, rgba(107,91,255,0.14), rgba(124,100,255,0.08));
-      border-radius: 10px;
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 15px;
+      background: rgba(107, 91, 255, 0.1);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.05rem;
+      font-size: 1.5rem;
       color: var(--primary-color);
     }
-
+    
     .stat-value {
-      font-size: 1.35rem;
+      font-size: 2rem;
       font-weight: 800;
       color: var(--text-primary);
-      margin: 0;
+      margin-bottom: 5px;
     }
-
+    
     .stat-label {
       color: var(--text-light);
-      font-size: 0.85rem;
-      margin-top: 2px;
+      font-size: 0.9rem;
     }
     
     .admin-tabs {
-      display:flex;
-      gap:8px;
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(16,16,16,0.04);
+      display: flex;
+      background: rgba(107, 91, 255, 0.05);
+      padding: 0 25px;
+      border-bottom: 1px solid var(--border-color);
       overflow-x: auto;
-      position: sticky;
+      position: sticky; /* stay visible when scrolling */
       top: 0;
-      z-index: 60;
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(6px);
-      -webkit-overflow-scrolling: touch;
+      z-index: 50;
+      backdrop-filter: blur(4px);
     }
 
-    /* hide ugly scrollbars on mobile */
-    .admin-tabs::-webkit-scrollbar { height: 6px; display: none; }
-    .admin-tabs { -ms-overflow-style: none; scrollbar-width: none; }
-
-    /* make sure tabs don't cover content */
-    .admin-content { padding-top: 8px; }
-
-    /* subtle divider so tabs feel separated */
-    .admin-tabs::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: linear-gradient(90deg, rgba(107,91,255,0.06), transparent); pointer-events:none; }
-
-    .admin-panel { padding-top: 14px; }
-
+    /* Ensure panel has top padding so sticky tabs don't sit on top of content */
+    .admin-panel { padding-top: 12px; }
+    
     .admin-tab {
-      padding: 10px 14px;
-      background: transparent;
-      border-radius: 12px;
-      border: 1px solid transparent;
+      padding: 15px 25px;
+      background: none;
+      border: none;
       color: var(--text-secondary);
       font-family: 'Cairo', sans-serif;
-      font-weight: 700;
+      font-weight: 600;
       cursor: pointer;
-      transition: all .18s ease;
+      transition: all var(--transition-fast);
+      position: relative;
       white-space: nowrap;
-      display:inline-flex; align-items:center; gap:8px;
     }
-
+    
     .admin-tab.active {
-      color: var(--primary-dark);
-      background: linear-gradient(90deg, rgba(107,91,255,0.12), rgba(124,100,255,0.06));
-      border-color: rgba(107,91,255,0.12);
-      box-shadow: 0 6px 22px rgba(107,91,255,0.06);
-      transform: translateY(-2px);
+      color: var(--primary-color);
+    }
+    
+    .admin-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary-gradient);
+      border-radius: 3px 3px 0 0;
     }
     
     .admin-tab:hover:not(.active) {
@@ -1348,47 +1332,20 @@
     
     .modal {
       background: white;
-      border-radius: 14px;
+      border-radius: var(--border-radius-lg);
       width: 100%;
-      max-width: 560px;
-      max-height: 92vh;
+      max-width: 500px;
+      max-height: 90vh;
       overflow: auto;
-      animation: slideInUp 0.36s ease;
-      box-shadow: 0 16px 48px rgba(16,16,48,0.12);
+      animation: slideInUp 0.4s ease;
+      box-shadow: var(--shadow-lg);
       position: relative;
-      border: 1px solid rgba(16,16,24,0.04);
     }
 
     /* Helper for table responsiveness */
     .table-responsive {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-    }
-
-    /* bottom action bar inside admin modal */
-    .admin-bottom-bar {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      gap: 10px;
-      padding: 12px;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.98));
-      border-top: 1px solid rgba(16,16,16,0.04);
-      box-shadow: 0 -6px 24px rgba(0,0,0,0.06);
-      padding-bottom: calc(12px + env(safe-area-inset-bottom));
-    }
-
-    .admin-bottom-bar .btn { padding: 10px 14px; border-radius: 10px; }
-
-    .admin-bottom-bar.compact { transform: translateY(48%); opacity: 0.92; transition: transform .24s ease, opacity .24s ease; }
-    .admin-bottom-bar { z-index: 120; }
-
-    @media (min-width: 901px) {
-      .admin-bottom-bar { display: none; }
     }
 
     /* Admin cards (hidden by default, shown on small screens) */
@@ -1427,8 +1384,7 @@
         right: 0 !important;
         bottom: 0 !important;
         width: 100vw !important;
-        /* use --vh to avoid mobile address-bar issues */
-        height: calc(var(--vh, 1vh) * 100) !important;
+        height: 100vh !important;
         max-width: none !important;
         margin: 0 !important;
         border-radius: 0 !important;
@@ -1438,8 +1394,7 @@
         box-sizing: border-box;
         overflow: auto;
         background: white;
-        padding-bottom: calc(90px + env(safe-area-inset-bottom)); /* keep space for bottom action bar and safe-area */
-        -webkit-overflow-scrolling: touch;
+        padding-bottom: 80px; /* keep space for floating bottom nav */
       }
 
       /* Make overlay remove padding and align to top so panel fills screen */
@@ -1469,8 +1424,6 @@
         overflow: auto;
         flex: 1;
         -webkit-overflow-scrolling: touch;
-        /* avoid being covered by bottom action bar */
-        padding-bottom: calc(140px + env(safe-area-inset-bottom));
       }
 
       /* Compact stat cards */
@@ -1493,31 +1446,12 @@
     }
 
       .admin-tabs {
-        padding: 6px 12px;
-        gap: 10px;
-        scroll-padding-inline: 40px; /* allow centering near edges */
-        scroll-behavior: smooth;
-        position: sticky;
-        top: calc(var(--admin-header-height, 64px)); /* pushed below header */
-        z-index: 80;
+        padding: 0 12px;
       }
 
       .admin-tab {
-        padding: 12px 18px;
-        font-size: 1rem;
-        min-width: 110px; /* larger touch target */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 999px; /* pill style */
-      }
-
-      /* On small screens keep active tab visually distinct but avoid translate so it doesn't overlap */
-      .admin-tab.active {
-        transform: none;
-        box-shadow: none;
-        background: linear-gradient(90deg, rgba(107,91,255,0.14), rgba(124,100,255,0.08));
-        border-color: rgba(107,91,255,0.12);
+        padding: 12px 16px;
+        font-size: 0.95rem;
       }
 
       .admin-content {
@@ -1526,8 +1460,6 @@
         overflow: auto;
         flex: 1;
         -webkit-overflow-scrolling: touch;
-        /* ensure we start below header+tabs when modal is full-screen */
-        padding-top: calc(var(--admin-header-height,64px) + 56px);
       }
 
       .admin-form {
@@ -1551,22 +1483,7 @@
         max-height: 100vh !important;
         border-radius: 0 !important;
         margin: 0;
-        height: 100vh; /* ensure full height so bottom bar sits on top */
       }
-
-      /* Make admin panel full-width on small screens so it uses all horizontal space */
-      .admin-panel { margin: 0 !important; width: 100% !important; max-width: 100% !important; border-radius: 0 !important; }
-      .admin-header { padding: 10px 14px; --admin-header-height: 56px; }
-      .admin-title { font-size: 1.25rem; }
-      .admin-subtitle { display:none; }
-
-      /* Keep admin bottom bar fixed at viewport bottom for small screens */
-      .admin-bottom-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 120; border-radius: 0; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
-      .admin-bottom-bar.compact { transform: translateY(56%); opacity: 0.95; }
-
-      /* reduce margins to avoid content being hidden */
-      .admin-stats { padding: 10px; gap: 10px; }
-      .stat-card { padding: 12px; }
 
       /* Tables -> Cards on small screens */
       .admin-table {
@@ -1580,13 +1497,11 @@
       .admin-card {
         background: white;
         border-radius: var(--border-radius-md);
-        padding: 10px 14px;
+        padding: 8px 12px;
         margin-bottom: 12px;
         box-shadow: var(--shadow-sm);
         border: 1px solid rgba(16, 16, 16, 0.02);
         overflow: hidden;
-        width: 100%;
-        box-sizing: border-box;
       }
 
       .admin-card-header {
@@ -1614,23 +1529,11 @@
         font-weight: 700;
         cursor: pointer;
         margin-left: 12px;
-        padding: 8px; /* easier to tap */
       }
 
       .admin-card-details {
         padding-top: 10px;
         border-top: 1px dashed var(--border-color);
-        max-height: 0; /* collapsed by default */
-        overflow: hidden;
-        transition: max-height 280ms ease, opacity .18s ease;
-        opacity: 0;
-      }
-
-      .admin-card.open .admin-card-details { opacity: 1; }
-
-      .admin-card.open .admin-card-details {
-        /* generous max-height to allow content to expand smoothly; we set exact height via JS */
-        max-height: 1000px;
       }
 
       .admin-card-row {
@@ -1640,51 +1543,14 @@
         padding: 8px 0;
       }
 
-      .admin-card .label { color: var(--text-light); font-size: 0.82rem; min-width: 30%; text-align: right; }
-      .admin-card .value { font-weight: 700; color: var(--text-primary); text-align: right; }
-      .admin-card .actions { display:flex; gap:8px; margin-top: 10px; }
-      .admin-card .actions button { flex:1; min-width: 0; }
-      .admin-card .preview-left .name { font-size: 1rem; }
-      .admin-card .preview-right { font-size: 0.92rem; }
-      }
-
       .admin-card-row:last-child {
         padding-bottom: 0;
       }
 
       .admin-card .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
 
-      .admin-card .actions button {
-        padding: 10px 12px;
-        min-width: 44%;
-        border-radius: 10px;
-        border: 1px solid rgba(16,16,24,0.06);
-        background: transparent;
-        color: var(--primary-dark);
-        font-weight: 700;
-        transition: all .14s ease;
-        box-shadow: none;
-      }
-
-      .admin-card .actions button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(16,16,48,0.06); }
-
-      .admin-card .actions .btn-primary { background: var(--primary-gradient); color: white; border: none; box-shadow: var(--shadow-sm); }
-      .admin-card .actions .btn-danger { background: linear-gradient(90deg,#FF6B6B,#FF3B3B); color: white; border: none; box-shadow: none; }
-
-      /* Accessibility & focus styles */
-      .card-toggle:focus {
-        outline: 3px solid rgba(107,91,255,0.15);
-        outline-offset: 2px;
-        border-radius: 8px;
-      }
-
-      .admin-card:focus-within { box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
-
-      /* Small screens: make header touch-friendly */
-      @media (max-width: 700px) {
-        .admin-card { padding: 12px; }
-        .card-toggle { padding: 10px 12px; min-width: 88px; }
-      }
+      .admin-card .actions button { padding: 10px 12px; min-width: 44%; }
+      .admin-card .actions .btn-danger { background: var(--cart-red); color: white; }
 
       .admin-card .label { color: var(--text-light); font-size: 0.9rem; }
       .admin-card .value { color: var(--text-primary); font-weight: 700; }
@@ -1742,7 +1608,7 @@
     .modal-close {
       position: absolute;
       top: 20px;
-      right: 20px; /* place the close button on the right (RTL friendly) */
+      left: 20px;
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -1754,11 +1620,6 @@
       cursor: pointer;
       transition: all var(--transition-fast);
       color: var(--text-secondary);
-    }
-
-    /* Ensure close button remains visible on mobile overlay */
-    @media (max-width: 700px) {
-      .modal-close { top: 12px; right: 12px; }
     }
     
     .modal-close:hover {
@@ -2058,15 +1919,6 @@
       animation: shimmer 1.5s infinite;
       border-radius: var(--border-radius-sm);
     }
-
-    /* Skeleton helpers for admin lists */
-    .skeleton-list { display: grid; gap: 12px; }
-    .skeleton-card { display:flex; gap:12px; align-items:center; padding:12px; border-radius:12px; background: #fff; box-shadow: var(--shadow-sm); }
-    .skeleton-circle { width:56px; height:56px; border-radius:8px; background: linear-gradient(90deg,#f3f3f3,#e9e9e9); }
-    .skeleton-lines { flex:1; }
-    .skeleton-lines > div { height:12px; background: linear-gradient(90deg,#f3f3f3,#e9e9e9); border-radius:6px; margin-bottom:8px; }
-    .skeleton-lines > div:last-child { width: 55%; margin-bottom:0; }
-    .skeleton-circle, .skeleton-lines > div { animation: shimmer 1.2s infinite; }
     
     /* ====== RESPONSIVE DESIGN ====== */
     @media (max-width: 768px) {
@@ -2077,19 +1929,6 @@
       
       .navbar {
         padding: 0 10px;
-      }
-
-      /* Filters toolbar on small screens */
-      .filters-row { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
-      .filters-inner { display: flex; gap: 8px; align-items: center; }
-      .filters-toggle { display: none; }
-
-      @media (max-width: 700px) {
-        .filters-row { flex-direction: row-reverse; }
-        .filters-inner { display: none; width: 100%; }
-        .filters-inner.show { display: flex; flex-direction: column; gap: 8px; }
-        .filters-toggle { display: inline-block; padding: 8px 12px; background: var(--primary-color); color: white; border-radius: 8px; border: none; }
-        .filters-inner .form-control { width: 100%; }
       }
       
       .logo-text {
@@ -2620,29 +2459,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics-compat.js"></script>
-
-  <!-- Quick dev helper: if you append ?no_cache=1 we will attempt to unregister SW and clear caches then reload a fresh index -->
-  <script>
-    (function(){
-      if (location.search && location.search.indexOf('no_cache=1') !== -1) {
-        (async function(){
-          try {
-            console.log('Debug: no_cache=1 detected — clearing SW and caches');
-            if ('serviceWorker' in navigator) {
-              const regs = await navigator.serviceWorker.getRegistrations();
-              await Promise.all(regs.map(r => r.unregister()));
-            }
-            const keys = await caches.keys();
-            await Promise.all(keys.map(k => caches.delete(k)));
-            // Reload without the no_cache flag but with a cache-busting query
-            location.replace(location.pathname + '?v=' + Date.now());
-          } catch (e) {
-            console.error('no_cache cleanup failed', e);
-          }
-        })();
-      }
-    })();
-  </script>
 
   <!-- JavaScript Application Code -->
   <script>
@@ -3364,116 +3180,11 @@
   }
 
   function closeModal() {
-    // remove escape handler if present and restore focus
-    try {
-      const adminRoot = document.getElementById('adminPanelRoot');
-      if (adminRoot && adminRoot._escHandler) {
-        document.removeEventListener('keydown', adminRoot._escHandler);
-        adminRoot._escHandler = null;
-      }
-      // remove vh handler
-      if (adminRoot && adminRoot._vhHandler) {
-        window.removeEventListener('resize', adminRoot._vhHandler);
-        adminRoot._vhHandler = null;
-      }
-      // remove content scroll handler (if we attached one) and tidy up bottom bar, padding, trap
-      try {
-        if (adminRoot && adminRoot._contentScrollHandler) {
-          const contentEl = document.getElementById('adminContent');
-          if (contentEl) {
-            contentEl.removeEventListener('scroll', adminRoot._contentScrollHandler);
-            contentEl.style.paddingBottom = '';
-            contentEl.style.paddingTop = '';
-          }
-          adminRoot._contentScrollHandler = null;
-        }
-        if (adminRoot && adminRoot._paddingHandler) {
-          window.removeEventListener('resize', adminRoot._paddingHandler);
-          adminRoot._paddingHandler = null;
-        }
-        if (adminRoot && adminRoot._trapHandler) {
-          document.removeEventListener('keydown', adminRoot._trapHandler);
-          adminRoot._trapHandler = null;
-        }
-        if (adminRoot && adminRoot._tabsTopHandler) {
-          window.removeEventListener('resize', adminRoot._tabsTopHandler);
-          adminRoot._tabsTopHandler = null;
-        }
-        if (adminRoot && adminRoot._tabsKeyHandler) {
-          try { const tabsEl = adminRoot.querySelector('.admin-tabs'); if (tabsEl) tabsEl.removeEventListener('keydown', adminRoot._tabsKeyHandler); } catch(e) {/* ignore */}
-          adminRoot._tabsKeyHandler = null;
-        }
-        const bottomBar = document.querySelector('.admin-bottom-bar');
-        if (bottomBar) { bottomBar.classList.remove('compact'); bottomBar.style.position = ''; }
-      } catch(e) { /* ignore */ }
-
-      if (adminRoot && adminRoot._prevActive && typeof adminRoot._prevActive.focus === 'function') {
-        adminRoot._prevActive.focus();
-        adminRoot._prevActive = null;
-      }
-    } catch (e) { console.warn('closeModal cleanup failed', e); }
-
     document.getElementById('modalsContainer').innerHTML = '';
     // إعادة تفعيل التمرير في الخلفية عند إغلاق النافذة
     document.body.style.overflow = '';
   }
 
-  // Admin helpers (mobile bottom bar actions)
-  function saveAdminChanges() {
-    // TODO: implement server-side save of admin edits; placeholder shows a success notification
-    showNotification('تم حفظ التغييرات', 'success');
-    // optionally refresh the admin stats or tables
-    try { loadAdminStats(); window.makeAdminTablesResponsive && window.makeAdminTablesResponsive(); } catch (e) { /* ignore */ }
-  }
-
-  // Debug helper: layout diagnostics for admin UI (run in console while admin panel is open)
-  window.__adminLayoutDiagnostics = function() {
-    const tabs = document.querySelector('.admin-tabs');
-    const active = document.querySelector('.admin-tab.active');
-    const bottomBar = document.querySelector('.admin-bottom-bar');
-    const content = document.getElementById('adminContent');
-    const header = document.querySelector('.admin-header');
-    const result = {
-      tabsRect: tabs && tabs.getBoundingClientRect(),
-      activeRect: active && active.getBoundingClientRect(),
-      bottomBarRect: bottomBar && bottomBar.getBoundingClientRect(),
-      contentRect: content && content.getBoundingClientRect(),
-      headerRect: header && header.getBoundingClientRect(),
-      overlaps: !!(bottomBar && content && (bottomBar.getBoundingClientRect().top < content.getBoundingClientRect().bottom)),
-      headerTooTall: header && header.getBoundingClientRect().height > 120,
-      contentTooHigh: content && (content.getBoundingClientRect().top < (header ? header.getBoundingClientRect().bottom : 0))
-    };
-    return result;
-  };
-
-  // Quick smoke-check for admin modal usability (returns issues array)
-  window.__adminRunChecks = function() {
-    const issues = [];
-    const d = window.__adminLayoutDiagnostics();
-    if (d.headerTooTall) issues.push('Header is very tall and may push content off-screen');
-    if (d.overlaps) issues.push('Bottom action bar overlaps content');
-    if (d.contentTooHigh) issues.push('Content top overlaps with header/tabs area');
-    // check keyboard tab behavior: presence of tabindex/aria
-    const tabs = document.querySelectorAll('.admin-tab');
-    if (!tabs || tabs.length === 0) issues.push('No admin tabs found');
-    else {
-      const hasRoles = Array.from(tabs).every(t => t.getAttribute('role') === 'tab');
-      if (!hasRoles) issues.push('Tabs missing role="tab"');
-    }
-    return { issues, diagnostics: d };
-  };
-
-  function openAddProductModal() {
-    // Reuse existing add-product modal if present, else show a notification
-    if (typeof openAddProductModal_original === 'function') return openAddProductModal_original();
-    if (typeof openAddProductModal === 'function' && openAddProductModal !== openAddProductModal_original) {
-      // in case the real function is defined later, call it
-      try { return openAddProductModal(); } catch(e) { /* ignore */ }
-    }
-    showNotification('فتح نافذة إضافة المنتج', 'info');
-  }
-
-  // Keep updateUserProfile below
   function updateUserProfile() {
     // تحديث الصورة الشخصية في القائمة العلوية
     const userAvatar = document.getElementById('userAvatar');
@@ -3507,22 +3218,19 @@
             <i class="fas fa-list"></i>
             جميع المنتجات
           </h2>
-                <div class="filters-row">
-            <div class="filters-inner">
-              <select class="form-control" onchange="filterProducts(this.value)" id="filterSelect">
-                <option value="">جميع التصنيفات</option>
-                <option value="discount">العروض</option>
-                <option value="featured">المميزة</option>
-                <option value="new">الأحدث</option>
-              </select>
-              <select class="form-control" onchange="sortProducts(this.value)" id="sortSelect">
-                <option value="newest">الأحدث أولاً</option>
-                <option value="price_low">السعر: منخفض إلى مرتفع</option>
-                <option value="price_high">السعر: مرتفع إلى منخفض</option>
-                <option value="discount">أعلى خصم</option>
-              </select>
-            </div>
-            <button class="btn btn-secondary filters-toggle" onclick="toggleFilters()" aria-expanded="false">فلاتر</button>
+          <div style="display: flex; gap: 10px;">
+            <select class="form-control" style="width: auto;" onchange="filterProducts(this.value)" id="filterSelect">
+              <option value="">جميع التصنيفات</option>
+              <option value="discount">العروض</option>
+              <option value="featured">المميزة</option>
+              <option value="new">الأحدث</option>
+            </select>
+            <select class="form-control" style="width: auto;" onchange="sortProducts(this.value)" id="sortSelect">
+              <option value="newest">الأحدث أولاً</option>
+              <option value="price_low">السعر: منخفض إلى مرتفع</option>
+              <option value="price_high">السعر: مرتفع إلى منخفض</option>
+              <option value="discount">أعلى خصم</option>
+            </select>
           </div>
         </div>
         <div class="products-grid" id="allProductsGrid">
@@ -3533,13 +3241,6 @@
     
     document.getElementById('mainContent').innerHTML = content;
     document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-
-    // ensure filters toggle is wired
-    const btn = document.querySelector('.filters-toggle');
-    if (btn && !btn._bound) {
-      btn.addEventListener('click', toggleFilters);
-      btn._bound = true;
-    }
   }
 
   function renderAllProducts(products) {
@@ -3610,10 +3311,6 @@
   // دالة الفلترة
   function filterProducts(filterType) {
     let filteredProducts = [...globalProducts];
-
-    // close mobile filters after applying
-    const filtersInner = document.querySelector('.filters-inner');
-    if (filtersInner && filtersInner.classList.contains('show')) filtersInner.classList.remove('show');
     
     switch(filterType) {
       case 'discount':
@@ -3636,45 +3333,12 @@
     const sortedProducts = sortProductsByType(filteredProducts, currentSort);
     
     document.getElementById('allProductsGrid').innerHTML = renderAllProducts(sortedProducts);
-
-    // ensure sticky position doesn't cover content on mobile after applying
-    const el = document.querySelector('.section-header');
-    if (el) el.scrollIntoView({ block: 'start' });
   }
 
   // دالة الترتيب
   function sortProducts(sortType) {
     const currentFilter = document.getElementById('filterSelect')?.value || '';
     let filteredProducts = [...globalProducts];
-
-    // ensure filters toolbar state is consistent on mobile (close when applying)
-    const filtersInner = document.querySelector('.filters-inner');
-    if (filtersInner && filtersInner.classList.contains('show')) filtersInner.classList.remove('show');
-
-    // apply sort
-    switch(sortType) {
-      case 'price_low':
-        filteredProducts.sort((a, b) => (a.price || 0) - (b.price || 0));
-        break;
-      case 'price_high':
-        filteredProducts.sort((a, b) => (b.price || 0) - (a.price || 0));
-        break;
-      case 'discount':
-        filteredProducts.sort((a, b) => (b.discount || 0) - (a.discount || 0));
-        break;
-      default:
-        filteredProducts.sort((a, b) => {
-          const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date();
-          const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date();
-          return dateB - dateA;
-        });
-    }
-
-    document.getElementById('allProductsGrid').innerHTML = renderAllProducts(filteredProducts);
-
-    // ensure sticky position doesn't cover content on mobile after applying
-    const el = document.querySelector('.section-header');
-    if (el) el.scrollIntoView({ block: 'start' });
     
     // تطبيق الفلتر أولاً
     switch(currentFilter) {
@@ -5329,7 +4993,7 @@
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
         <div class="admin-panel" onclick="event.stopPropagation()" style="max-width: 1200px; margin: 20px; width: calc(100% - 40px);">
-          <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 20px; right: 20px;">
+          <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 20px; left: 20px;">
             <i class="fas fa-times"></i>
           </button>
           
@@ -5375,20 +5039,20 @@
             </div>
           </div>
           
-          <div class="admin-tabs" role="tablist" aria-label="قوائم لوحة التحكم">
-            <button class="admin-tab active" role="tab" aria-selected="true" tabindex="0" data-tab="products" onclick="showAdminTab('products', this)">
+          <div class="admin-tabs">
+            <button class="admin-tab active" onclick="showAdminTab('products', this)">
               <i class="fas fa-box"></i> المنتجات
             </button>
-            <button class="admin-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="orders" onclick="showAdminTab('orders', this)">
+            <button class="admin-tab" onclick="showAdminTab('orders', this)">
               <i class="fas fa-shopping-cart"></i> الطلبات
             </button>
-            <button class="admin-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="categories" onclick="showAdminTab('categories', this)">
+            <button class="admin-tab" onclick="showAdminTab('categories', this)">
               <i class="fas fa-tags"></i> التصنيفات
             </button>
-            <button class="admin-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="users" onclick="showAdminTab('users', this)">
+            <button class="admin-tab" onclick="showAdminTab('users', this)">
               <i class="fas fa-users"></i> المستخدمين
             </button>
-            <button class="admin-tab" role="tab" aria-selected="false" tabindex="-1" data-tab="settings" onclick="showAdminTab('settings', this)">
+            <button class="admin-tab" onclick="showAdminTab('settings', this)">
               <i class="fas fa-cog"></i> الإعدادات
             </button>
           </div>
@@ -5399,135 +5063,11 @@
             </div>
           </div>
         </div>
-
-          <!-- bottom action bar for mobile admin (shows on small screens) -->
-          <div class="admin-bottom-bar" aria-hidden="true">
-            <button class="btn btn-primary" onclick="openAddProductModal()">+ إضافة منتج</button>
-            <button class="btn" onclick="saveAdminChanges()">حفظ</button>
-          </div>
-
-        </div>
       </div>
     `;
     
     document.getElementById('modalsContainer').innerHTML = modalHTML;
     document.body.style.overflow = 'hidden';
-
-    // accessibility: set dialog attributes and focus
-    const adminRoot = document.querySelector('.admin-panel');
-    if (adminRoot) {
-      adminRoot.setAttribute('role', 'dialog');
-      adminRoot.setAttribute('aria-modal', 'true');
-      adminRoot.setAttribute('aria-label', 'لوحة تحكم المدير');
-      adminRoot.id = 'adminPanelRoot';
-      // store previously focused element to restore later
-      try { adminRoot._prevActive = document.activeElement; } catch(e) { adminRoot._prevActive = null; }
-      // focus the content for keyboard users
-      const contentEl = document.getElementById('adminContent');
-      if (contentEl) contentEl.focus(); else adminRoot.focus();
-
-      // close on Escape
-      const escHandler = (e) => { if (e.key === 'Escape') closeModal(); };
-      adminRoot._escHandler = escHandler;
-      document.addEventListener('keydown', escHandler);
-
-      // set mobile-safe viewport unit (--vh) and update on resize to avoid address bar issues
-      function setVh() { document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px'); }
-      setVh();
-      window.addEventListener('resize', setVh);
-      adminRoot._vhHandler = setVh;
-
-      // position tabs under header and ensure adminContent padding accounts for header+tabs on small screens
-      try {
-        const tabs = adminRoot.querySelector('.admin-tabs');
-        const header = adminRoot.querySelector('.admin-header');
-        const contentEl = document.getElementById('adminContent');
-        function updateTabsTop() {
-          if (!tabs || !header) return;
-          const h = header.getBoundingClientRect().height || 56;
-          tabs.style.top = h + 'px';
-          // store CSS var for consistent use
-          document.documentElement.style.setProperty('--admin-header-height', h + 'px');
-          // adjust content padding to ensure top content isn't obscured by header+tabs
-          if (contentEl) contentEl.style.paddingTop = (h + (tabs.getBoundingClientRect().height || 56) + 12) + 'px';
-        }
-        updateTabsTop();
-        const tabsTopHandler = () => updateTabsTop();
-        window.addEventListener('resize', tabsTopHandler);
-        adminRoot._tabsTopHandler = tabsTopHandler;
-
-        // keyboard support for tabs (ArrowLeft/ArrowRight) for accessibility
-        try {
-          const tabsEl = adminRoot.querySelector('.admin-tabs');
-          if (tabsEl) {
-            const tabsKeyHandler = (e) => {
-              const current = document.activeElement;
-              if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                e.preventDefault();
-                const tabs = Array.from(tabsEl.querySelectorAll('.admin-tab'));
-                const idx = tabs.indexOf(current);
-                if (idx === -1) return;
-                const nextIdx = e.key === 'ArrowRight' ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
-                tabs[nextIdx].focus();
-                showAdminTab(tabs[nextIdx].getAttribute('data-tab'), tabs[nextIdx]);
-              }
-            };
-            tabsEl.addEventListener('keydown', tabsKeyHandler);
-            adminRoot._tabsKeyHandler = tabsKeyHandler;
-          }
-        } catch(e) { /* ignore */ }
-
-      // collapse/hide bottom action bar while scrolling down to give more space on small screens
-      try {
-        const contentEl = document.getElementById('adminContent');
-        const bottomBar = document.querySelector('.admin-bottom-bar');
-        if (contentEl && bottomBar) {
-          let lastY = 0;
-
-          const fullPadding = () => bottomBar.offsetHeight + 16 + (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--safe-area-inset-bottom')) || 0);
-          const compactPadding = () => Math.round(bottomBar.offsetHeight * 0.4) + 8;
-          const setPadding = (compact) => { if (contentEl) contentEl.style.paddingBottom = (compact ? compactPadding() : fullPadding()) + 'px'; };
-
-          // initialize padding
-          setPadding(false);
-
-          const onAdminScroll = () => {
-            const y = contentEl.scrollTop || 0;
-            const compact = (y > lastY && y > 30);
-            if (compact) {
-              bottomBar.classList.add('compact');
-              setPadding(true);
-            } else {
-              bottomBar.classList.remove('compact');
-              setPadding(false);
-            }
-            lastY = y;
-          };
-
-          contentEl.addEventListener('scroll', onAdminScroll, { passive: true });
-          adminRoot._contentScrollHandler = onAdminScroll;
-
-          // recompute padding on resize
-          const onResize = () => setPadding(bottomBar.classList.contains('compact'));
-          window.addEventListener('resize', onResize);
-          adminRoot._paddingHandler = onResize;
-        }
-
-        // focus trap inside admin modal (Tab cycling)
-        const trapFocus = (e) => {
-          if (e.key !== 'Tab') return;
-          const focusable = adminRoot.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
-          if (!focusable || focusable.length === 0) return;
-          const first = focusable[0];
-          const last = focusable[focusable.length - 1];
-          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-        };
-        document.addEventListener('keydown', trapFocus);
-        adminRoot._trapHandler = trapFocus;
-
-      } catch(e) { /* ignore */ }
-    }
     
     // تحميل الإحصائيات
     loadAdminStats();
@@ -5559,31 +5099,12 @@
     }
   }
 
-  function centerActiveTab(button) {
-    if (!button) return;
-    const tabs = button.closest('.admin-tabs');
-    if (!tabs) return;
-    try {
-      const left = button.offsetLeft + (button.offsetWidth / 2) - (tabs.clientWidth / 2);
-      tabs.scrollTo({ left, behavior: 'smooth' });
-    } catch (e) {
-      try { button.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); } catch (e2) { /* ignore */ }
-    }
-  }
-
   async function showAdminTab(tabName, button) {
-    // تحديث التبويبات النشطة and aria state
+    // تحديث التبويبات النشطة
     document.querySelectorAll('.admin-tab').forEach(tab => {
       tab.classList.remove('active');
-      tab.setAttribute('aria-selected', 'false');
-      tab.setAttribute('tabindex', '-1');
     });
     button.classList.add('active');
-    button.setAttribute('aria-selected', 'true');
-    button.setAttribute('tabindex', '0');
-
-    // center active tab in the scroll container (works better across browsers & RTL)
-    try { centerActiveTab(button); } catch(e) { /* ignore */ }
     
     const contentEl = document.getElementById('adminContent');
     // Ensure content is focusable for accessibility and to receive focus after loading
@@ -5619,12 +5140,6 @@
 
   async function loadAdminProducts(container) {
     try {
-      // show lightweight skeleton while loading
-      container.innerHTML = `
-        <div class="skeleton-list">
-          ${Array.from({length:4}).map(()=>`<div class="skeleton-card"><div class="skeleton-circle"></div><div class="skeleton-lines"><div></div><div></div></div></div>`).join('')}
-        </div>
-      `;
       const snapshot = await db.collection('products')
         .orderBy('createdAt', 'desc')
         .limit(20)
@@ -7407,16 +6922,6 @@
       // ignore
     }
   };
-
-  // Toggle filters panel for mobile
-  function toggleFilters() {
-    const inner = document.querySelector('.filters-inner');
-    const btn = document.querySelector('.filters-toggle');
-    if (!inner || !btn) return;
-    const isShown = inner.classList.toggle('show');
-    btn.setAttribute('aria-expanded', String(isShown));
-    if (isShown) inner.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
   </script>
   <script src="./admin-responsive.js"></script>
   <script>
@@ -7473,40 +6978,6 @@
         });
       }, 900);
     })();
-
-    // Listen for SW messages about new version
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('message', (e) => {
-        try {
-          if (e.data && e.data.type === 'NEW_VERSION') {
-            console.log('New SW version available:', e.data.version);
-            // show an inline reload banner
-            const msg = document.createElement('div');
-            msg.id = 'swUpdateBanner';
-            msg.style.cssText = 'position:fixed;left:12px;right:12px;bottom:20px;z-index:2147483646;padding:12px;border-radius:10px;background:#f0f7ff;border:1px solid #b3d4ff;color:#072b5b;box-shadow:0 8px 24px rgba(0,0,0,0.12);font-weight:700;text-align:center;';
-            msg.innerHTML = 'يتوفر تحديث للموقع. اضغط <button id="swReloadBtn" style="margin-left:10px;padding:8px 10px;border-radius:8px;border:none;background:#6B5BFF;color:white;cursor:pointer;font-weight:700">إعادة التحميل</button>';
-            document.body.appendChild(msg);
-            document.getElementById('swReloadBtn').addEventListener('click', () => {
-              // try to clear caches and reload to force fresh content
-              (async function(){
-                try {
-                  if ('serviceWorker' in navigator) {
-                    const regs = await navigator.serviceWorker.getRegistrations();
-                    for (const r of regs) await r.unregister();
-                  }
-                  const keys = await caches.keys();
-                  for (const k of keys) await caches.delete(k);
-                  location.href = location.pathname + '?v=' + Date.now();
-                } catch (err) {
-                  console.error('Reload after SW update failed', err);
-                  location.reload();
-                }
-              })();
-            });
-          }
-        } catch (err) { console.error(err); }
-      });
-    }
   </script>
 </body>
 </html>
