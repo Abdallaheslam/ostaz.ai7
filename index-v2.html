@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>نسخة احتياطية - سوبر ماركت الأستاذ</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#fff;direction:rtl;color:#222;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+    .card{max-width:640px;padding:24px;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,0.12);text-align:center}
+    button{background:#6B5BFF;color:#fff;border:none;padding:12px 16px;border-radius:8px;cursor:pointer;font-weight:700}
+    .note{margin-top:12px;color:#555}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>نسخة احتياطية مؤقتة</h2>
+    <p>إذا كنت ترى هذه الصفحة، فقد تكون النسخة الرئيسية مقطوعة أو مخزّنة كنسخة قديمة على جهازك. اضغط الزر لتنظيف ذاكرة التخزين المؤقت ومحاولة إعادة التحميل من الشبكة.</p>
+    <div style="margin-top:18px">
+      <button id="fixBtn">امسح الكاش وأعد التحميل</button>
+    </div>
+    <div class="note">إن لم تنجح، جرّب فتح الموقع في نافذة متصفح مخفي (Incognito) أو أبلغ الدعم.</div>
+  </div>
+
+  <script>
+    document.getElementById('fixBtn').addEventListener('click', async () => {
+      try {
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const r of regs) await r.unregister();
+        }
+        const keys = await caches.keys();
+        for (const k of keys) await caches.delete(k);
+        // Force fresh fetch of index
+        location.href = '/?no_cache=1';
+      } catch (e) {
+        console.error('Fallback fix failed:', e);
+        alert('فشل تنظيف الكاش، راجع الكونسول.');
+      }
+    });
+
+    // Run EOF marker for diagnostics
+    window.__indexEOF = true;
+    console.log('EOF_MARKER: index-v2.html fully parsed');
+  </script>
+</body>
+</html>
