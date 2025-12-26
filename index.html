@@ -3,7 +3,7 @@
 <head>
   
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
   <meta name="theme-color" content="#6B5BFF" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -653,27 +653,6 @@
       margin: 0 auto;
       width: 100%;
     }
-
-    /* Force full width and remove stray gutters on small screens */
-    html, body, #mainContent, .main-content {
-      width: 100% !important;
-      max-width: 100% !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      padding-left: 12px !important;
-      padding-right: 12px !important;
-    }
-
-    .products-grid {
-      margin: 0 !important;
-      padding: 0 !important;
-      width: 100% !important;
-    }
-
-    /* Protect against accidental horizontal scrolling */
-    html, body {
-      overflow-x: hidden !important;
-    }
     
     .hero-section {
       background: var(--primary-gradient), 
@@ -871,7 +850,7 @@
         gap: 15px;
       }
     }
-
+    
     .product-card {
       background: var(--card-bg);
       border-radius: var(--border-radius-md);
@@ -1192,14 +1171,7 @@
       padding: 0 25px;
       border-bottom: 1px solid var(--border-color);
       overflow-x: auto;
-      position: sticky; /* stay visible when scrolling */
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(4px);
     }
-
-    /* Ensure panel has top padding so sticky tabs don't sit on top of content */
-    .admin-panel { padding-top: 12px; }
     
     .admin-tab {
       padding: 15px 25px;
@@ -1317,8 +1289,6 @@
       left: 0;
       right: 0;
       bottom: 0;
-      width: 100vw;
-      height: 100vh;
       background: rgba(0, 0, 0, 0.7);
       display: flex;
       align-items: center;
@@ -1327,7 +1297,6 @@
       padding: 20px;
       animation: fadeIn 0.3s ease;
       backdrop-filter: blur(5px);
-      overflow: hidden;
     }
     
     .modal {
@@ -1340,259 +1309,6 @@
       animation: slideInUp 0.4s ease;
       box-shadow: var(--shadow-lg);
       position: relative;
-    }
-
-    /* Helper for table responsiveness */
-    .table-responsive {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    /* Admin cards (hidden by default, shown on small screens) */
-    .admin-cards {
-      display: none;
-    }
-
-    .admin-card img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 6px;
-      margin-left: 8px;
-    }
-
-    .admin-card .actions button {
-      display: inline-block;
-      width: 48%;
-      box-sizing: border-box;
-      padding: 8px 10px;
-      font-size: 0.9rem;
-    }
-
-    /* improve touch targets for tabs */
-    .admin-tab {
-      padding: 12px 16px;
-      min-width: 90px;
-    }
-
-    /* ====== Responsive fixes for Admin Panel & Tables (Mobile) ====== */
-    @media (max-width: 700px) {
-      .admin-panel {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        max-width: none !important;
-        margin: 0 !important;
-        border-radius: 0 !important;
-        display: flex;
-        flex-direction: column;
-        z-index: 9999 !important;
-        box-sizing: border-box;
-        overflow: auto;
-        background: white;
-        padding-bottom: 80px; /* keep space for floating bottom nav */
-      }
-
-      /* Make overlay remove padding and align to top so panel fills screen */
-      .modal-overlay {
-        align-items: flex-start !important;
-        padding: 0 !important;
-        justify-content: flex-start !important;
-        background: rgba(0,0,0,0.65);
-        width: 100vw !important;
-        height: 100vh !important;
-      }
-
-      .admin-header {
-        padding: 12px 16px;
-      }
-
-      .admin-stats {
-        padding: 12px;
-        gap: 12px;
-        grid-template-columns: 1fr;
-      }
-
-      /* Make sure the content area scrolls inside the panel and not the body */
-      .admin-content {
-        padding: 12px;
-        min-height: auto;
-        overflow: auto;
-        flex: 1;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      /* Compact stat cards */
-      .stat-card { padding: 14px; }
-
-      /* Ensure product grid uses full width inside main content */
-      .products-grid {
-        width: 100% !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px;
-      }
-
-      /* Reduce section padding so content fits on small screens */
-      .section { padding: 16px; }
-
-      /* Allow header controls to wrap instead of pushing content */
-      .section-header { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-
-      .section-header .form-control { width: auto !important; }
-    }
-
-      .admin-tabs {
-        padding: 0 12px;
-      }
-
-      .admin-tab {
-        padding: 12px 16px;
-        font-size: 0.95rem;
-      }
-
-      .admin-content {
-        padding: 16px;
-        min-height: auto;
-        overflow: auto;
-        flex: 1;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .admin-form {
-        max-width: 100%;
-        gap: 12px;
-      }
-
-      /* Ensure product grid uses full width inside main content */
-      .products-grid {
-        width: 100% !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px;
-      }
-
-      .product-card {
-        box-sizing: border-box;
-      }
-
-      .modal {
-        max-width: 100% !important;
-        max-height: 100vh !important;
-        border-radius: 0 !important;
-        margin: 0;
-      }
-
-      /* Tables -> Cards on small screens */
-      .admin-table {
-        display: none;
-      }
-
-      .admin-cards {
-        display: block;
-      }
-
-      .admin-card {
-        background: white;
-        border-radius: var(--border-radius-md);
-        padding: 8px 12px;
-        margin-bottom: 12px;
-        box-shadow: var(--shadow-sm);
-        border: 1px solid rgba(16, 16, 16, 0.02);
-        overflow: hidden;
-      }
-
-      .admin-card-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .admin-card .preview-left {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        min-width: 0;
-      }
-
-      .admin-card .preview-left img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; }
-      .admin-card .preview-left .name { font-weight: 700; color: var(--text-primary); font-size: 0.98rem; }
-
-      .admin-card .preview-right { margin-left: auto; color: var(--text-secondary); font-weight: 700; }
-
-      .card-toggle {
-        background: transparent;
-        border: none;
-        color: var(--primary-color);
-        font-weight: 700;
-        cursor: pointer;
-        margin-left: 12px;
-      }
-
-      .admin-card-details {
-        padding-top: 10px;
-        border-top: 1px dashed var(--border-color);
-      }
-
-      .admin-card-row {
-        display: flex;
-        justify-content: space-between;
-        gap: 8px;
-        padding: 8px 0;
-      }
-
-      .admin-card-row:last-child {
-        padding-bottom: 0;
-      }
-
-      .admin-card .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-
-      .admin-card .actions button { padding: 10px 12px; min-width: 44%; }
-      .admin-card .actions .btn-danger { background: var(--cart-red); color: white; }
-
-      .admin-card .label { color: var(--text-light); font-size: 0.9rem; }
-      .admin-card .value { color: var(--text-primary); font-weight: 700; }
-
-      /* Hide table on small screens (cards handle display) */
-      @media (max-width: 900px) {
-        .admin-table { display: none; }
-        .admin-cards { display: block; }
-      }
-
-      .admin-card .label {
-        color: var(--text-light);
-        font-size: 0.9rem;
-      }
-
-      .admin-card .value {
-        color: var(--text-primary);
-        font-weight: 700;
-        text-align: left;
-      }
-
-      .admin-card .actions {
-        display: flex;
-        gap: 8px;
-        margin-top: 8px;
-        justify-content: flex-start;
-      }
-
-      .stat-icon {
-        width: 48px;
-        height: 48px;
-      }
-
-      .admin-panel {
-        box-shadow: none;
-        border-radius: 0;
-      }
-
-      #adminFloatBtn {
-        left: 14px;
-        bottom: 110px;
-      }
     }
     
     .modal-header {
@@ -2007,28 +1723,12 @@
       
       .products-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin: 0;
-        width: 100%;
       }
       
       .admin-stats {
         grid-template-columns: 1fr;
       }
-
-      /* Force main content to full width and remove stray left gutters */
-      .main-content {
-        padding: calc(var(--navbar-height) + 10px) 12px 120px !important;
-        max-width: 100% !important;
-        margin: 0 auto !important;
-      }
-
-      .section { padding: 12px !important; }
-
-      /* Ensure filters move to a top toolbar and wrap nicely */
-      .section-header { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-      .section-header .form-control { width: auto !important; }
-    }      
+      
       .admin-tabs {
         padding: 0 15px;
       }
@@ -2702,19 +2402,12 @@
   }
 
   async function loadProducts() {
-    console.log('🔍 loadProducts: starting');
-    if (!db || typeof db.collection !== 'function') {
-      console.error('Firestore DB not available');
-      if (typeof showNotification === 'function') showNotification('خطأ في الاتصال بقاعدة البيانات', 'error');
-      return { featured: [], offers: [], newProducts: [], all: [] };
-    }
     try {
       // تحميل المنتجات المميزة
       const featuredSnapshot = await db.collection('products')
         .where('featured', '==', true)
         .limit(6)
         .get();
-      console.log('🔍 loadProducts: featuredSnapshot size =', featuredSnapshot.size);
       
       renderProducts('featuredContainer', featuredSnapshot.docs);
       
@@ -2733,32 +2426,21 @@
         .get();
       
       renderProducts('newProductsContainer', newSnapshot.docs);
-      console.log('🔍 loadProducts: newSnapshot size =', newSnapshot.size);
       
       // حفظ جميع المنتجات للمستقبل
       const allSnapshot = await db.collection('products').limit(50).get();
       globalProducts = allSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       
-      // إرجاع بيانات التحميل لاستخدامها في التخزين المؤقت
-      return {
-        featured: featuredSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
-        offers: offersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
-        newProducts: newSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })),
-        all: globalProducts
-      };
     } catch (error) {
       console.error('Error loading products:', error);
-      showNotification('حدث خطأ في تحميل المنتجات', 'error');
-      return { featured: [], offers: [], newProducts: [], all: [] };
     }
   }
 
   function renderProducts(containerId, products) {
     const container = document.getElementById(containerId);
     if (!container) return;
-
-    // دعم كلاً من مستندات Firestore وبيانات مخبأة (Plain objects)
-    if (!products || products.length === 0) {
+    
+    if (products.length === 0) {
       container.innerHTML = `
         <div class="text-center text-muted" style="grid-column: 1/-1; padding: 40px;">
           <i class="fas fa-box-open fa-3x mb-3" style="color: #e0e0e0;"></i>
@@ -2767,14 +2449,8 @@
       `;
       return;
     }
-
-    const normalized = products.map(item => {
-      if (typeof item.data === 'function') return item; // Firestore doc
-      const { id, ...rest } = item;
-      return { id, data: () => rest };
-    });
-
-    container.innerHTML = normalized.map(doc => {
+    
+    container.innerHTML = products.map(doc => {
       const product = doc.data();
       const isFavorite = favorites.some(fav => fav.id === doc.id);
       const isInCart = cart.some(item => item.id === doc.id);
@@ -3181,8 +2857,6 @@
 
   function closeModal() {
     document.getElementById('modalsContainer').innerHTML = '';
-    // إعادة تفعيل التمرير في الخلفية عند إغلاق النافذة
-    document.body.style.overflow = '';
   }
 
   function updateUserProfile() {
@@ -4749,12 +4423,7 @@
       </div>
     `;
     
-    try {
-      document.getElementById('modalsContainer').innerHTML = modalHTML;
-    } catch (error) {
-      console.error('openLoginModal error:', error);
-      if (typeof showNotification === 'function') showNotification('حدث خطأ أثناء فتح نافذة تسجيل الدخول', 'error');
-    }
+    document.getElementById('modalsContainer').innerHTML = modalHTML;
   }
 
   function openForgotPasswordModal() {
@@ -5057,7 +4726,7 @@
             </button>
           </div>
           
-          <div class="admin-content" id="adminContent" tabindex="-1">
+          <div class="admin-content" id="adminContent">
             <div class="loading">
               <div class="spinner"></div>
             </div>
@@ -5067,7 +4736,6 @@
     `;
     
     document.getElementById('modalsContainer').innerHTML = modalHTML;
-    document.body.style.overflow = 'hidden';
     
     // تحميل الإحصائيات
     loadAdminStats();
@@ -5107,34 +4775,23 @@
     button.classList.add('active');
     
     const contentEl = document.getElementById('adminContent');
-    // Ensure content is focusable for accessibility and to receive focus after loading
-    contentEl.setAttribute('tabindex', '-1');
-
-    try {
-      switch (tabName) {
-        case 'products':
-          await loadAdminProducts(contentEl);
-          break;
-        case 'orders':
-          await loadAdminOrders(contentEl);
-          break;
-        case 'categories':
-          await loadAdminCategories(contentEl);
-          break;
-        case 'users':
-          await loadAdminUsers(contentEl);
-          break;
-        case 'settings':
-          await loadAdminSettings(contentEl);
-          break;
-      }
-    } catch (error) {
-      console.error('Error switching admin tab:', error);
-      contentEl.innerHTML = `\n        <div class="text-center text-danger" style="padding:20px;">\n          <i class="fas fa-exclamation-circle fa-2x mb-2"></i>\n          <p>حدث خطأ أثناء فتح التبويب. حاول مرة أخرى.</p>\n        </div>\n      `;
-    } finally {
-      // Reset scroll and focus so the user sees top of content on mobile
-      try { contentEl.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e){}
-      try { contentEl.focus(); } catch(e){}
+    
+    switch (tabName) {
+      case 'products':
+        await loadAdminProducts(contentEl);
+        break;
+      case 'orders':
+        await loadAdminOrders(contentEl);
+        break;
+      case 'categories':
+        await loadAdminCategories(contentEl);
+        break;
+      case 'users':
+        await loadAdminUsers(contentEl);
+        break;
+      case 'settings':
+        await loadAdminSettings(contentEl);
+        break;
     }
   }
 
@@ -5162,7 +4819,7 @@
             <i class="fas fa-plus"></i> إضافة منتج
           </button>
         </div>
-        <div class="table-responsive">
+        <div style="overflow-x: auto;">
           <table class="admin-table">
             <thead>
               <tr>
@@ -5211,12 +4868,7 @@
       `;
       
       container.innerHTML = tableHTML;
-      // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
-      if (typeof makeAdminTablesResponsive === 'function') {
-        requestAnimationFrame(() => {
-          try { makeAdminTablesResponsive(container); } catch (e) { console.error('makeAdminTablesResponsive failed:', e); }
-        });
-      }
+      
     } catch (error) {
       console.error('Error loading admin products:', error);
       container.innerHTML = `
@@ -5519,7 +5171,7 @@
       
       let tableHTML = `
         <h3 style="margin-bottom: 20px;">إدارة الطلبات</h3>
-        <div class="table-responsive">
+        <div style="overflow-x: auto;">
           <table class="admin-table">
             <thead>
               <tr>
@@ -5567,12 +5219,7 @@
       `;
       
       container.innerHTML = tableHTML;
-      // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
-      if (typeof makeAdminTablesResponsive === 'function') {
-        requestAnimationFrame(() => {
-          try { makeAdminTablesResponsive(container); } catch (e) { console.error('makeAdminTablesResponsive failed:', e); }
-        });
-      }
+      
     } catch (error) {
       console.error('Error loading admin orders:', error);
       container.innerHTML = `
@@ -5728,7 +5375,7 @@
             <i class="fas fa-plus"></i> إضافة تصنيف
           </button>
         </div>
-        <div class="table-responsive">
+        <div style="overflow-x: auto;">
           <table class="admin-table">
             <thead>
               <tr>
@@ -5775,12 +5422,7 @@
       `;
       
       container.innerHTML = tableHTML;
-      // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
-      if (typeof makeAdminTablesResponsive === 'function') {
-        requestAnimationFrame(() => {
-          try { makeAdminTablesResponsive(container); } catch (e) { console.error('makeAdminTablesResponsive failed:', e); }
-        });
-      }
+      
     } catch (error) {
       console.error('Error loading admin categories:', error);
       container.innerHTML = `
@@ -5961,7 +5603,7 @@
       
       let tableHTML = `
         <h3 style="margin-bottom: 20px;">إدارة المستخدمين</h3>
-        <div class="table-responsive">
+        <div style="overflow-x: auto;">
           <table class="admin-table">
             <thead>
               <tr>
@@ -6009,12 +5651,7 @@
       `;
       
       container.innerHTML = tableHTML;
-      // تحويل الجدول إلى بطاقات للأجهزة الصغيرة
-      if (typeof makeAdminTablesResponsive === 'function') {
-        requestAnimationFrame(() => {
-          try { makeAdminTablesResponsive(container); } catch (e) { console.error('makeAdminTablesResponsive failed:', e); }
-        });
-      }
+      
     } catch (error) {
       console.error('Error loading admin users:', error);
       container.innerHTML = `
@@ -6770,7 +6407,71 @@
     </div>
   </footer>
 
+  <!-- PWA Install Script -->
   <script>
+  // Install Prompt
+  let deferredPrompt;
+  const installButton = document.createElement('button');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // إنشاء زر التثبيت إذا لم يكن موجود
+    if (!document.getElementById('installButton')) {
+      installButton.id = 'installButton';
+      installButton.innerHTML = `
+        <i class="fas fa-download"></i>
+        <span>تثبيت التطبيق</span>
+      `;
+      installButton.className = 'btn btn-primary';
+      installButton.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: var(--shadow-lg);
+        animation: pulse 2s infinite;
+      `;
+      installButton.onclick = installApp;
+      
+      document.body.appendChild(installButton);
+    }
+  });
+
+  // Install App Function
+  async function installApp() {
+    if (!deferredPrompt) return;
+    
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      console.log('✅ User accepted the install prompt');
+      if (installButton.parentNode) {
+        installButton.style.display = 'none';
+      }
+    } else {
+      console.log('❌ User dismissed the install prompt');
+    }
+    
+    deferredPrompt = null;
+  }
+
+  // Detect if app is installed
+  window.addEventListener('appinstalled', () => {
+    console.log('🎉 PWA installed successfully');
+    if (installButton.parentNode) {
+      installButton.style.display = 'none';
+    }
+    
+    // إظهار رسالة نجاح التثبيت
+    showNotification('تم تثبيت التطبيق بنجاح!', 'success');
+  });
+
   // تحسينات Mobile UX
   function enhanceMobileUX() {
     // منع zoom غير مقصود
@@ -6827,24 +6528,8 @@
         window.location.reload();
       }
     });
+  }
 
-    // Helper to clear caches programmatically (useful for debugging deploys)
-    window.clearSiteCache = function() {
-      if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-        const mc = new MessageChannel();
-        mc.port1.onmessage = (e) => {
-          console.log('clearSiteCache response:', e.data);
-          if (e.data && e.data.success) {
-            console.log('✅ Site caches cleared via Service Worker. Reloading...');
-            window.location.reload(true);
-          }
-        };
-        navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE' }, [mc.port2]);
-      } else {
-        console.log('No active service worker to clear cache.');
-      }
-    };
-  
   // تحسين Firebase Performance
   function optimizeFirebase() {
     if (typeof firebase !== 'undefined') {
@@ -6876,15 +6561,10 @@
         window.loadProducts = async function() {
           const cached = getCachedData('products_cache');
           if (cached) {
-            console.log('📦 Using cached products (rendering from cache)');
-            // عرض البيانات المخزنة في الكاش بدلاً من إرجاع undefined
-            if (cached.featured) renderProducts('featuredContainer', cached.featured);
-            if (cached.offers) renderProducts('offersContainer', cached.offers);
-            if (cached.newProducts) renderProducts('newProductsContainer', cached.newProducts);
-            if (cached.all) globalProducts = cached.all;
+            console.log('📦 Using cached products');
             return Promise.resolve(cached);
           }
-
+          
           const result = await originalLoadProducts();
           cacheData('products_cache', result);
           return result;
@@ -6910,74 +6590,6 @@
 
   // تشغيل تلميح التثبيت
   showPWAInstallHint();
-
-  // Global error handler to report runtime errors and show notification if available
-  window.onerror = function(message, source, lineno, colno, error) {
-    console.error('Global error caught:', message, source, lineno, colno, error);
-    try {
-      if (typeof showNotification === 'function') {
-        showNotification('حدث خطأ في التطبيق: ' + (message || ''), 'error');
-      }
-    } catch (e) {
-      // ignore
-    }
-  };
-  </script>
-  <script src="./admin-responsive.js"></script>
-  <script>
-    // EOF marker to help detect truncated responses or caching issues
-    window.__indexEOF = true;
-    console.log('EOF_MARKER: index.html fully parsed');
-
-    // Quick runtime check you can run in console to inspect the raw served HTML
-    window.__fetchIndexDiagnostics = async function() {
-      try {
-        const res = await fetch('/index.html', { cache: 'no-store' });
-        console.log('index.html status:', res.status, 'content-length:', res.headers.get('content-length'));
-        const text = await res.text();
-        console.log('index.html last 300 chars:\n', text.slice(-300));
-        return { status: res.status, tail: text.slice(-300) };
-      } catch (e) {
-        console.error('fetch index diagnostics failed:', e);
-        throw e;
-      }
-    };
-
-    // Debug banner: shown when EOF marker didn't run (likely truncated/cached file)
-    (function showReloadBannerWhenTruncated() {
-      const existing = document.getElementById('debugReloadBanner');
-      if (existing) return;
-
-      setTimeout(async () => {
-        if (window.__indexEOF) return; // page fully parsed
-
-        // create banner
-        const banner = document.createElement('div');
-        banner.id = 'debugReloadBanner';
-        banner.style.cssText = 'position:fixed;left:12px;right:12px;bottom:80px;z-index:2147483647;padding:12px;border-radius:10px;background:#ffefef;border:1px solid #ffb3b3;color:#700;box-shadow:0 8px 24px rgba(0,0,0,0.2);font-weight:700;text-align:center;';
-        banner.innerHTML = `نسخة الموقع قد تكون مقطوعة أو مخزّنة. اضغط لإعادة التحميل من الشبكة <button id="debugReloadBtn" style="margin-left:10px;padding:8px 10px;border-radius:8px;border:none;background:#6B5BFF;color:white;cursor:pointer;font-weight:700">Reload (Network)</button>`;
-
-        document.body.appendChild(banner);
-
-        document.getElementById('debugReloadBtn').addEventListener('click', async () => {
-          try {
-            // Try to bypass SW by clearing caches and unregistering then reload with ?no_cache=1
-            if ('serviceWorker' in navigator) {
-              const regs = await navigator.serviceWorker.getRegistrations();
-              for (const r of regs) await r.unregister();
-            }
-            const keys = await caches.keys();
-            for (const k of keys) await caches.delete(k);
-            console.log('Debug: SW unregistered and caches deleted. Reloading with no_cache.');
-            // Force fresh fetch
-            location.href = location.pathname + '?no_cache=1';
-          } catch (e) {
-            console.error('Reload from network failed:', e);
-            alert('خطأ في إعادة التحميل من الشبكة، راجع الكونسول.');
-          }
-        });
-      }, 900);
-    })();
   </script>
 </body>
 </html>
