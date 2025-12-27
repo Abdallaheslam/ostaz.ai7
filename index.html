@@ -4997,28 +4997,40 @@
     }
   }
 
-  // فتح لوحة التحكم الرئيسية
+  // فتح لوحة التحكم الرئيسية - تصميم احترافي محسّن للهواتف
   function openAdminPanel() {
     if (!currentUser || userData?.role !== 'admin') {
       showNotification('ليس لديك صلاحية الوصول إلى لوحة التحكم', 'error');
       return;
     }
-    
+
     const modalHTML = `
       <div class="modal-overlay" onclick="closeModal()">
-        <div class="admin-panel" onclick="event.stopPropagation()" style="max-width: 1200px; margin: 20px; width: calc(100% - 40px);">
-          <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 20px; left: 20px;">
+        <div class="admin-panel" onclick="event.stopPropagation()" style="max-width: 100vw; margin: 0; width: 100vw; height: 100vh; border-radius: 0;">
+          <button class="modal-close" onclick="closeModal()" style="position: absolute; top: 15px; left: 15px; z-index: 1001;">
             <i class="fas fa-times"></i>
           </button>
-          
+
+          <!-- رأس احترافي محسّن -->
           <div class="admin-header">
-            <h2 class="admin-title">
-              <i class="fas fa-tools"></i>
-              لوحة تحكم المدير
-            </h2>
-            <p class="admin-subtitle">إدارة المتجر بالكامل من مكان واحد</p>
+            <div style="text-align: center; padding: 20px 15px;">
+              <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px;">
+                <div style="width: 48px; height: 48px; background: var(--primary-gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(107, 91, 255, 0.3);">
+                  <i class="fas fa-store" style="color: white; font-size: 1.4rem;"></i>
+                </div>
+                <div>
+                  <h2 class="admin-title" style="font-size: 1.4rem; margin: 0; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                    سوبر ماركت الأستاذ
+                  </h2>
+                  <p class="admin-subtitle" style="margin: 4px 0 0; opacity: 0.9; font-size: 0.85rem;">
+                    لوحة تحكم المدير
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          
+
+          <!-- إحصائيات محسّنة للهواتف -->
           <div class="admin-stats" id="adminStats">
             <div class="stat-card">
               <div class="stat-icon">
@@ -5027,7 +5039,7 @@
               <div class="stat-value" id="statOrders">0</div>
               <div class="stat-label">الطلبات</div>
             </div>
-            
+
             <div class="stat-card">
               <div class="stat-icon">
                 <i class="fas fa-box"></i>
@@ -5035,7 +5047,7 @@
               <div class="stat-value" id="statProducts">0</div>
               <div class="stat-label">المنتجات</div>
             </div>
-            
+
             <div class="stat-card">
               <div class="stat-icon">
                 <i class="fas fa-users"></i>
@@ -5043,7 +5055,7 @@
               <div class="stat-value" id="statUsers">0</div>
               <div class="stat-label">المستخدمين</div>
             </div>
-            
+
             <div class="stat-card">
               <div class="stat-icon">
                 <i class="fas fa-money-bill-wave"></i>
@@ -5052,25 +5064,32 @@
               <div class="stat-label">المبيعات</div>
             </div>
           </div>
-          
+
+          <!-- تبويبات محسّنة للهواتف -->
           <div class="admin-tabs">
             <button class="admin-tab active" onclick="showAdminTab('products', this)">
-              <i class="fas fa-box"></i> المنتجات
+              <i class="fas fa-box"></i>
+              <span>المنتجات</span>
             </button>
             <button class="admin-tab" onclick="showAdminTab('orders', this)">
-              <i class="fas fa-shopping-cart"></i> الطلبات
+              <i class="fas fa-shopping-cart"></i>
+              <span>الطلبات</span>
             </button>
             <button class="admin-tab" onclick="showAdminTab('categories', this)">
-              <i class="fas fa-tags"></i> التصنيفات
+              <i class="fas fa-tags"></i>
+              <span>التصنيفات</span>
             </button>
             <button class="admin-tab" onclick="showAdminTab('users', this)">
-              <i class="fas fa-users"></i> المستخدمين
+              <i class="fas fa-users"></i>
+              <span>المستخدمين</span>
             </button>
             <button class="admin-tab" onclick="showAdminTab('settings', this)">
-              <i class="fas fa-cog"></i> الإعدادات
+              <i class="fas fa-cog"></i>
+              <span>الإعدادات</span>
             </button>
           </div>
-          
+
+          <!-- محتوى محسّن -->
           <div class="admin-content" id="adminContent">
             <div class="loading">
               <div class="spinner"></div>
@@ -5079,12 +5098,12 @@
         </div>
       </div>
     `;
-    
+
     document.getElementById('modalsContainer').innerHTML = modalHTML;
-    
+
     // تحميل الإحصائيات
     loadAdminStats();
-    
+
     // تحميل أول تبويب
     showAdminTab('products', document.querySelector('.admin-tab.active'));
   }
