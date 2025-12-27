@@ -98,7 +98,9 @@ function makeAdminTablesResponsive(container) {
   }
 }
 
-// Run on resize to ensure responsiveness
+// Initialize on DOMContentLoaded and keep resize handler minimal
+document.addEventListener('DOMContentLoaded', () => makeAdminTablesResponsive(document));
+
 window.addEventListener('resize', () => {
   // no-op for now; cards are static once created
 });
