@@ -149,24 +149,28 @@
       color: var(--primary-dark);
     }
     
-    /* ====== BUTTONS ====== */
+    /* ====== BUTTONS - MOBILE OPTIMIZED ====== */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 12px 24px;
+      padding: 14px 28px;
       border: none;
       border-radius: var(--border-radius-md);
       font-family: 'Cairo', sans-serif;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 1rem;
       cursor: pointer;
       transition: all var(--transition-normal);
-      min-height: 44px;
-      min-width: 44px;
+      min-height: 48px;
+      min-width: 48px;
       position: relative;
       overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
     
     .btn::after {
