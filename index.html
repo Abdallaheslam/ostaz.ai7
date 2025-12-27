@@ -6574,82 +6574,7 @@
   console.log('🎉 تطبيق سوبر ماركت الأستاذ جاهز!');
   </script>
 
-  <!-- PWA Install Prompt -->
-  <script>
-  // تسجيل Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').then(registration => {
-        console.log('ServiceWorker registered with scope:', registration.scope);
-      }).catch(error => {
-        console.log('ServiceWorker registration failed:', error);
-      });
-    });
-  }
 
-  // Install Prompt
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    
-    // عرض زر التثبيت بعد 5 ثواني
-    setTimeout(() => {
-      if (deferredPrompt) {
-        showInstallPromotion();
-      }
-    }, 5000);
-  });
-
-  function showInstallPromotion() {
-    const installModal = `
-      <div class="modal-overlay" onclick="closeModal()">
-        <div class="modal" onclick="event.stopPropagation()" style="max-width: 400px;">
-          <button class="modal-close" onclick="closeModal()">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-body text-center">
-            <i class="fas fa-download fa-3x mb-3" style="color: var(--primary-color);"></i>
-            <h3 class="mb-3">تثبيت التطبيق</h3>
-            <p class="text-muted mb-4">تثبيت تطبيق سوبر ماركت الأستاذ للحصول على تجربة أفضل</p>
-            <button class="btn btn-primary btn-block" onclick="installApp()">
-              <i class="fas fa-download"></i> تثبيت التطبيق
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    document.getElementById('modalsContainer').innerHTML = installModal;
-  }
-
-  async function installApp() {
-    if (!deferredPrompt) return;
-    
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      console.log('User accepted the install prompt');
-    } else {
-      console.log('User dismissed the install prompt');
-    }
-    
-    deferredPrompt = null;
-    closeModal();
-  }
-
-  // تحديث التطبيق
-  if ('serviceWorker' in navigator) {
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (!refreshing) {
-        refreshing = true;
-        window.location.reload();
-      }
-    });
-  }
-  </script>
 
   <!-- Banner تطوير -->
   <footer style="
