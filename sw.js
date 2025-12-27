@@ -8,9 +8,9 @@ const STATIC_CACHE_FILES = [
   '/index.html',
   '/offline.html',
   '/manifest.json',
-  '/icons/icon-72x72.png',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png',
+  '/icons/icon-72x72.svg',
+  '/icons/icon-192x192.svg',
+  '/icons/icon-512x512.svg',
   'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
   'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
@@ -89,6 +89,7 @@ self.addEventListener('fetch', event => {
     // للصور
     else if (url.pathname.includes('/icons/') || 
              url.pathname.includes('.png') || 
+             url.pathname.includes('.svg') || 
              url.pathname.includes('.jpg') ||
              url.pathname.includes('.jpeg') ||
              url.pathname.includes('.webp')) {
@@ -262,8 +263,8 @@ self.addEventListener('message', event => {
 self.addEventListener('push', event => {
   const options = {
     body: event.data ? event.data.text() : 'إشعار جديد من سوبر ماركت الأستاذ',
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/icon-72x72.png',
+    icon: '/icons/icon-192x192.svg',
+    badge: '/icons/icon-72x72.svg',
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
@@ -273,12 +274,12 @@ self.addEventListener('push', event => {
       {
         action: 'explore',
         title: 'فتح التطبيق',
-        icon: '/icons/icon-72x72.png'
+        icon: '/icons/icon-72x72.svg'
       },
       {
         action: 'close',
         title: 'إغلاق',
-        icon: '/icons/icon-72x72.png'
+        icon: '/icons/icon-72x72.svg'
       }
     ]
   };
