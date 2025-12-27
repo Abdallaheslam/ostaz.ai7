@@ -1,0 +1,6 @@
+dist/
+node_modules/
+icons/*.svg
+.env
+.env.local
+.env.*
