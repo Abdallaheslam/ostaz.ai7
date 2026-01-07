@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6B5BFF">
+    <title>سوبر ماركت الأستاذ | الرئيسية</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="assets/icons/icon-192x192.png">
+    
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": "سوبر ماركت الأستاذ",
+        "description": "سوبر ماركت أونلاين مع توصيل سريع",
+        "url": "https://supermarket-alostaz.web.app",
+        "telephone": "+201550462808",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "شارع عبدالحافظ",
+            "addressLocality": "بنها",
+            "addressRegion": "القليوبية"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Top Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <!-- Logo -->
+            <div class="logo" onclick="goHome()">
+                <div class="logo-icon"><i class="fas fa-store"></i></div>
+                <div>
+                    <div class="logo-text">سوبر ماركت الأستاذ</div>
+                    <div class="logo-subtext">تسوق بثقة، عروض مذهلة</div>
+                </div>
+            </div>
+            
+            <!-- Mobile Search Button -->
+            <button class="mobile-search-btn" onclick="toggleMobileSearch()">
+                <i class="fas fa-search"></i>
+            </button>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="ابحث عن منتج...">
+                    <button class="search-button"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            
+            <!-- Auth Buttons -->
+            <div class="auth-buttons" id="authButtons">
+                <button class="btn btn-primary btn-sm" onclick="openLoginModal()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>تسجيل الدخول</span>
+                </button>
+                <button class="btn btn-orange btn-sm" onclick="openRegisterModal()">
+                    <i class="fas fa-user-plus"></i>
+                    <span>إنشاء حساب</span>
+                </button>
+            </div>
+            
+            <!-- User Profile -->
+            <div class="user-profile" id="userProfile" style="display: none;">
+                <div class="user-info">
+                    <div class="user-name" id="userName">مستخدم</div>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=مستخدم&background=6B5BFF&color=fff&size=64" 
+                     class="user-avatar" id="userAvatar">
+                <div class="user-dropdown">
+                    <a href="#" class="dropdown-item" onclick="openProfile()">
+                        <i class="fas fa-user"></i><span>حسابي</span>
+                    </a>
+                    <a href="#" class="dropdown-item" onclick="openOrders()">
+                        <i class="fas fa-shopping-bag"></i><span>طلباتي</span>
+                    </a>
+                    <a href="#" class="dropdown-item" onclick="openWishlist()">
+                        <i class="fas fa-heart"></i><span>المفضلة</span>
+                        <span class="nav-badge" id="favoritesBadge"></span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item" onclick="openAddresses()">
+                        <i class="fas fa-map-marker-alt"></i><span>العناوين</span>
+                    </a>
+                    <a href="#" class="dropdown-item" onclick="openNotifications()">
+                        <i class="fas fa-bell"></i><span>الإشعارات</span>
+                        <span class="nav-badge" id="notificationBadge"></span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item text-danger" onclick="logoutUser()">
+                        <i class="fas fa-sign-out-alt"></i><span>تسجيل الخروج</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Search -->
+    <div class="mobile-search-container" id="mobileSearch">
+        <div class="search-box">
+            <input type="text" class="search-input" id="mobileSearchInput" placeholder="ابحث عن منتج...">
+            <button class="search-button" onclick="searchFromMobile()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">🎉 عروض 2026 الحصرية 🎉</h1>
+                <p class="hero-subtitle">خصومات تصل إلى 50% | توصيل مجاني للطلبات فوق 300 جنيه</p>
+                <div class="hero-actions">
+                    <button class="btn btn-secondary btn-lg" onclick="showOffersPage()">
+                        <i class="fas fa-percentage"></i>تصفح العروض
+                    </button>
+                    <button class="btn btn-coupon btn-lg" onclick="openCouponModal()">
+                        <i class="fas fa-tag"></i>استخدم كوبون
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Categories Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-tags"></i>تصفح التصنيفات</h2>
+                <a href="#" class="view-all" onclick="showCategoriesPage()">
+                    عرض الكل <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+            <div class="categories-grid" id="categoriesContainer"></div>
+        </section>
+        
+        <!-- Offers Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-fire"></i>العروض الخاصة</h2>
+                <a href="#" class="view-all" onclick="showOffersPage()">
+                    عرض الكل <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+            <div class="products-grid" id="offersContainer"></div>
+        </section>
+        
+        <!-- Featured Products -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-star"></i>منتجات مميزة</h2>
+                <a href="#" class="view-all" onclick="showAllProductsPage()">
+                    عرض الكل <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+            <div class="products-grid" id="featuredContainer"></div>
+        </section>
+        
+        <!-- New Products -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-bolt"></i>منتجات جديدة</h2>
+                <a href="#" class="view-all" onclick="showAllProductsPage()">
+                    عرض الكل <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+            <div class="products-grid" id="newProductsContainer"></div>
+        </section>
+    </main>
+    
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" onclick="goHome(); setActiveNav(this);">
+            <div class="nav-icon"><i class="fas fa-home"></i></div>
+            <span class="nav-label">الرئيسية</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showAllProductsPage(); setActiveNav(this);">
+            <div class="nav-icon"><i class="fas fa-shopping-bag"></i></div>
+            <span class="nav-label">المنتجات</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showCategoriesPage(); setActiveNav(this);">
+            <div class="nav-icon"><i class="fas fa-tags"></i></div>
+            <span class="nav-label">التصنيفات</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showOffersPage(); setActiveNav(this);">
+            <div class="nav-icon"><i class="fas fa-percentage"></i></div>
+            <span class="nav-label">العروض</span>
+        </a>
+        <a href="#" class="nav-item" onclick="openCart(); setActiveNav(this);">
+            <div class="nav-icon"><i class="fas fa-shopping-cart"></i></div>
+            <span class="nav-label">العربة</span>
+            <span class="nav-badge" id="cartBadge">0</span>
+        </a>
+        <a href="#" class="nav-item" onclick="openWishlist(); setActiveNav(this);">
+            <div class="nav-icon"><i class="fas fa-heart"></i></div>
+            <span class="nav-label">المفضلة</span>
+            <span class="nav-badge" id="favoritesBottomBadge"></span>
+        </a>
+        <a href="#" class="nav-item" onclick="openNotifications(); setActiveNav(this);">
+            <div class="nav-icon"><i class="fas fa-bell"></i></div>
+            <span class="nav-label">الإشعارات</span>
+            <span class="nav-badge" id="notifBadge">0</span>
+        </a>
+    </nav>
+    
+    <!-- Modals Container -->
+    <div id="modalsContainer"></div>
+    
+    <!-- Floating Buttons -->
+    <button id="adminFloatBtn" class="floating-btn admin-btn" onclick="openAdminPanel()">
+        <i class="fas fa-tools"></i>
+    </button>
+    <button id="whatsappFloatBtn" class="floating-btn whatsapp-btn" onclick="openWhatsapp()">
+        <i class="fab fa-whatsapp"></i>
+    </button>
+    <button id="phoneFloatBtn" class="floating-btn phone-btn" onclick="openPhone()">
+        <i class="fas fa-phone"></i>
+    </button>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+    
+    <!-- JavaScript Files -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/products.js"></script>
+    <script src="assets/js/admin.js"></script>
+    <script src="assets/js/ui.js"></script>
+    
+    <!-- PWA Script -->
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+            .then(() => console.log('Service Worker Registered'))
+            .catch(err => console.log('Service Worker Error:', err));
+    }
+    </script>
+</body>
+</html>
