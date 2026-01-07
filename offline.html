@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوبر ماركت الأستاذ - غير متصل</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #6B5BFF 0%, #7C64FF 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .offline-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .features {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: right;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            justify-content: flex-end;
+        }
+        
+        .feature i {
+            margin-left: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .reconnect-btn {
+            background: white;
+            color: #6B5BFF;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px auto;
+            min-width: 200px;
+        }
+        
+        .reconnect-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .loading {
+            display: none;
+            animation: spin 1s linear infinite;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="offline-icon">
+            <i class="fas fa-wifi-slash"></i>
+        </div>
+        
+        <h1>أنت غير متصل بالإنترنت</h1>
+        
+        <p>لا يمكنك الوصول إلى المحتوى الآن بسبب انقطاع الاتصال.</p>
+        
+        <div class="features">
+            <div class="feature">
+                <span>يمكنك الاستمرار في تصفح الصفحات التي زُرتها مسبقاً</span>
+                <i class="fas fa-history"></i>
+            </div>
+            <div class="feature">
+                <span>المنتجات التي حفظتها متاحة للعرض</span>
+                <i class="fas fa-box"></i>
+            </div>
+            <div class="feature">
+                <span>عربة التسوق محفوظة محلياً</span>
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        
+        <button id="reconnectBtn" class="reconnect-btn" onclick="reconnect()">
+            <i class="fas fa-redo"></i>
+            <span>إعادة المحاولة</span>
+            <i class="fas fa-redo loading" id="loadingIcon"></i>
+        </button>
+        
+        <div class="footer">
+            تطوير AI7 - جميع الحقوق محفوظة © 2026
+        </div>
+    </div>
+    
+    <script>
+        function reconnect() {
+            const btn = document.getElementById('reconnectBtn');
+            const loadingIcon = document.getElementById('loadingIcon');
+            
+            btn.disabled = true;
+            loadingIcon.style.display = 'inline-block';
+            btn.querySelector('span').textContent = 'جاري إعادة الاتصال...';
+            
+            setTimeout(() => {
+                if (navigator.onLine) {
+                    window.location.href = '/';
+                } else {
+                    btn.disabled = false;
+                    loadingIcon.style.display = 'none';
+                    btn.querySelector('span').textContent = 'إعادة المحاولة';
+                    alert('لا يزال الاتصال بالإنترنت غير متوفر. يرجى التحقق من اتصالك.');
+                }
+            }, 2000);
+        }
+        
+        // مراقبة حالة الاتصال
+        window.addEventListener('online', () => {
+            window.location.href = '/';
+        });
+        
+        // محاولة إعادة الاتصال كل 10 ثواني
+        setInterval(() => {
+            if (navigator.onLine) {
+                window.location.href = '/';
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
