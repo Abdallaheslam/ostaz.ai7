@@ -47,8 +47,6 @@ async function run() {
       await sharp(src).resize(32,32).png().toFile(tmp32);
       await sharp(src).resize(16,16).png().toFile(tmp16);
 
-      // Use png-to-ico with file paths (more compatible)
-      const pngToIco = require('png-to-ico');
       // Debug: ensure files exist
       const s1 = await fs.stat(tmp32).catch(()=>null);
       const s2 = await fs.stat(tmp16).catch(()=>null);
@@ -57,8 +55,8 @@ async function run() {
       } else {
         console.log('tmp32 size', s1.size, 'tmp16 size', s2.size);
         try {
-          const imagesToIco = pngToIco.imagesToIco || pngToIco.default || pngToIco;
-          const icoBuf = await imagesToIco([tmp32, tmp16]);
+          const icoFunc = pngToIco.default || pngToIco;
+          const icoBuf = await icoFunc([tmp32, tmp16]);
           await fs.writeFile(path.join(dir, 'favicon.ico'), icoBuf);
           await fs.remove(tmpDir);
           console.log('Generated favicon.ico');
