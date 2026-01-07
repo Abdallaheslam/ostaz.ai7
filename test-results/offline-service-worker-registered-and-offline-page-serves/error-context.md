@@ -1,0 +1,497 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4] [cursor=pointer]:
+        - generic [ref=e6]: 
+        - generic [ref=e8]:
+          - text: سوبر ماركت
+          - generic [ref=e9]: الأستاذ
+      - text: 
+      - generic [ref=e11]:
+        - textbox "ابحث عن منتج..." [ref=e12]
+        - button "" [ref=e13] [cursor=pointer]:
+          - generic [ref=e14]: 
+      - generic [ref=e15]:
+        - button " تسجيل الدخول" [ref=e16] [cursor=pointer]:
+          - generic [ref=e17]: 
+          - generic [ref=e18]: تسجيل الدخول
+        - button " إنشاء حساب" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: 
+          - generic [ref=e21]: إنشاء حساب
+  - text: 
+  - main [ref=e22]:
+    - generic [ref=e24]:
+      - heading "🎉 عروض 2026 الحصرية 🎉" [level=1] [ref=e25]
+      - paragraph [ref=e26]: خصومات تصل إلى 50% على جميع المنتجات | توصيل مجاني للطلبات فوق 300 جنيه
+      - generic [ref=e27]:
+        - button "% تصفح العروض" [ref=e28] [cursor=pointer]:
+          - generic [ref=e29]: "%"
+          - text: تصفح العروض
+        - button " استخدم كوبون" [ref=e30] [cursor=pointer]:
+          - generic [ref=e31]: 
+          - text: استخدم كوبون
+    - generic [ref=e32]:
+      - generic [ref=e33]:
+        - heading " تصفح التصنيفات" [level=2] [ref=e34]:
+          - generic [ref=e35]: 
+          - text: تصفح التصنيفات
+        - link "عرض الكل " [ref=e36] [cursor=pointer]:
+          - /url: "#"
+          - text: عرض الكل
+          - generic [ref=e37]: 
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - generic [ref=e41]: 
+          - generic [ref=e42]: معلبات
+          - generic [ref=e43]: 0 منتج
+        - generic [ref=e44]:
+          - generic [ref=e46]: 
+          - generic [ref=e47]: شيبسيات
+          - generic [ref=e48]: 0 منتج
+        - generic [ref=e49]:
+          - generic [ref=e51]: 
+          - generic [ref=e52]: معلبات
+          - generic [ref=e53]: 0 منتج
+        - generic [ref=e54]:
+          - generic [ref=e56]: 
+          - generic [ref=e57]: جميع المنتجات
+          - generic [ref=e58]: 0 منتج
+        - generic [ref=e59]:
+          - generic [ref=e61]: 
+          - generic [ref=e62]: معلبات
+          - generic [ref=e63]: 0 منتج
+        - generic [ref=e64]:
+          - generic [ref=e66]: 
+          - generic [ref=e67]: معلبات
+          - generic [ref=e68]: 0 منتج
+        - generic [ref=e69]:
+          - generic [ref=e71]: 
+          - generic [ref=e72]: كروت شحن (اورنج/اتصالات/فودافون)
+          - generic [ref=e73]: 0 منتج
+        - generic [ref=e74]:
+          - generic [ref=e76]: 
+          - generic [ref=e77]: كوكيز
+          - generic [ref=e78]: 0 منتج
+    - generic [ref=e79]:
+      - generic [ref=e80]:
+        - heading " العروض الخاصة" [level=2] [ref=e81]:
+          - generic [ref=e82]: 
+          - text: العروض الخاصة
+        - link "عرض الكل " [ref=e83] [cursor=pointer]:
+          - /url: "#"
+          - text: عرض الكل
+          - generic [ref=e84]: 
+      - generic [ref=e85]:
+        - generic [ref=e86]:
+          - generic [ref=e87]: 1% خصم
+          - generic [ref=e89]: 
+          - generic [ref=e90]:
+            - button "" [ref=e91] [cursor=pointer]:
+              - generic [ref=e92]: 
+            - button "" [ref=e93] [cursor=pointer]:
+              - generic [ref=e94]: 
+            - button "" [ref=e95] [cursor=pointer]:
+              - generic [ref=e96]: 
+          - img "شيبسي" [ref=e98]
+          - generic [ref=e99]:
+            - heading "شيبسي" [level=3] [ref=e100]
+            - generic [ref=e101]: شيبسيات
+            - generic [ref=e102]:
+              - generic [ref=e103]: 9.90 جنيه
+              - generic [ref=e104]: 10.00 جنيه
+            - generic [ref=e105]:
+              - generic [ref=e106]:
+                - generic [ref=e107]: 
+                - generic [ref=e108]: 
+                - generic [ref=e109]: 
+                - generic [ref=e110]: 
+                - generic [ref=e111]: 
+              - generic [ref=e112]: (0)
+            - generic [ref=e113]:
+              - generic [ref=e114]: 
+              - text: متوفر بكثرة
+            - button " أضف إلى العربة" [ref=e115] [cursor=pointer]:
+              - generic [ref=e116]: 
+              - text: أضف إلى العربة
+        - generic [ref=e117]:
+          - generic [ref=e118]: 2% خصم
+          - generic [ref=e119]:
+            - button "" [ref=e120] [cursor=pointer]:
+              - generic [ref=e121]: 
+            - button "" [ref=e122] [cursor=pointer]:
+              - generic [ref=e123]: 
+            - button "" [ref=e124] [cursor=pointer]:
+              - generic [ref=e125]: 
+          - img "جديد" [ref=e127]
+          - generic [ref=e128]:
+            - heading "جديد" [level=3] [ref=e129]
+            - generic [ref=e130]: 88FzrN863p340kcrYcZg
+            - generic [ref=e131]:
+              - generic [ref=e132]: 9.80 جنيه
+              - generic [ref=e133]: 10.00 جنيه
+            - generic [ref=e134]:
+              - generic [ref=e135]:
+                - generic [ref=e136]: 
+                - generic [ref=e137]: 
+                - generic [ref=e138]: 
+                - generic [ref=e139]: 
+                - generic [ref=e140]: 
+              - generic [ref=e141]: (0)
+            - generic [ref=e142]:
+              - generic [ref=e143]: 
+              - text: متوفر بكثرة
+            - button " أضف إلى العربة" [ref=e144] [cursor=pointer]:
+              - generic [ref=e145]: 
+              - text: أضف إلى العربة
+        - generic [ref=e146]:
+          - generic [ref=e147]: 10% خصم
+          - generic [ref=e148]:
+            - button "" [ref=e149] [cursor=pointer]:
+              - generic [ref=e150]: 
+            - button "" [ref=e151] [cursor=pointer]:
+              - generic [ref=e152]: 
+            - button "" [ref=e153] [cursor=pointer]:
+              - generic [ref=e154]: 
+          - img "تونه" [ref=e156]
+          - generic [ref=e157]:
+            - heading "تونه" [level=3] [ref=e158]
+            - generic [ref=e159]: أرز ومكرونة
+            - generic [ref=e160]:
+              - generic [ref=e161]: 9.00 جنيه
+              - generic [ref=e162]: 10.00 جنيه
+            - generic [ref=e163]:
+              - generic [ref=e164]:
+                - generic [ref=e165]: 
+                - generic [ref=e166]: 
+                - generic [ref=e167]: 
+                - generic [ref=e168]: 
+                - generic [ref=e169]: 
+              - generic [ref=e170]: (0)
+            - generic [ref=e171]:
+              - generic [ref=e172]: 
+              - text: متوفر بكثرة
+            - button " أضف إلى العربة" [ref=e173] [cursor=pointer]:
+              - generic [ref=e174]: 
+              - text: أضف إلى العربة
+    - generic [ref=e175]:
+      - generic [ref=e176]:
+        - heading " منتجات مميزة" [level=2] [ref=e177]:
+          - generic [ref=e178]: 
+          - text: منتجات مميزة
+        - link "عرض الكل " [ref=e179] [cursor=pointer]:
+          - /url: "#"
+          - text: عرض الكل
+          - generic [ref=e180]: 
+      - generic [ref=e181]:
+        - generic [ref=e182]:
+          - generic [ref=e184]: 
+          - generic [ref=e185]:
+            - button "" [ref=e186] [cursor=pointer]:
+              - generic [ref=e187]: 
+            - button "" [ref=e188] [cursor=pointer]:
+              - generic [ref=e189]: 
+            - button "" [ref=e190] [cursor=pointer]:
+              - generic [ref=e191]: 
+          - img "شستوس" [ref=e193]
+          - generic [ref=e194]:
+            - heading "شستوس" [level=3] [ref=e195]
+            - generic [ref=e196]: عام
+            - generic [ref=e198]: 10.00 جنيه
+            - generic [ref=e199]:
+              - generic [ref=e200]:
+                - generic [ref=e201]: 
+                - generic [ref=e202]: 
+                - generic [ref=e203]: 
+                - generic [ref=e204]: 
+                - generic [ref=e205]: 
+              - generic [ref=e206]: (0)
+            - generic [ref=e207]:
+              - generic [ref=e208]: 
+              - text: نفذت الكمية
+            - button " نفذت الكمية" [disabled] [ref=e209]:
+              - generic [ref=e210]: 
+              - text: نفذت الكمية
+        - generic [ref=e211]:
+          - generic [ref=e212]: 1% خصم
+          - generic [ref=e214]: 
+          - generic [ref=e215]:
+            - button "" [ref=e216] [cursor=pointer]:
+              - generic [ref=e217]: 
+            - button "" [ref=e218] [cursor=pointer]:
+              - generic [ref=e219]: 
+            - button "" [ref=e220] [cursor=pointer]:
+              - generic [ref=e221]: 
+          - img "شيبسي" [ref=e223]
+          - generic [ref=e224]:
+            - heading "شيبسي" [level=3] [ref=e225]
+            - generic [ref=e226]: شيبسيات
+            - generic [ref=e227]:
+              - generic [ref=e228]: 9.90 جنيه
+              - generic [ref=e229]: 10.00 جنيه
+            - generic [ref=e230]:
+              - generic [ref=e231]:
+                - generic [ref=e232]: 
+                - generic [ref=e233]: 
+                - generic [ref=e234]: 
+                - generic [ref=e235]: 
+                - generic [ref=e236]: 
+              - generic [ref=e237]: (0)
+            - generic [ref=e238]:
+              - generic [ref=e239]: 
+              - text: متوفر بكثرة
+            - button " أضف إلى العربة" [ref=e240] [cursor=pointer]:
+              - generic [ref=e241]: 
+              - text: أضف إلى العربة
+    - generic [ref=e242]:
+      - generic [ref=e243]:
+        - heading " منتجات جديدة" [level=2] [ref=e244]:
+          - generic [ref=e245]: 
+          - text: منتجات جديدة
+        - link "عرض الكل " [ref=e246] [cursor=pointer]:
+          - /url: "#"
+          - text: عرض الكل
+          - generic [ref=e247]: 
+      - generic [ref=e248]:
+        - generic [ref=e249]:
+          - generic [ref=e250]:
+            - button "" [ref=e251] [cursor=pointer]:
+              - generic [ref=e252]: 
+            - button "" [ref=e253] [cursor=pointer]:
+              - generic [ref=e254]: 
+            - button "" [ref=e255] [cursor=pointer]:
+              - generic [ref=e256]: 
+          - img "كريمة طهي" [ref=e258]
+          - generic [ref=e259]:
+            - heading "كريمة طهي" [level=3] [ref=e260]
+            - generic [ref=e261]: معلبات
+            - generic [ref=e263]: 75.00 جنيه
+            - generic [ref=e264]:
+              - generic [ref=e265]:
+                - generic [ref=e266]: 
+                - generic [ref=e267]: 
+                - generic [ref=e268]: 
+                - generic [ref=e269]: 
+                - generic [ref=e270]: 
+              - generic [ref=e271]: (0)
+            - generic [ref=e272]:
+              - generic [ref=e273]: 
+              - text: متوفر بكثرة
+            - button " أضف إلى العربة" [ref=e274] [cursor=pointer]:
+              - generic [ref=e275]: 
+              - text: أضف إلى العربة
+        - generic [ref=e276]:
+          - generic [ref=e277]:
+            - button "" [ref=e278] [cursor=pointer]:
+              - generic [ref=e279]: 
+            - button "" [ref=e280] [cursor=pointer]:
+              - generic [ref=e281]: 
+            - button "" [ref=e282] [cursor=pointer]:
+              - generic [ref=e283]: 
+          - img "جديد" [ref=e285]
+          - generic [ref=e286]:
+            - heading "جديد" [level=3] [ref=e287]
+            - generic [ref=e288]: معلبات
+            - generic [ref=e290]: 20.00 جنيه
+            - generic [ref=e291]:
+              - generic [ref=e292]:
+                - generic [ref=e293]: 
+                - generic [ref=e294]: 
+                - generic [ref=e295]: 
+                - generic [ref=e296]: 
+                - generic [ref=e297]: 
+              - generic [ref=e298]: (0)
+            - generic [ref=e299]:
+              - generic [ref=e300]: 
+              - text: متوفر بكثرة
+            - button " أضف إلى العربة" [ref=e301] [cursor=pointer]:
+              - generic [ref=e302]: 
+              - text: أضف إلى العربة
+        - generic [ref=e303]:
+          - generic [ref=e304]: 10% خصم
+          - generic [ref=e305]:
+            - button "" [ref=e306] [cursor=pointer]:
+              - generic [ref=e307]: 
+            - button "" [ref=e308] [cursor=pointer]:
+              - generic [ref=e309]: 
+            - button "" [ref=e310] [cursor=pointer]:
+              - generic [ref=e311]: 
+          - img "تونه" [ref=e313]
+          - generic [ref=e314]:
+            - heading "تونه" [level=3] [ref=e315]
+            - generic [ref=e316]: أرز ومكرونة
+            - generic [ref=e317]:
+              - generic [ref=e318]: 9.00 جنيه
+              - generic [ref=e319]: 10.00 جنيه
+            - generic [ref=e320]:
+              - generic [ref=e321]:
+                - generic [ref=e322]: 
+                - generic [ref=e323]: 
+                - generic [ref=e324]: 
+                - generic [ref=e325]: 
+                - generic [ref=e326]: 
+              - generic [ref=e327]: (0)
+            - generic [ref=e328]:
+              - generic [ref=e329]: 
+              - text: متوفر بكثرة
+            - button " أضف إلى العربة" [ref=e330] [cursor=pointer]:
+              - generic [ref=e331]: 
+              - text: أضف إلى العربة
+        - generic [ref=e332]:
+          - generic [ref=e333]: 2% خصم
+          - generic [ref=e334]:
+            - button "" [ref=e335] [cursor=pointer]:
+              - generic [ref=e336]: 
+            - button "" [ref=e337] [cursor=pointer]:
+              - generic [ref=e338]: 
+            - button "" [ref=e339] [cursor=pointer]:
+              - generic [ref=e340]: 
+          - img "جديد" [ref=e342]
+          - generic [ref=e343]:
+            - heading "جديد" [level=3] [ref=e344]
+            - generic [ref=e345]: 88FzrN863p340kcrYcZg
+            - generic [ref=e346]:
+              - generic [ref=e347]: 9.80 جنيه
+              - generic [ref=e348]: 10.00 جنيه
+            - generic [ref=e349]:
+              - generic [ref=e350]:
+                - generic [ref=e351]: 
+                - generic [ref=e352]: 
+                - generic [ref=e353]: 
+                - generic [ref=e354]: 
+                - generic [ref=e355]: 
+              - generic [ref=e356]: (0)
+            - generic [ref=e357]:
+              - generic [ref=e358]: 
+              - text: متوفر بكثرة
+            - button " أضف إلى العربة" [ref=e359] [cursor=pointer]:
+              - generic [ref=e360]: 
+              - text: أضف إلى العربة
+        - generic [ref=e361]:
+          - generic [ref=e362]:
+            - button "" [ref=e363] [cursor=pointer]:
+              - generic [ref=e364]: 
+            - button "" [ref=e365] [cursor=pointer]:
+              - generic [ref=e366]: 
+            - button "" [ref=e367] [cursor=pointer]:
+              - generic [ref=e368]: 
+          - img "جديد" [ref=e370]
+          - generic [ref=e371]:
+            - heading "جديد" [level=3] [ref=e372]
+            - generic [ref=e373]: 88FzrN863p340kcrYcZg
+            - generic [ref=e375]: 10.00 جنيه
+            - generic [ref=e376]:
+              - generic [ref=e377]:
+                - generic [ref=e378]: 
+                - generic [ref=e379]: 
+                - generic [ref=e380]: 
+                - generic [ref=e381]: 
+                - generic [ref=e382]: 
+              - generic [ref=e383]: (0)
+            - generic [ref=e384]:
+              - generic [ref=e385]: 
+              - text: آخر الكمية
+            - button " أضف إلى العربة" [ref=e386] [cursor=pointer]:
+              - generic [ref=e387]: 
+              - text: أضف إلى العربة
+        - generic [ref=e388]:
+          - generic [ref=e390]: 
+          - generic [ref=e391]:
+            - button "" [ref=e392] [cursor=pointer]:
+              - generic [ref=e393]: 
+            - button "" [ref=e394] [cursor=pointer]:
+              - generic [ref=e395]: 
+            - button "" [ref=e396] [cursor=pointer]:
+              - generic [ref=e397]: 
+          - img "شستوس" [ref=e399]
+          - generic [ref=e400]:
+            - heading "شستوس" [level=3] [ref=e401]
+            - generic [ref=e402]: عام
+            - generic [ref=e404]: 10.00 جنيه
+            - generic [ref=e405]:
+              - generic [ref=e406]:
+                - generic [ref=e407]: 
+                - generic [ref=e408]: 
+                - generic [ref=e409]: 
+                - generic [ref=e410]: 
+                - generic [ref=e411]: 
+              - generic [ref=e412]: (0)
+            - generic [ref=e413]:
+              - generic [ref=e414]: 
+              - text: نفذت الكمية
+            - button " نفذت الكمية" [disabled] [ref=e415]:
+              - generic [ref=e416]: 
+              - text: نفذت الكمية
+  - navigation [ref=e417]:
+    - link " الرئيسية" [ref=e418] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e420]: 
+      - generic [ref=e421]: الرئيسية
+    - link " المنتجات" [ref=e422] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e424]: 
+      - generic [ref=e425]: المنتجات
+    - link " التصنيفات" [ref=e426] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e428]: 
+      - generic [ref=e429]: التصنيفات
+    - link "% العروض" [ref=e430] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e432]: "%"
+      - generic [ref=e433]: العروض
+    - link " العربة 0" [ref=e434] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e436]: 
+      - generic [ref=e437]: العربة
+      - generic [ref=e438]: "0"
+    - link " المفضلة" [ref=e439] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e441]: 
+      - generic [ref=e442]: المفضلة
+    - link " الإشعارات 0" [ref=e443] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e445]: 
+      - generic [ref=e446]: الإشعارات
+      - generic [ref=e447]: "0"
+  - text: 
+  - button "" [ref=e448] [cursor=pointer]:
+    - generic [ref=e449]: 
+  - button "" [ref=e450] [cursor=pointer]:
+    - generic [ref=e451]: 
+  - contentinfo [ref=e452]:
+    - generic [ref=e455]:
+      - generic [ref=e456]:
+        - generic [ref=e458]: 
+        - heading "سوبر ماركت الأستاذ" [level=3] [ref=e459]
+      - paragraph [ref=e460]: تطبيق تسوق متكامل مصمم خصيصاً للهواتف الذكية. يوفر تجربة تسوق سلسة وآمنة مع جميع الميزات التي تحتاجها.
+      - generic [ref=e461]:
+        - generic [ref=e462]:
+          - generic [ref=e463]: 
+          - generic [ref=e464]: متوافق مع جميع الهواتف
+        - generic [ref=e465]:
+          - generic [ref=e466]: 
+          - generic [ref=e467]: سرعة عالية
+        - generic [ref=e468]:
+          - generic [ref=e469]: 
+          - generic [ref=e470]: آمن ومحمي
+        - generic [ref=e471]:
+          - generic [ref=e472]: 
+          - generic [ref=e473]: يعمل بدون إنترنت
+      - generic [ref=e474]:
+        - generic [ref=e475]:
+          - generic [ref=e477]: 
+          - generic [ref=e478]:
+            - heading "تم التطوير بواسطة" [level=4] [ref=e479]
+            - generic [ref=e480]: AI7
+        - generic [ref=e481]:
+          - generic [ref=e482]: إصدار 2026.4
+          - generic [ref=e483]: •
+          - generic [ref=e484]: تطبيق PWA احترافي
+          - generic [ref=e485]: •
+          - generic [ref=e486]: 100% Mobile First
+      - paragraph [ref=e488]:
+        - text: © 2026 سوبر ماركت الأستاذ. جميع الحقوق محفوظة.
+        - text: مصمم ليكون التطبيق المثالي للتسوق عبر الهاتف
+```
