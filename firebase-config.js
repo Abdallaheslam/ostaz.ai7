@@ -1,6 +1,4 @@
-////////////////////////////////////////////////////////////////
-firebase-config.js
-// firebase-config.js - محمي وآمن
+
 const firebaseConfig = {
   apiKey: "AIzaSyAX2wKpYXUYmEA-Yn-W88BoMbzbD24HlEE",
   authDomain: "supermarket-3aboda.firebaseapp.com",
